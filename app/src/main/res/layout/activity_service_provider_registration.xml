@@ -1,384 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/colorPrimary"
-android:textAlignment="center"
-tools:context=".ServiceProviderRegistrationActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:textAlignment="center"
+    tools:context=".ServiceProviderRegistrationActivity">
 
 
-<Button
-    android:id="@+id/userReg"
-    style="@android:style/Widget.Button"
-    android:layout_width="120dp"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:text="Register"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/conpass1" />
+    <Button
+        android:id="@+id/userReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.998" />
 
-<TextView
-    android:id="@+id/title"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginBottom="17dp"
-    android:background="@color/colorPrimaryDark"
-    android:text="      Service Provider Registration"
-    android:textAlignment="textStart"
-    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-    android:textColor="@color/colorPrimary"
-    app:layout_constraintBottom_toTopOf="@+id/fname1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="410dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="23dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="     Service Provider Registration"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/fname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-<TextView
-    android:id="@+id/fname"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginStart="26dp"
-    android:layout_marginEnd="14dp"
-    android:layout_marginBottom="1dp"
-    android:padding="3dip"
-    android:text=" Full Name"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toTopOf="@+id/sname"
-    app:layout_constraintEnd_toStartOf="@+id/fname1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/fname1"></TextView>
-
-<EditText
-    android:id="@+id/fname1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="2dp"
-    android:gravity="left"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/sname1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/fname"
-    app:layout_constraintTop_toBottomOf="@+id/title"></EditText>
-
-<TextView
-    android:id="@+id/sname"
-    android:layout_width="0dp"
-    android:layout_height="36dp"
-    android:layout_marginStart="26dp"
-    android:layout_marginTop="58dp"
-    android:layout_marginEnd="14dp"
-    android:layout_marginBottom="51dp"
-    android:padding="3dip"
-    android:text=" Username"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toBottomOf="@+id/email"
-    app:layout_constraintEnd_toStartOf="@+id/sname1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/title"></TextView>
-
-<EditText
-    android:id="@+id/sname1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="14dp"
-    android:gravity="left"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/email"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/sname"
-    app:layout_constraintTop_toBottomOf="@+id/fname1"></EditText>
-
-<TextView
-    android:id="@+id/email"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginStart="26dp"
-    android:layout_marginEnd="9dp"
-    android:layout_marginBottom="14dp"
-    android:padding="3dip"
-    android:text=" Email"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toTopOf="@+id/dob1"
-    app:layout_constraintEnd_toStartOf="@+id/email1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/sname1"></TextView>
-
-<EditText
-    android:id="@+id/email1"
-    android:layout_width="179dp"
-    android:layout_height="45dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="14dp"
-    android:gravity="left"
-    android:inputType="textEmailAddress"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/dob1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/email"
-    app:layout_constraintTop_toBottomOf="@+id/sname"></EditText>
-
-<TextView
-    android:id="@+id/dob"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="26dp"
-    android:layout_marginTop="47dp"
-    android:layout_marginEnd="13dp"
-    android:layout_marginBottom="50dp"
-    android:padding="3dip"
-    android:text=" Date of Birth"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toBottomOf="@+id/address"
-    app:layout_constraintEnd_toStartOf="@+id/dob1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/email"></TextView>
-
-<EditText
-    android:id="@+id/dob1"
-    android:layout_width="0dp"
-    android:layout_height="45dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="10dp"
-    android:gravity="left"
-    android:hint="mm/dd/yyyy"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/address"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/dob"
-    app:layout_constraintTop_toBottomOf="@+id/email"></EditText>
-
-<TextView
-    android:id="@+id/state"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="31dp"
-    android:layout_marginTop="161dp"
-    android:layout_marginEnd="9dp"
-    android:layout_marginBottom="161dp"
-    android:padding="3dip"
-    android:text=" State"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toBottomOf="@+id/phone"
-    app:layout_constraintEnd_toStartOf="@+id/state1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/email1"></TextView>
-
-<EditText
-    android:id="@+id/state1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="17dp"
-    android:gravity="left"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/city1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/state"
-    app:layout_constraintTop_toBottomOf="@+id/address"></EditText>
-
-<TextView
-    android:id="@+id/address"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginStart="26dp"
-    android:layout_marginEnd="14dp"
-    android:layout_marginBottom="32dp"
-    android:padding="3dip"
-    android:text=" Address"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toTopOf="@+id/state1"
-    app:layout_constraintEnd_toStartOf="@+id/address1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/dob1"></TextView>
-
-<EditText
-    android:id="@+id/address1"
-    android:layout_width="0dp"
-    android:layout_height="59dp"
-    android:layout_marginTop="45dp"
-    android:layout_marginEnd="16dp"
-    android:textSize="12sp"
-    android:layout_marginBottom="46dp"
-    android:gravity="left"
-    app:layout_constraintBottom_toBottomOf="@+id/state1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/address"
-    app:layout_constraintTop_toTopOf="@+id/dob1"
-    app:layout_constraintVertical_bias="0.666"></EditText>
-
-<TextView
-    android:id="@+id/city"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="31dp"
-    android:layout_marginTop="167dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="167dp"
-    android:padding="3dip"
-    android:text=" City"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toTopOf="@+id/conpass1"
-    app:layout_constraintEnd_toStartOf="@+id/city1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/dob1"></TextView>
-
-<EditText
-    android:id="@+id/city1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="17dp"
-    android:layout_marginBottom="16dp"
-    android:gravity="left"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/country1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/city"
-    app:layout_constraintTop_toBottomOf="@+id/state1"></EditText>
-
-<TextView
-    android:id="@+id/country"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="31dp"
-    android:layout_marginTop="53dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="53dp"
-    android:padding="3dip"
-    android:text=" Country"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toBottomOf="@+id/phone"
-    app:layout_constraintEnd_toStartOf="@+id/country1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/city"></TextView>
-
-<EditText
-    android:id="@+id/country1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="18dp"
-    android:gravity="left"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/phone1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/country"
-    app:layout_constraintTop_toBottomOf="@+id/city1"></EditText>
-
-<TextView
-    android:id="@+id/phone"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="31dp"
-    android:layout_marginTop="53dp"
-    android:layout_marginEnd="6dp"
-    android:layout_marginBottom="51dp"
-    android:padding="3dip"
-    android:text=" Phone "
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toBottomOf="@+id/pass"
-    app:layout_constraintEnd_toStartOf="@+id/phone1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/country1"></TextView>
-
-<EditText
-    android:id="@+id/phone1"
-    android:layout_width="0dp"
-    android:layout_height="46dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="16dp"
-    android:gravity="left"
-    android:hint="10 digit number"
-    android:inputType="phone"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/pass1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/phone"
-    app:layout_constraintTop_toBottomOf="@+id/country1"></EditText>
-
-<TextView
-    android:id="@+id/pass"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="31dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="6dp"
-    android:layout_marginBottom="15dp"
-    android:padding="3dip"
-    android:text=" Password"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBottom_toTopOf="@+id/conpass"
-    app:layout_constraintEnd_toStartOf="@+id/pass1"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/phone1"></TextView>
-
-<EditText
-    android:id="@+id/pass1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="13dp"
-    android:gravity="left"
-    android:inputType="textPassword"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/conpass1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/pass"
-    app:layout_constraintTop_toBottomOf="@+id/phone1"></EditText>
-
-<TextView
-    android:id="@+id/conpass"
-    android:layout_width="0dp"
-    android:layout_height="38dp"
-    android:layout_marginStart="31dp"
-    android:layout_marginEnd="6dp"
-    android:padding="3dip"
-    android:text=" Confirm Password"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="14sp"
-    app:layout_constraintBaseline_toBaselineOf="@+id/conpass1"
-    app:layout_constraintEnd_toStartOf="@+id/conpass1"
-    app:layout_constraintStart_toStartOf="parent"></TextView>
-
-<EditText
-    android:id="@+id/conpass1"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="52dp"
-    android:gravity="left"
-    android:inputType="textPassword"
-    android:textSize="12sp"
-    app:layout_constraintBottom_toTopOf="@+id/userReg"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/conpass"
-    app:layout_constraintTop_toBottomOf="@+id/pass1"></EditText>
+    <EditText
+        android:id="@+id/fname"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="630dp"
+        android:ems="10"
+        android:hint="                 Enter Full Name"
+        android:inputType="textPersonName"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
