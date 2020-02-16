@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
     Button registration;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    ArrayList<String> userList;
+    ArrayList<String> userDetails;
     private static int count = 0;
 
     @Override
@@ -52,7 +53,8 @@ public class UserRegistrationActivity extends RegistrationHelper {
         registration = findViewById(R.id.userReg);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        userList = new ArrayList<>();
+        userDetails = new ArrayList<>();
+        fetchData();
         registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,32 +69,56 @@ public class UserRegistrationActivity extends RegistrationHelper {
                 dateOfBirth = getDateOfBirth(dob);
                 confirmPass = getConfirmPass(cpass);
                 boolean flag = true;
-                fetchData();
-                if (!verifyName(fullName)) {
-                    fname.setHint("Enter a valid name consisting only alphabets");
-                    flag = false;
-                }
-                if (!verifyPhone(phone)) {
-                    ph.setHint("Enter a valid 10 digit phone number");
-                    flag = false;
-                }
-                if (!verifyConfirmPass(password, confirmPass)) {
-                    cpass.setHint("Passwords don't match");
-                    flag = false;
-                }
-                if (!verifyEmail(email)) {
-                    email1.setHint("Enter a valid e-mail address");
-                    flag = false;
-                }
-                if (!verifydob(dateOfBirth)) {
-                    dob.setHint("Enter a valid date of mm/dd/yyyy");
-                    flag = false;
-                }
 
-                if (flag) {
-                    sendData();
-                }
+                    if(emailExists(email)){
+                        email1.setText("");
+                        email1.setHint("E-mail already exists");
+                        flag=false;
+                    }
+                    if(phoneExists(phone)){
+                        ph.setText("");
+                        ph.setHint("Phone number already exists");
+                        flag=false;
+                    }
+                    if (usernameExists(userName)) {
+                        uname.setText("");
+                        uname.setHint("User already exists");
+                        flag = false;
+                    }
+                    if (!verifyName(fullName)) {
+                        fname.setText("");
+                        fname.setHint("Enter a valid name consisting only alphabets");
+                        flag = false;
+                    }
+                    if (!verifyPhone(phone)) {
+                        ph.setText("");
+                        ph.setHint("Enter a valid 10 digit phone number");
+                        flag = false;
+                    }
+                    if (!verifyPassword(password)) {
+                        pass.setText("");
+                        pass.setHint("Password must have at least 6 characters");
+                        flag = false;
+                    }
+                    if (!verifyConfirmPass(password, confirmPass)) {
+                        cpass.setText("");
+                        cpass.setHint("Passwords don't match");
+                        flag = false;
+                    }
+                    if (!verifyEmail(email)) {
+                        email1.setText("");
+                        email1.setHint("Enter a valid e-mail address");
+                        flag = false;
+                    }
+                    if (!verifydob(dateOfBirth)) {
+                        dob.setText("");
+                        dob.setHint("Enter a valid date");
+                        flag = false;
+                    }
 
+                    if (flag) {
+                        sendData();
+                    }
 
             }
         });
@@ -143,27 +169,4 @@ public class UserRegistrationActivity extends RegistrationHelper {
         Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    void fetchData() {
-        final ArrayList<String> question = new ArrayList<>() ;
-        myRef.child("User_Credentials").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                // Result will be held Here
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    userList.add(dsp.getKey());//add result into array list
-                    question.add(dsp.getKey());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
 }
