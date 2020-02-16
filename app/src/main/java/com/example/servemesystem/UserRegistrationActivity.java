@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -29,7 +30,8 @@ import static android.content.ContentValues.TAG;
 
 public class UserRegistrationActivity extends RegistrationHelper {
     String password, fullName, userName, email, phone, city, state, country, dateOfBirth, confirmPass;
-    EditText pass, fname, uname, email1, ph, city1, state1, country1, dob, cpass;
+    EditText pass, fname, uname, email1, ph, city1, country1, dob, cpass;
+    Spinner state1;
     Button registration;
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -46,9 +48,8 @@ public class UserRegistrationActivity extends RegistrationHelper {
         uname = findViewById(R.id.sname1);
         email1 = findViewById(R.id.email1);
         ph = findViewById(R.id.phone1);
-        country1 = findViewById(R.id.city1);
         state1 = findViewById(R.id.state1);
-        city1 = findViewById(R.id.country1);
+        city1 = findViewById(R.id.city1);
         dob = findViewById(R.id.dob1);
         registration = findViewById(R.id.userReg);
         database = FirebaseDatabase.getInstance();
@@ -65,7 +66,6 @@ public class UserRegistrationActivity extends RegistrationHelper {
                 phone = getPhone(ph);
                 city = getCity(city1);
                 state = getState(state1);
-                country = getCountry(country1);
                 dateOfBirth = getDateOfBirth(dob);
                 confirmPass = getConfirmPass(cpass);
                 boolean flag = true;
@@ -87,7 +87,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
                     }
                     if (!verifyName(fullName)) {
                         fname.setText("");
-                        fname.setHint("Enter a valid name consisting only alphabets");
+                        fname.setHint("Name can have only alphabets");
                         flag = false;
                     }
                     if (!verifyPhone(phone)) {
@@ -97,7 +97,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
                     }
                     if (!verifyPassword(password)) {
                         pass.setText("");
-                        pass.setHint("Password must have at least 6 characters");
+                        pass.setHint("Enter at least 6 characters");
                         flag = false;
                     }
                     if (!verifyConfirmPass(password, confirmPass)) {

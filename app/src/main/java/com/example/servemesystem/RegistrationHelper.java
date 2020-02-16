@@ -4,6 +4,7 @@ package com.example.servemesystem;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class RegistrationHelper extends Activity {
-    String password,fullName,userName,email,phone,city,state,country,dateOfBirth,confirmPass;
+    String password,fullName,userName,email,phone,city,state,dateOfBirth,confirmPass;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     HashMap<String, UserModel> allUsers= new HashMap<>();
@@ -149,13 +150,9 @@ public abstract class RegistrationHelper extends Activity {
         this.city=editText.getText().toString();
         return  this.city;
     }
-    public String getState(EditText editText){
-        this.state=editText.getText().toString();
+    public String getState(Spinner spinner){
+        this.state=spinner.getSelectedItem().toString();
         return  this.state;
-    }
-    public String getCountry(EditText editText){
-        this.country=editText.getText().toString();
-        return  this.country;
     }
     public String getDateOfBirth(EditText editText){
         this.dateOfBirth=editText.getText().toString();
