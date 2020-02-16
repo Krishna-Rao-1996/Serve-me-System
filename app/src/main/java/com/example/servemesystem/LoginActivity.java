@@ -116,7 +116,6 @@ public class LoginActivity extends Activity {
 
     }
 
-
     private void register() {
         userReg=findViewById(R.id.regbutton);
         userReg.setOnClickListener(new View.OnClickListener() {
