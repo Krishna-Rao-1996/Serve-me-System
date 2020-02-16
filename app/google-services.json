@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "603921518100",
+    "firebase_url": "https://serveme-system-d313f.firebaseio.com",
+    "project_id": "serveme-system-d313f",
+    "storage_bucket": "serveme-system-d313f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603921518100:android:d04e89ad3d9024edc0e101",
+        "android_client_info": {
+          "package_name": "com.example.servemesystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603921518100-1manhvtiqefbruvc8ddf64d5cfi6u5ft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.servemesystem",
+            "certificate_hash": "3305ce9c1bf233ec5cb229de49df044ef2026406"
+          }
+        },
+        {
+          "client_id": "603921518100-p3rdbtieonurgsm9jcl9k9cfvuddqbjn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFzztOh9JpYqSC2lreTW69y4-IFQqLJqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603921518100-p3rdbtieonurgsm9jcl9k9cfvuddqbjn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

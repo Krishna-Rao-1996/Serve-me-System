@@ -1,23 +1,121 @@
 package com.example.servemesystem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends Activity {
-    private Button userReg;
+    private Button userReg,loginButton;
+    private EditText username,password;
+    //private String usernameFromDB = null;
+    private String passwordFromDB = null;
+    FirebaseAuth uAuth;
+    private static final String TAG = "EmailPassword";
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        uAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         register();
-
+        login();
 
     }
+
+    private void login() {
+        loginButton = findViewById(R.id.Logbutton);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginEvent();
+            }
+        });
+    }
+
+
+    private void loginEvent() {
+        System.out.println(username);
+        System.out.println(username.getText().toString());
+        System.out.println(password);
+        System.out.println(password.getText().toString());
+
+        if(TextUtils.isEmpty(username.getText())){
+            //return username is empty
+            Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+
+        }
+        else if(password.getText().toString().length()==0){
+            //return password is empty
+            Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            queryData();
+        }
+
+    }
+
+    private void queryData() {
+        myRef.child("User_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getValue());
+                System.out.println(dataSnapshot.getValue());
+                if(dataSnapshot.getValue()!=null){
+                    passwordFromDB = dataSnapshot.getValue().toString();
+                }
+                System.out.println(passwordFromDB);
+                System.out.println(passwordFromDB);
+                if(passwordFromDB == null){
+                    //return username is not register,page not jump to homepage
+                    Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                }
+                else if(!password.getText().toString().equals(passwordFromDB)){
+                    //return password is not correct,page not jump to homepage
+                    Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    //username and password match,return login success and jump to homepage
+                    Intent logInIntent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(logInIntent);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     private void register() {
         userReg=findViewById(R.id.regbutton);
