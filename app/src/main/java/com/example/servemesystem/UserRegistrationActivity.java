@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,8 +30,8 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 public class UserRegistrationActivity extends RegistrationHelper {
-    String password, fullName, userName, email, phone, city, state, country, dateOfBirth, confirmPass;
-    EditText pass, fname, uname, email1, ph, city1, country1, dob, cpass;
+    String password, fullName, userName, email, phone, city, state, country, dateOfBirth, confirmPass,address;
+    EditText pass, fname, uname, email1, ph, city1, address1, dob, cpass;
     Spinner state1;
     Button registration;
     FirebaseDatabase database;
@@ -50,6 +51,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         ph = findViewById(R.id.phone1);
         state1 = findViewById(R.id.state1);
         city1 = findViewById(R.id.city1);
+        address1=findViewById(R.id.address1);
         dob = findViewById(R.id.dob1);
         registration = findViewById(R.id.userReg);
         database = FirebaseDatabase.getInstance();
@@ -68,6 +70,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
                 state = getState(state1);
                 dateOfBirth = getDateOfBirth(dob);
                 confirmPass = getConfirmPass(cpass);
+                address=getAddress(address1);
                 boolean flag = true;
 
                     if(emailExists(email)){
@@ -89,6 +92,11 @@ public class UserRegistrationActivity extends RegistrationHelper {
                         fname.setText("");
                         fname.setHint("Name can have only alphabets");
                         flag = false;
+                    }
+                    if(!verifyAddress(address)){
+                        address1.setText("");
+                        address1.setHint("Address can't be empty");
+                        flag=false;
                     }
                     if (!verifyPhone(phone)) {
                         ph.setText("");
@@ -136,7 +144,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         mymap.put("Email", email);
         mymap.put("City", city);
         mymap.put("State", state);
-        mymap.put("Country", country);
+        mymap.put("Address", address);
         mymap.put("Password", password);
         myRef.child("Users").child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
             @Override
@@ -167,6 +175,8 @@ public class UserRegistrationActivity extends RegistrationHelper {
         });
 
         Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+        Intent login = new Intent(UserRegistrationActivity.this,LoginActivity.class);
+        startActivity(login);
     }
 
 }
