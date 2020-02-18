@@ -8,9 +8,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +39,7 @@ public class LoginActivity extends Activity {
     private static final String TAG = "EmailPassword";
     FirebaseDatabase database;
     DatabaseReference myRef;
+    private CheckBox showPassword;
 
 
     @Override
@@ -44,6 +49,23 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         register();
         login();
+        password = findViewById(R.id.password);
+        showPassword=findViewById(R.id.showPassword);
+        showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // TODO Auto-generated method stub
+                if(isChecked){
+                    //If selected, show password
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    //else hide password
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+
+            }
+        });
 
     }
 
@@ -63,11 +85,6 @@ public class LoginActivity extends Activity {
 
 
     private void loginEvent() {
-        System.out.println(username);
-        System.out.println(username.getText().toString());
-        System.out.println(password);
-        System.out.println(password.getText().toString());
-
         if(TextUtils.isEmpty(username.getText())){
             //return username is empty
             Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
