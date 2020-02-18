@@ -1,15 +1,21 @@
 package com.example.servemesystem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,71 +30,103 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 public class UserRegistrationActivity extends RegistrationHelper {
-    String password,fullName,userName,email,phone,city,state,country,dateOfBirth,confirmPass;
-    EditText pass,fname,uname,email1,ph,city1,state1,country1,dob,cpass;
+    String password, fullName, userName, email, phone, city, state, country, dateOfBirth, confirmPass,address;
+    EditText pass, fname, uname, email1, ph, city1, address1, dob, cpass;
+    Spinner state1;
     Button registration;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    ArrayList<Object> userList;
-    private  static int count=0;
+    ArrayList<String> userDetails;
+    private static int count = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_registration);
-        pass=findViewById(R.id.pass1);
-        cpass=findViewById(R.id.conpass1);
-        fname=findViewById(R.id.fname1);
-        uname=findViewById(R.id.sname1);
-        email1=findViewById(R.id.email1);
-        ph=findViewById(R.id.phone1);
-        country1=findViewById(R.id.city1);
-        state1=findViewById(R.id.state1);
-        city1=findViewById(R.id.country1);
-        dob=findViewById(R.id.dob1);
+        pass = findViewById(R.id.pass1);
+        cpass = findViewById(R.id.conpass1);
+        fname = findViewById(R.id.fname1);
+        uname = findViewById(R.id.sname1);
+        email1 = findViewById(R.id.email1);
+        ph = findViewById(R.id.phone1);
+        state1 = findViewById(R.id.state1);
+        city1 = findViewById(R.id.city1);
+        address1=findViewById(R.id.address1);
+        dob = findViewById(R.id.dob1);
         registration = findViewById(R.id.userReg);
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
-        userList = new ArrayList<>();
+        myRef = database.getReference();
+        userDetails = new ArrayList<>();
         fetchData();
         registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                password=getPassword(pass);
-                fullName=getFullName(fname);
-                userName=getUserName(uname);
-                email=getEmail(email1);
-                phone=getPhone(ph);
-                city=getCity(city1);
-                state=getState(state1);
-                country=getCountry(country1);
-                dateOfBirth=getDateOfBirth(dob);
-                confirmPass=getConfirmPass(cpass);
-                boolean flag= true;
-                if(!verifyName(fullName)){
-                    fname.setHint("Enter a valid name consisting only alphabets");
-                    flag=false;
-                }
-                if(!verifyPhone(phone)){
-                    ph.setHint("Enter a valid 10 digit phone number");
-                    flag=false;
-                }
-                if(!verifyConfirmPass(password,confirmPass)){
-                    cpass.setHint("Passwords don't match");
-                    flag=false;
-                }
-                if(!verifyEmail(email)){
-                    email1.setHint("Enter a valid e-mail address");
-                    flag=false;
-                }
-                if(!verifydob(dateOfBirth)){
-                    dob.setHint("Enter a valid date of mm/dd/yyyy");
-                    flag=false;
-                }
+                password = getPassword(pass);
+                fullName = getFullName(fname);
+                userName = getUserName(uname);
+                email = getEmail(email1);
+                phone = getPhone(ph);
+                city = getCity(city1);
+                state = getState(state1);
+                dateOfBirth = getDateOfBirth(dob);
+                confirmPass = getConfirmPass(cpass);
+                address=getAddress(address1);
+                boolean flag = true;
 
-                if(flag){
-                    sendData();
-                }
+                    if(emailExists(email)){
+                        email1.setText("");
+                        email1.setHint("E-mail already exists");
+                        flag=false;
+                    }
+                    if(phoneExists(phone)){
+                        ph.setText("");
+                        ph.setHint("Phone number already exists");
+                        flag=false;
+                    }
+                    if (usernameExists(userName)) {
+                        uname.setText("");
+                        uname.setHint("User already exists");
+                        flag = false;
+                    }
+                    if (!verifyName(fullName)) {
+                        fname.setText("");
+                        fname.setHint("Name can have only alphabets");
+                        flag = false;
+                    }
+                    if(!verifyAddress(address)){
+                        address1.setText("");
+                        address1.setHint("Address can't be empty");
+                        flag=false;
+                    }
+                    if (!verifyPhone(phone)) {
+                        ph.setText("");
+                        ph.setHint("Enter a valid 10 digit phone number");
+                        flag = false;
+                    }
+                    if (!verifyPassword(password)) {
+                        pass.setText("");
+                        pass.setHint("Enter at least 6 characters");
+                        flag = false;
+                    }
+                    if (!verifyConfirmPass(password, confirmPass)) {
+                        cpass.setText("");
+                        cpass.setHint("Passwords don't match");
+                        flag = false;
+                    }
+                    if (!verifyEmail(email)) {
+                        email1.setText("");
+                        email1.setHint("Enter a valid e-mail address");
+                        flag = false;
+                    }
+                    if (!verifydob(dateOfBirth)) {
+                        dob.setText("");
+                        dob.setHint("Enter a valid date");
+                        flag = false;
+                    }
 
+                    if (flag) {
+                        sendData();
+                    }
 
             }
         });
@@ -100,20 +138,19 @@ public class UserRegistrationActivity extends RegistrationHelper {
         // Write a message to the database
 
         Map mymap = new HashMap<>();
-        mymap.put("FirstName",fullName);
-        mymap.put("Phone",phone);
-        mymap.put("DateOfBirth",dateOfBirth);
-        mymap.put("Email",email);
-        mymap.put("City",city);
-        mymap.put("State",state);
-        mymap.put("Country",country);
-        mymap.put("Password",password);
-        count++;
-        myRef.child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+        mymap.put("FullName", fullName);
+        mymap.put("Phone", phone);
+        mymap.put("DateOfBirth", dateOfBirth);
+        mymap.put("Email", email);
+        mymap.put("City", city);
+        mymap.put("State", state);
+        mymap.put("Address", address);
+        mymap.put("Password", password);
+        myRef.child("Users").child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                if(databaseError != null){
+                if (databaseError != null) {
 
                     Log.d("CHAT_LOG", databaseError.getMessage().toString());
 
@@ -122,28 +159,24 @@ public class UserRegistrationActivity extends RegistrationHelper {
             }
         });
 
-        Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    void fetchData() {
-
-
-
-        myRef.addValueEventListener(new ValueEventListener() {
+        Map userCred = new HashMap<>();
+        userCred.put(userName, password);
+        myRef.child("User_Credentials").updateChildren(userCred, new DatabaseReference.CompletionListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                userList= new ArrayList<>(td.values());
-            }
+                if (databaseError != null) {
 
+                    Log.d("CHAT_LOG", databaseError.getMessage().toString());
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+                }
+
             }
         });
+
+        Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+        Intent login = new Intent(UserRegistrationActivity.this,LoginActivity.class);
+        startActivity(login);
     }
+
 }
