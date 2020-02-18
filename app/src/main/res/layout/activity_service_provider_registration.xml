@@ -16,7 +16,7 @@
             android:id="@+id/userReg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1800dp"
+            android:layout_marginTop="1600dp"
             android:text="Register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,9 +28,10 @@
             android:id="@+id/title"
             android:layout_width="410dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="1229dp"
+            android:layout_marginBottom="1258dp"
             android:background="@color/colorPrimaryDark"
             android:text="     Service Provider Registration"
+            app:layout_constraintBottom_toTopOf="@+id/Numberofdays"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +96,6 @@
             android:ems="10"
             android:hint="                     DD/MM/YY"
             android:inputType="date"
-            app:layout_constraintBottom_toTopOf="@+id/userReg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,10 +112,10 @@
             android:text="Types of Services"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/companyname1"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.498" />
 
         <EditText
             android:id="@+id/fname"
@@ -142,7 +142,6 @@
             android:ems="10"
             android:hint="                 Enter User Name *"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/userReg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +182,6 @@
             android:ems="10"
             android:hint="                   Enter Address *"
             android:inputType="textPostalAddress"
-            app:layout_constraintBottom_toTopOf="@+id/userReg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
@@ -207,37 +205,51 @@
             android:id="@+id/Office_Address1"
             android:layout_width="300dp"
             android:layout_height="100dp"
-            android:layout_marginBottom="724dp"
+            android:layout_marginBottom="776dp"
             android:ems="10"
             android:hint="         Enter Office Address *"
             android:inputType="textPostalAddress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/Office_Number1"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="660dp"
+            android:layout_marginBottom="884dp"
             android:ems="10"
             android:hint="          Enter Office Number *"
             android:inputType="phone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/workinghours"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="   Enter Working hours *"
+            android:inputType="time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Office_Number1"
+            app:layout_constraintVertical_bias="0.141" />
 
         <LinearLayout
             android:id="@+id/Servicetypelinearlayout"
             android:layout_width="0dp"
-            android:layout_height="350dp"
+            android:layout_height="320dp"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Typesofservicestext">
+            app:layout_constraintTop_toBottomOf="@+id/workinghours">
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -247,22 +259,22 @@
                 android:orientation="vertical">
 
             </RadioGroup>
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/Numberofdays"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="473dp"
+            android:layout_marginBottom="352dp"
             android:background="@color/colorPrimaryDark"
             android:text="Number of Days"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Office_Number1"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
         <LinearLayout
             android:id="@+id/Workingdayslinearlayout"
             android:layout_width="0dp"
