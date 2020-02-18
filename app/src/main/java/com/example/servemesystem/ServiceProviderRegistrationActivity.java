@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 public class ServiceProviderRegistrationActivity extends Activity{
 
-    EditText fname,sname1,email1;
-
+    EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
+    Spinner state1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -117,30 +121,30 @@ public class ServiceProviderRegistrationActivity extends Activity{
         usersRefer.addListenerForSingleValueEvent(workdaylistener);
         usersRefer.removeEventListener(workdaylistener);
 
+
+        //Registration Button Onclick Event
+
         Button Registration =  (Button) findViewById(R.id.userReg);
 
         Registration.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 //Full Name
                 fname = findViewById(R.id.fname);
 
-                String Fname = fname.getText().toString();
+                String Fname = (String) fname.getText().toString();
 
                 boolean allLetters = Fname.matches("[a-zA-Z]*");
 
                 Log.d("allLetters", "count= " + allLetters);
 
 
-                if(allLetters != true)
-                {
+                if (allLetters != true) {
                     fname.setError("Please Enter a Valid Fullname");
                     return;
                 }
 
-                if (Fname.matches(""))
-                {
+                if (Fname.matches("")) {
                     fname.setError("Fullname field cannot be empty");
                     return;
                 }
@@ -148,10 +152,9 @@ public class ServiceProviderRegistrationActivity extends Activity{
                 //User Name
                 sname1 = findViewById(R.id.sname1);
 
-                String Fname1 = sname1.getText().toString();
+                String Fname1 = (String) sname1.getText().toString();
 
-                if (Fname1.matches(""))
-                {
+                if (Fname1.matches("")) {
                     sname1.setError("Username field cannot be empty");
                     return;
                 }
@@ -161,8 +164,7 @@ public class ServiceProviderRegistrationActivity extends Activity{
                 ref.child("Service_Providers").child(Fname1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists())
-                        {
+                        if (dataSnapshot.exists()) {
                             sname1.setError("Username already exists!");
                             return;
                         }
@@ -175,7 +177,7 @@ public class ServiceProviderRegistrationActivity extends Activity{
                 });
 
                 //Email
-                String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                         "[a-zA-Z0-9_+&*-]+)*@" +
                         "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                         "A-Z]{2,7}$";
@@ -184,15 +186,128 @@ public class ServiceProviderRegistrationActivity extends Activity{
 
                 email1 = findViewById(R.id.email1);
 
-                String Email1 = email1.getText().toString();
+                String Email1 = (String) email1.getText().toString();
 
-                if (Email1.matches(""))
-                {
+                if (Email1.matches("")) {
                     email1.setError("Email field cannot be empty");
                     return;
                 }
 
+                if (pat.matcher(Email1).matches() == false) {
+                    email1.setError("Email entered is invalid");
+                    return;
+                }
 
+                //Date of Birth
+                dob1 = findViewById(R.id.dob1);
+
+                String Dob1 = (String) dob1.getText().toString();
+
+                if (Dob1.matches("")) {
+                    dob1.setError("Date of Birth field cannot be empty");
+                    return;
+                }
+
+                boolean isDate = verifydob(Dob1);
+
+                if (isDate != true) {
+                    dob1.setError("Date of Birth format is not according to MM/DD/YYYY");
+                    return;
+                }
+
+
+                //Address
+                address1 = findViewById(R.id.address1);
+
+                String Address1 = (String) address1.getText().toString();
+
+                Log.d("Address1", "count= " + Address1);
+
+                if (Address1.matches("")) {
+                    address1.setError("Address field cannot be empty");
+                    return;
+                }
+
+                //State
+                state1 = (Spinner) findViewById(R.id.state1);
+
+                String State = (String) state1.getSelectedItem();
+
+                Log.d("State", "count= " + State);
+
+                if (State.matches("Select a State")) {
+                    Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a State", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //City
+
+                city1 = findViewById(R.id.city1);
+
+                String City1 = (String) city1.getText().toString();
+
+                if (City1.matches("")) {
+                    city1.setError("City field cannot be empty");
+                    return;
+                }
+
+                phone1 = findViewById(R.id.phone1);
+
+                String Phone1 = (String) phone1.getText().toString();
+
+                if (Phone1.matches("")) {
+                    phone1.setError("Phone number field cannot be empty");
+                    return;
+                }
+
+                if (Phone1.length() < 10 || Phone1.length() > 10) {
+                    phone1.setError("Invalid Phone number");
+                    return;
+                }
+
+                //Pass1
+
+                pass1 = findViewById(R.id.pass1);
+
+                String Pass1 = (String) pass1.getText().toString();
+
+                if (Pass1.matches("")) {
+                    pass1.setError("Password field cannot be empty");
+                    return;
+                }
+
+                //Confirmpass
+
+                conpass1 = findViewById(R.id.conpass1);
+
+                String Conpass1 = (String) conpass1.getText().toString();
+
+                if (Conpass1.matches("")) {
+                    conpass1.setError("Password field cannot be empty");
+                    return;
+
+                }
+
+                //Check wheter they are different
+
+                if (!Pass1.matches(Conpass1)) {
+                    pass1.setError("Please Enter Similar Passwords");
+                    conpass1.setError("Please Enter Similar Passwords");
+                    return;
+                }
+            }
+
+
+
+            public boolean verifydob(String dateOfBirth){
+                SimpleDateFormat sdfrmt = new SimpleDateFormat("MM/dd/yyyy");
+                sdfrmt.setLenient(false);
+                try {
+                    sdfrmt.parse(dateOfBirth);
+                } catch (ParseException e) {
+                    return false;
+                }
+                return true;
             }
         });
     }
