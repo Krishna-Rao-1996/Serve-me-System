@@ -25,7 +25,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
-public class ServiceProviderRegistrationActivity extends Activity{
+public class ServiceProviderRegistrationActivity extends UserRegistrationActivity{
 
     EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
     Spinner state1;
@@ -134,7 +134,7 @@ public class ServiceProviderRegistrationActivity extends Activity{
 
                 String Fname = (String) fname.getText().toString();
 
-                boolean allLetters = Fname.matches("[a-zA-Z]*");
+                boolean allLetters = verifyName(Fname);
 
                 Log.d("allLetters", "count= " + allLetters);
 
@@ -177,12 +177,6 @@ public class ServiceProviderRegistrationActivity extends Activity{
                 });
 
                 //Email
-                String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
-                        "[a-zA-Z0-9_+&*-]+)*@" +
-                        "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                        "A-Z]{2,7}$";
-
-                Pattern pat = Pattern.compile(emailRegex);
 
                 email1 = findViewById(R.id.email1);
 
@@ -193,7 +187,9 @@ public class ServiceProviderRegistrationActivity extends Activity{
                     return;
                 }
 
-                if (pat.matcher(Email1).matches() == false) {
+                boolean emailcheck = verifyEmail(Email1);
+
+                if (emailcheck == false) {
                     email1.setError("Email entered is invalid");
                     return;
                 }
@@ -260,7 +256,9 @@ public class ServiceProviderRegistrationActivity extends Activity{
                     return;
                 }
 
-                if (Phone1.length() < 10 || Phone1.length() > 10) {
+                boolean phonecheck = verifyPhone(Phone1);
+
+                if (phonecheck == false) {
                     phone1.setError("Invalid Phone number");
                     return;
                 }
@@ -290,24 +288,13 @@ public class ServiceProviderRegistrationActivity extends Activity{
 
                 //Check wheter they are different
 
-                if (!Pass1.matches(Conpass1)) {
+                boolean confirmpass = verifyConfirmPass(Pass1,Conpass1);
+
+                if (confirmpass == false) {
                     pass1.setError("Please Enter Similar Passwords");
                     conpass1.setError("Please Enter Similar Passwords");
                     return;
                 }
-            }
-
-
-
-            public boolean verifydob(String dateOfBirth){
-                SimpleDateFormat sdfrmt = new SimpleDateFormat("MM/dd/yyyy");
-                sdfrmt.setLenient(false);
-                try {
-                    sdfrmt.parse(dateOfBirth);
-                } catch (ParseException e) {
-                    return false;
-                }
-                return true;
             }
         });
     }
