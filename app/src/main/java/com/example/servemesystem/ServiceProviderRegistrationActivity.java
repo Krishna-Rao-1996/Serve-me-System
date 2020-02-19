@@ -1,6 +1,4 @@
 package com.example.servemesystem;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,25 +8,25 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceProviderRegistrationActivity extends UserRegistrationActivity{
 
     EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
     Spinner state1;
+    DatabaseReference myReg;
+    String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours;
+    boolean Check = false;
+    private  static int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,14 +36,9 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
         setContentView(R.layout.activity_service_provider_registration);
 
         //Service Provider Types
-
         final RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
-
-        DatabaseReference rootref = FirebaseDatabase.getInstance().getReference();
-
-        DatabaseReference usersRef = rootref.child("Service_Provider_Types");
-
-        Log.d("Service_Providers", "usersRef= " + usersRef);
+        DatabaseReference rootref = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
+        Log.d("Service_Providers", "usersRef= " + rootref);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -65,8 +58,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 int i=0;
                 while (i<count)
                 {
-                    CheckBox checkBox = new CheckBox(getBaseContext());
-                    radioGroup.addView(checkBox);
+                    CheckBox servicetypecheckBox = new CheckBox(getBaseContext());
+                    radioGroup.addView(servicetypecheckBox);
                     ((CheckBox) radioGroup.getChildAt(i)).setText(str[i]);
                     i++;
                 }
@@ -74,21 +67,19 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
-        usersRef.addListenerForSingleValueEvent(valueEventListener);
-        usersRef.removeEventListener(valueEventListener);
+        rootref.addListenerForSingleValueEvent(valueEventListener);
+        rootref.removeEventListener(valueEventListener);
 
 
         //Working day Types
 
         final RadioGroup workingradioGroup = (RadioGroup)findViewById(R.id.workingradioGroup);
 
-        DatabaseReference rootrefer = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference rootrefer = FirebaseDatabase.getInstance().getReference().child("Working_Day_Types");
 
-        DatabaseReference usersRefer = rootrefer.child("Working_Day_Types");
+        Log.d("Working_Day_Types", "usersRefer= " + rootrefer);
 
-        Log.d("Working_Day_Types", "usersRefer= " + usersRefer);
-
-        ValueEventListener workdaylistener = new ValueEventListener() {
+        final ValueEventListener workdaylistener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
@@ -107,8 +98,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 int i=0;
                 while (i<count)
                 {
-                    CheckBox checkBox = new CheckBox(getBaseContext());
-                    workingradioGroup.addView(checkBox);
+                    CheckBox workdaycheckBox = new CheckBox(getBaseContext());
+                    workingradioGroup.addView(workdaycheckBox);
                     ((CheckBox) workingradioGroup.getChildAt(i)).setText(str[i]);
                     i++;
                 }
@@ -118,8 +109,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
             public void onCancelled(DatabaseError databaseError) {}
         };
 
-        usersRefer.addListenerForSingleValueEvent(workdaylistener);
-        usersRefer.removeEventListener(workdaylistener);
+        rootrefer.addListenerForSingleValueEvent(workdaylistener);
+        rootrefer.removeEventListener(workdaylistener);
 
 
         //Registration Button Onclick Event
@@ -132,7 +123,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 //Full Name
                 fname = findViewById(R.id.fname);
 
-                String Fname = (String) fname.getText().toString();
+                Fname = (String) fname.getText().toString();
 
                 boolean allLetters = verifyName(Fname);
 
@@ -141,22 +132,37 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                 if (allLetters != true) {
                     fname.setError("Please Enter a Valid Fullname");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 if (Fname.matches("")) {
                     fname.setError("Fullname field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //User Name
                 sname1 = findViewById(R.id.sname1);
 
-                String Fname1 = (String) sname1.getText().toString();
+                Fname1 = (String) sname1.getText().toString();
 
                 if (Fname1.matches("")) {
                     sname1.setError("Username field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -166,7 +172,12 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             sname1.setError("Username already exists!");
+                            Check = false;
                             return;
+                        }
+                        else
+                        {
+                            Check = true;
                         }
                     }
 
@@ -180,121 +191,320 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                 email1 = findViewById(R.id.email1);
 
-                String Email1 = (String) email1.getText().toString();
+                Email1 = (String) email1.getText().toString();
 
                 if (Email1.matches("")) {
                     email1.setError("Email field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 boolean emailcheck = verifyEmail(Email1);
 
                 if (emailcheck == false) {
                     email1.setError("Email entered is invalid");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //Date of Birth
                 dob1 = findViewById(R.id.dob1);
 
-                String Dob1 = (String) dob1.getText().toString();
+                Dob1 = (String) dob1.getText().toString();
 
                 if (Dob1.matches("")) {
                     dob1.setError("Date of Birth field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 boolean isDate = verifydob(Dob1);
 
                 if (isDate != true) {
                     dob1.setError("Date of Birth format is not according to MM/DD/YYYY");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
 
                 //Address
                 address1 = findViewById(R.id.address1);
 
-                String Address1 = (String) address1.getText().toString();
+                Address1 = (String) address1.getText().toString();
 
                 Log.d("Address1", "count= " + Address1);
 
                 if (Address1.matches("")) {
                     address1.setError("Address field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //State
                 state1 = (Spinner) findViewById(R.id.state1);
 
-                String State = (String) state1.getSelectedItem();
+                State = (String) state1.getSelectedItem();
 
                 Log.d("State", "count= " + State);
 
                 if (State.matches("Select a State")) {
                     Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a State", Toast.LENGTH_SHORT).show();
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //City
 
                 city1 = findViewById(R.id.city1);
 
-                String City1 = (String) city1.getText().toString();
+                City1 = (String) city1.getText().toString();
 
                 if (City1.matches("")) {
                     city1.setError("City field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 phone1 = findViewById(R.id.phone1);
 
-                String Phone1 = (String) phone1.getText().toString();
+                Phone1 = (String) phone1.getText().toString();
 
                 if (Phone1.matches("")) {
                     phone1.setError("Phone number field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 boolean phonecheck = verifyPhone(Phone1);
 
                 if (phonecheck == false) {
                     phone1.setError("Invalid Phone number");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //Pass1
 
                 pass1 = findViewById(R.id.pass1);
 
-                String Pass1 = (String) pass1.getText().toString();
+                Pass1 = (String) pass1.getText().toString();
 
                 if (Pass1.matches("")) {
                     pass1.setError("Password field cannot be empty");
+                    Check = false;
                     return;
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //Confirmpass
 
                 conpass1 = findViewById(R.id.conpass1);
 
-                String Conpass1 = (String) conpass1.getText().toString();
+                Conpass1 = (String) conpass1.getText().toString();
 
                 if (Conpass1.matches("")) {
                     conpass1.setError("Password field cannot be empty");
+                    Check = false;
                     return;
 
+                }
+                else
+                {
+                    Check = true;
                 }
 
                 //Check wheter they are different
 
-                boolean confirmpass = verifyConfirmPass(Pass1,Conpass1);
+                boolean confirmpass = Pass1.matches(Conpass1);
 
                 if (confirmpass == false) {
                     pass1.setError("Please Enter Similar Passwords");
                     conpass1.setError("Please Enter Similar Passwords");
+                    Check = false;
                     return;
                 }
+                else
+                {
+                    Check = true;
+                }
+
+                //Company name
+
+
+                companyname1 = findViewById(R.id.companyname1);
+
+                Companyname = (String) companyname1.getText().toString();
+
+                boolean companycheck = verifyName(Companyname);
+
+                if (Companyname.matches("")) {
+                    companyname1.setError("Company name field cannot be empty");
+                    Check = false;
+                    return;
+
+                }
+                else
+                {
+                    Check = true;
+                }
+
+                if(companycheck == false)
+                {
+                    companyname1.setError("Company name entered is not valid");
+                    Check = false;
+                    return;
+                }
+                else
+                {
+                    Check = true;
+                }
+
+                //Office Number
+
+                Office_Number1 = findViewById(R.id.Office_Number1);
+
+                Officenumber = (String) Office_Number1.getText().toString();
+
+                boolean Officenumbercheck = verifyPhone(Officenumber);
+
+                if (Officenumber.matches("")) {
+                    Office_Number1.setError("Office number field cannot be empty");
+                    Check = false;
+                    return;
+
+                }
+                else
+                {
+                    Check = true;
+                }
+
+                if(Officenumbercheck == false)
+                {
+                    Office_Number1.setError("Office number entered is not valid");
+                    Check = false;
+                    return;
+                }
+                else
+                {
+                    Check = true;
+                }
+
+                //Office Address
+
+                Office_Address1 = findViewById(R.id.Office_Address1);
+
+                Office_Address = (String) Office_Address1.getText().toString();
+
+                if (Office_Address.matches("")) {
+                    Office_Address1.setError("Office Address field cannot be empty");
+                    Check = false;
+                    return;
+
+                }
+                else
+                {
+                    Check = true;
+                }
+
+
+                //Working hours
+
+                workinghours = findViewById(R.id.workinghours);
+
+                Workinghours = (String) workinghours.getText().toString();
+
+                if (Workinghours.matches("")) {
+                    workinghours.setError("Working hours field cannot be empty");
+                    Check = false;
+                    return;
+
+                }
+                else
+                {
+                    Check = true;
+                }
+
+                Log.d("Check", "Check= " + Check);
+
+
+
+
+
+
+                //Sending Data to Firebase
+
+                myReg = database.getReference("Service_Providers");
+                if(Check != true)
+                {
+                    Map mymap = new HashMap<>();
+                    mymap.put("FirstName",Fname);
+                    mymap.put("Phone",Phone1);
+                    mymap.put("DateOfBirth",Dob1);
+                    mymap.put("Email",Email1);
+                    mymap.put("City",City1);
+                    mymap.put("State",State);
+                    mymap.put("Password",Pass1);
+                    mymap.put("Companyname",Companyname);
+                    mymap.put("Officenumber",Officenumber);
+                    mymap.put("Officeaddress",Office_Address);
+                    mymap.put("Workinghours",Workinghours);
+                    count++;
+                    myReg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            if(databaseError != null){
+
+                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+
+                            }
+
+                        }
+                    });
+
+                    Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }

@@ -94,7 +94,6 @@ public class UserRegistrationActivity extends RegistrationHelper {
         });
 
     }
-
     @Override
     void sendData() {
         // Write a message to the database
