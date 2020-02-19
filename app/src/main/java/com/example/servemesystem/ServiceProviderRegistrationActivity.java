@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ServiceProviderRegistrationActivity extends UserRegistrationActivity{
@@ -27,11 +28,13 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
     EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
     Spinner state1;
     DatabaseReference myReg;
-    String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours;
+    String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours,Servtype="",Worktype="";
     boolean Check = false;
     int count=0,count1=0;
     CheckBox workdaycheckBox;
     CheckBox servicetypecheckBox;
+    DatabaseReference rootref = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
+    DatabaseReference rootrefer = FirebaseDatabase.getInstance().getReference().child("Working_Day_Types");
     ArrayList<String> Servicearray = new ArrayList<String>();
     ArrayList<String> Workdayarray = new ArrayList<String>();
     @Override
@@ -44,7 +47,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
         //Service Provider Types
         final RadioGroup serviceradioGroup = (RadioGroup)findViewById(R.id.radioGroup);
-        DatabaseReference rootref = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
         Log.d("Service_Providers", "usersRef= " + rootref);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -82,8 +84,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
         //Working day Types
 
         final RadioGroup workingradioGroup = (RadioGroup)findViewById(R.id.workingradioGroup);
-
-        DatabaseReference rootrefer = FirebaseDatabase.getInstance().getReference().child("Working_Day_Types");
 
         Log.d("Working_Day_Types", "usersRefer= " + rootrefer);
 
@@ -473,8 +473,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     Check = true;
                 }
 
-                Log.d("Check", "Check= " + Check);
-
 
                 //Service type and Workday Validation
 
@@ -501,10 +499,21 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 }
 
 
-                //Sending Data to Firebase
+                Log.d("Check", "Check= " + Check);
 
+                //Sending Data to Firebase
+                for (int i = 0; i < Servicearray.size(); i++)
+                {
+                    Servtype += Servicearray.get(i) + ",";
+                }
+                Log.d("Servtype", "Check= " + Servtype);
+                for (int i = 0; i < Workdayarray.size(); i++)
+                {
+                    Worktype += Workdayarray.get(i) + ",";
+                }
+                Log.d("worktype", "Check= " + Worktype);
                 myReg = database.getReference("Service_Providers");
-                if(Check != true)
+                if(Check == true)
                 {
                     Map mymap = new HashMap<>();
                     mymap.put("FirstName",Fname);
@@ -518,8 +527,9 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     mymap.put("Officenumber",Officenumber);
                     mymap.put("Officeaddress",Office_Address);
                     mymap.put("Workinghours",Workinghours);
-                    mymap.put("ServiceTypes",Servicearray);
-                    mymap.put("Workingdays",Workdayarray);
+                    mymap.put("ServiceTypes",Servtype);
+                    mymap.put("Workingdays",Worktype);
+                    mymap.put("IsVerified",false);
                     count++;
                     myReg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
                         @Override
