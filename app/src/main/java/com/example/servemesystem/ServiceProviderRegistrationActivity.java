@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +29,11 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
     DatabaseReference myReg;
     String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours;
     boolean Check = false;
-    private  static int count=0;
+    int count=0,count1=0;
+    CheckBox workdaycheckBox;
+    CheckBox servicetypecheckBox;
+    ArrayList<String> Servicearray = new ArrayList<String>();
+    ArrayList<String> Workdayarray = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,7 +43,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
         setContentView(R.layout.activity_service_provider_registration);
 
         //Service Provider Types
-        final RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
+        final RadioGroup serviceradioGroup = (RadioGroup)findViewById(R.id.radioGroup);
         DatabaseReference rootref = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
         Log.d("Service_Providers", "usersRef= " + rootref);
 
@@ -58,9 +65,10 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 int i=0;
                 while (i<count)
                 {
-                    CheckBox servicetypecheckBox = new CheckBox(getBaseContext());
-                    radioGroup.addView(servicetypecheckBox);
-                    ((CheckBox) radioGroup.getChildAt(i)).setText(str[i]);
+                    servicetypecheckBox = new CheckBox(getBaseContext());
+                    serviceradioGroup.addView(servicetypecheckBox);
+                    ((CheckBox) serviceradioGroup.getChildAt(i)).setText(str[i]);
+                    servicetypecheckBox.setOnClickListener(ServiceType1(servicetypecheckBox));
                     i++;
                 }
             }
@@ -83,9 +91,9 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                long count = dataSnapshot.getChildrenCount();
-                Log.d("Service_Providers", "count= " + count);
-                String[] str = new String[((int) count)];
+                long count1 = dataSnapshot.getChildrenCount();
+                Log.d("Service_Providers", "count= " + count1);
+                String[] str = new String[((int) count1)];
                 int j = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
@@ -96,11 +104,12 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     j++;
                 }
                 int i=0;
-                while (i<count)
+                while (i<count1)
                 {
-                    CheckBox workdaycheckBox = new CheckBox(getBaseContext());
+                    workdaycheckBox = new CheckBox(getBaseContext());
                     workingradioGroup.addView(workdaycheckBox);
                     ((CheckBox) workingradioGroup.getChildAt(i)).setText(str[i]);
+                    workdaycheckBox.setOnClickListener(ServiceType2(workdaycheckBox));
                     i++;
                 }
             }
@@ -119,7 +128,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
         Registration.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 //Full Name
                 fname = findViewById(R.id.fname);
 
@@ -466,8 +476,29 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 Log.d("Check", "Check= " + Check);
 
 
+                //Service type and Workday Validation
 
+                if(Servicearray == null)
+                {
+                    Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a Service Type", Toast.LENGTH_SHORT).show();
+                    Check = false;
+                    return;
+                }
+                else
+                {
+                    Check = true;
+                }
 
+                if(Workdayarray == null)
+                {
+                    Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a Working Day", Toast.LENGTH_SHORT).show();
+                    Check = false;
+                    return;
+                }
+                else
+                {
+                    Check = true;
+                }
 
 
                 //Sending Data to Firebase
@@ -487,6 +518,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     mymap.put("Officenumber",Officenumber);
                     mymap.put("Officeaddress",Office_Address);
                     mymap.put("Workinghours",Workinghours);
+                    mymap.put("ServiceTypes",Servicearray);
+                    mymap.put("Workingdays",Workdayarray);
                     count++;
                     myReg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
                         @Override
@@ -506,7 +539,50 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
 
             }
+
         });
+    }
+    View.OnClickListener ServiceType1(final Button button)
+    {
+       return  new View.OnClickListener() {
+           @Override
+           public void onClick(View v)
+           {
+               Log.d("Button clicked is", "count= " + button.getText());
+
+               if(Servicearray.contains(button.getText()))
+               {
+                   Servicearray.remove(button.getText().toString());
+               }
+               else
+               {
+                   Servicearray.add(button.getText().toString());
+               }
+
+               Log.d("Servicearray", "count= " + Servicearray);
+           }
+       };
+    }
+    View.OnClickListener ServiceType2(final Button button)
+    {
+        return  new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Log.d("Button clicked is", "count= " + button.getText());
+
+                if(Workdayarray.contains(button.getText()))
+                {
+                    Workdayarray.remove(button.getText().toString());
+                }
+                else
+                {
+                    Workdayarray.add(button.getText().toString());
+                }
+
+                Log.d("Servicearray", "count= " + Workdayarray);
+            }
+        };
     }
  }
 
