@@ -1,4 +1,5 @@
 package com.example.servemesystem;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServiceProviderRegistrationActivity extends UserRegistrationActivity{
+public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
     EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
     Spinner state1;
@@ -27,7 +28,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
     DatabaseReference emailRef;
     DatabaseReference numberref;
     String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours,Servtype="",Worktype="";
-    boolean Check = false;
+    boolean Check = true;
     int count=0,count1=0;
     CheckBox workdaycheckBox;
     CheckBox servicetypecheckBox;
@@ -141,21 +142,11 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (allLetters != true) {
                     fname.setError("Please Enter a Valid Fullname");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 if (Fname.matches("")) {
                     fname.setError("Fullname field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //User Name
@@ -169,22 +160,12 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 {
                     sname1.setError("Username field cannot have special characters");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 if (Fname1.matches(""))
                 {
                     sname1.setError("Username field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -237,11 +218,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Email1.matches("")) {
                     email1.setError("Email field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 boolean emailcheck = verifyEmail(Email1);
@@ -249,11 +225,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (emailcheck == false) {
                     email1.setError("Email entered is invalid");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Date of Birth
@@ -264,11 +235,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Dob1.matches("")) {
                     dob1.setError("Date of Birth field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 boolean isDate = verifydob(Dob1);
@@ -276,13 +242,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (isDate != true) {
                     dob1.setError("Date of Birth format is not according to MM/DD/YYYY");
                     Check = false;
-                    return;
                 }
-                else
-                {
-                    Check = true;
-                }
-
 
                 //Address
                 address1 = findViewById(R.id.address1);
@@ -294,11 +254,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Address1.matches("")) {
                     address1.setError("Address field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //State
@@ -311,11 +266,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (State.matches("Select a State")) {
                     Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a State", Toast.LENGTH_SHORT).show();
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //City
@@ -327,11 +277,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (City1.matches("")) {
                     city1.setError("City field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Phone number
@@ -361,11 +306,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Phone1.matches("")) {
                     phone1.setError("Phone number field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 boolean phonecheck = verifyPhone(Phone1);
@@ -373,15 +313,9 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (phonecheck == false) {
                     phone1.setError("Invalid Phone number");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Pass1
-
                 pass1 = findViewById(R.id.pass1);
 
                 Pass1 = (String) pass1.getText().toString();
@@ -389,11 +323,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Pass1.matches("")) {
                     pass1.setError("Password field cannot be empty");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Confirmpass
@@ -405,12 +334,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Conpass1.matches("")) {
                     conpass1.setError("Password field cannot be empty");
                     Check = false;
-                    return;
 
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Check wheter they are different
@@ -421,11 +345,6 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     pass1.setError("Please Enter Similar Passwords");
                     conpass1.setError("Please Enter Similar Passwords");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Company name
@@ -440,23 +359,12 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Companyname.matches("")) {
                     companyname1.setError("Company name field cannot be empty");
                     Check = false;
-                    return;
-
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 if(companycheck == false)
                 {
                     companyname1.setError("Company name entered is not valid");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Office Number
@@ -470,23 +378,12 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Officenumber.matches("")) {
                     Office_Number1.setError("Office number field cannot be empty");
                     Check = false;
-                    return;
-
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 if(Officenumbercheck == false)
                 {
                     Office_Number1.setError("Office number entered is not valid");
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 //Office Address
@@ -498,14 +395,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Office_Address.matches("")) {
                     Office_Address1.setError("Office Address field cannot be empty");
                     Check = false;
-                    return;
-
                 }
-                else
-                {
-                    Check = true;
-                }
-
 
                 //Working hours
 
@@ -516,14 +406,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 if (Workinghours.matches("")) {
                     workinghours.setError("Working hours field cannot be empty");
                     Check = false;
-                    return;
-
                 }
-                else
-                {
-                    Check = true;
-                }
-
 
                 //Service type and Workday Validation
 
@@ -531,22 +414,12 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 {
                     Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a Service Type", Toast.LENGTH_SHORT).show();
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
                 if(Workdayarray == null)
                 {
                     Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a Working Day", Toast.LENGTH_SHORT).show();
                     Check = false;
-                    return;
-                }
-                else
-                {
-                    Check = true;
                 }
 
 
@@ -565,7 +438,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 Log.d("worktype", "Check= " + Worktype);
                 myReg = database.getReference("Service_Providers");
                 addingreg = database.getReference("Service_Provider_Credentials");
-                if(Check == true)
+                if(Check)
                 {
                     Map mymap = new HashMap<>();
                     mymap.put("FirstName",Fname);
@@ -584,8 +457,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     mymap.put("IsVerified",false);
                     count++;
                     myReg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
                             if(databaseError != null){
 
@@ -596,14 +469,13 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                         }
                     });
 
-                    mymap.clear();
-                    mymap.put("Password",Pass1);
-                    count1++;
-                    addingreg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+                    Map userCred = new HashMap<>();
+                    userCred.put(Fname1, Pass1);
+                    addingreg.child("Service_Provider_Credentials").updateChildren(userCred, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                            if(databaseError != null){
+                            if (databaseError != null) {
 
                                 Log.d("CHAT_LOG", databaseError.getMessage().toString());
 
@@ -615,6 +487,9 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
+
+                    Intent login = new Intent(ServiceProviderRegistrationActivity.this,LoginActivity.class);
+                    startActivity(login);
                 }
                 else
                 {
@@ -668,5 +543,10 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
             }
         };
     }
- }
+
+    @Override
+    void sendData() {
+
+    }
+}
 
