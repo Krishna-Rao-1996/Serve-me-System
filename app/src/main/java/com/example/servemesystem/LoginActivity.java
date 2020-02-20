@@ -31,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends Activity {
-    private Button userReg,loginButton;
+    private Button userReg,loginButton,loginButtonForServiceProvider;
     private EditText username,password;
     //private String usernameFromDB = null;
     private String passwordFromDB = null;
@@ -48,7 +48,8 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         register();
-        login();
+        loginForUser();
+        loginForServiceProvider();
         password = findViewById(R.id.password);
         showPassword=findViewById(R.id.showPassword);
         showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -69,7 +70,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void login() {
+    private void loginForUser() {
         loginButton = findViewById(R.id.Logbutton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -87,12 +88,19 @@ public class LoginActivity extends Activity {
     private void loginEvent() {
         if(TextUtils.isEmpty(username.getText())){
             //return username is empty
-            Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+            password.setError(null,null);
+//            username.setError(null, null);
+            username.setError("Username is empty!");
+            username.requestFocus();
 
         }
         else if(password.getText().toString().length()==0){
             //return password is empty
-            Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+//          password.setError(null,null);
+            username.setError(null, null);
+            password.setError("Password is empty!");
+            password.requestFocus();
         }
         else {
             queryData();
@@ -109,19 +117,104 @@ public class LoginActivity extends Activity {
                 if(dataSnapshot.getValue()!=null){
                     passwordFromDB = dataSnapshot.getValue().toString();
                 }
-                System.out.println(passwordFromDB);
-                System.out.println(passwordFromDB);
                 if(passwordFromDB == null){
                     //return username is not register,page not jump to homepage
-                    Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                    password.setError(null,null);
+//                    username.setError(null, null);
+                    username.setError("Username is not registered!");
+                    username.requestFocus();
                 }
                 else if(!password.getText().toString().equals(passwordFromDB)){
                     //return password is not correct,page not jump to homepage
-                    Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
+//                    password.setError(null,null);
+                    username.setError(null, null);
+                    passwordFromDB = null;
+                    password.setError("Password is not correct!");
+                    password.requestFocus();
                 }
                 else{
                     //username and password match,return login success and jump to homepage
+                    passwordFromDB = null;
                     Intent logInIntent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(logInIntent);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loginForServiceProvider() {
+        loginButtonForServiceProvider = findViewById(R.id.LogbuttonForServiceProvider);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        loginButtonForServiceProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginEventForServiceProvider();
+            }
+        });
+    }
+
+
+    private void loginEventForServiceProvider() {
+        if(TextUtils.isEmpty(username.getText())){
+            //return username is empty
+            //Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+            password.setError(null,null);
+//            username.setError(null, null);
+            username.setError("Username is empty!");
+            username.requestFocus();
+
+        }
+        else if(password.getText().toString().length()==0){
+            //return password is empty
+            //Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+            username.setError(null, null);
+            password.setError("Password is empty!");
+            password.requestFocus();
+        }
+        else {
+            queryDataForServiceProvider();
+        }
+
+    }
+
+    private void queryDataForServiceProvider() {
+        //We should modify here.
+        myRef.child("Service_Provider_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null){
+                    passwordFromDB = dataSnapshot.getValue().toString();
+                }
+                if(passwordFromDB == null){
+                    //return username is not register,page not jump to homepage
+                    //Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                    password.setError(null,null);
+//                    username.setError(null, null);
+                    username.setError("Username is not registered!");
+                    username.requestFocus();
+                }
+                else if(!password.getText().toString().equals(passwordFromDB)){
+                    //return password is not correct,page not jump to homepage
+                   // Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
+                    username.setError(null, null);
+                    passwordFromDB = null;
+                    password.setError("Password is not correct!");
+                    password.requestFocus();
+                }
+                else{
+                    //username and password match,return login success and jump to homepage
+                    passwordFromDB = null;
+                    Intent logInIntent = new Intent(LoginActivity.this,ServiceProviderHome.class);
                     startActivity(logInIntent);
                 }
             }
@@ -138,8 +231,8 @@ public class LoginActivity extends Activity {
         userReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myint = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(myint);
+                Intent myInt = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(myInt);
             }
         });
     }
