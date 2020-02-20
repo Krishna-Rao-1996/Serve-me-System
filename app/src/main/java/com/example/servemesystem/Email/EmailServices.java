@@ -3,8 +3,14 @@ package com.example.servemesystem.Email;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Properties;
 import java.util.Random;
 
@@ -30,6 +36,7 @@ public class EmailServices extends AsyncTask<Void,Void,Void>  {
 
     private String mEmail;
     private String mMessage;
+    public FirebaseDatabase database;
 
     private ProgressBar mProgressDialog;
 
@@ -83,6 +90,27 @@ public class EmailServices extends AsyncTask<Void,Void,Void>  {
                     }
                 });
 
+        //Creating a DB instance to save the recoveryPin
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = database.getReference("/Users/");
+
+
+        //GET THE USERNAME FROM THE DB OF THIS PARTICULAR USER AND USE THAT AS THE CHILD.
+        // CREATE A NEW CHILD "RECOVERYPIN" AND SAVE THIS PIN VALUE THERE USING SETVALUE
+        // https://www.techotopia.com/index.php/Writing_Firebase_Realtime_Database_Data
+//        dbRef.child("Users").child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+//
+//                if (databaseError != null) {
+//
+//                    Log.d("CHAT_LOG", databaseError.getMessage().toString());
+//
+//                }
+//
+//            }
+//        });
+
         try {
             int recoveryPin = (int)(Math.random()*9000)+1000;
             //Creating MimeMessage object
@@ -98,6 +126,8 @@ public class EmailServices extends AsyncTask<Void,Void,Void>  {
             mm.setText(MESSAGE +"\n" + recoveryPin);
             //Sending email
             Transport.send(mm);
+
+
 
         } catch (MessagingException e) {
             e.printStackTrace();
