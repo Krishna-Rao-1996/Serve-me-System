@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -75,52 +76,76 @@ public class UserRegistrationActivity extends RegistrationHelper {
 
                     if(emailExists(email)){
                         email1.setText("");
-                        email1.setHint("E-mail already exists");
+                        email1.setError("E-mail already exists");
+                        flag=false;
+                    }
+                    if(userName.length()<1){
+                        uname.setText("");
+                        uname.setError("Enter a Username");
+                        flag=false;
+                    }
+                    if(!verifyUsername(userName)){
+                        uname.setText("");
+                        uname.setError("Username can't contain special characters");
+                        flag=false;
+                    }
+                    if(state.equals("Select a State")){
+                        ((TextView)state1.getSelectedView()).setError("Error message");
+                        flag=false;
+                    }
+                    if(city.length()<1){
+                        city1.setText("");
+                        city1.setError("Enter a City");
+                        flag=false;
+                        }
+                    if(confirmPass.length()<1){
+                        cpass.setText("");
+                        cpass.setError("Confirm password can't be empty");
                         flag=false;
                     }
                     if(phoneExists(phone)){
                         ph.setText("");
-                        ph.setHint("Phone number already exists");
+                        ph.setError("Phone number already exists");
                         flag=false;
                     }
                     if (usernameExists(userName)) {
                         uname.setText("");
-                        uname.setHint("User already exists");
+                        uname.setError("User already exists");
                         flag = false;
                     }
                     if (!verifyName(fullName)) {
                         fname.setText("");
-                        fname.setHint("Name can have only alphabets");
+                        fname.setError("Name can have only alphabets");
                         flag = false;
                     }
                     if(!verifyAddress(address)){
                         address1.setText("");
-                        address1.setHint("Address can't be empty");
+                        address1.setError("Enter an Address");
                         flag=false;
                     }
                     if (!verifyPhone(phone)) {
                         ph.setText("");
-                        ph.setHint("Enter a valid 10 digit phone number");
+                        ph.setError("Enter a valid 10 digit phone number");
                         flag = false;
                     }
                     if (!verifyPassword(password)) {
                         pass.setText("");
-                        pass.setHint("Enter at least 6 characters");
+                        pass.setError("Enter at least 6 characters");
                         flag = false;
                     }
                     if (!verifyConfirmPass(password, confirmPass)) {
                         cpass.setText("");
-                        cpass.setHint("Passwords don't match");
+                        cpass.setError("Passwords don't match");
                         flag = false;
                     }
                     if (!verifyEmail(email)) {
                         email1.setText("");
-                        email1.setHint("Enter a valid e-mail address");
+                        email1.setError("Enter a valid e-mail address");
                         flag = false;
                     }
                     if (!verifydob(dateOfBirth)) {
                         dob.setText("");
-                        dob.setHint("Enter a valid date");
+                        dob.setError("Enter a valid date");
                         flag = false;
                     }
 
@@ -132,6 +157,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         });
 
     }
+
     @Override
     void sendData() {
         // Write a message to the database

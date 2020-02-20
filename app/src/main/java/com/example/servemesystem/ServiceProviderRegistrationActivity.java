@@ -163,7 +163,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                 Fname1 = (String) sname1.getText().toString();
 
-                boolean usernamecheck = Fname1.matches("[a-zA-Z.? ]*");
+                boolean usernamecheck = verifyUsername(Fname1);
 
                 if(usernamecheck !=true)
                 {

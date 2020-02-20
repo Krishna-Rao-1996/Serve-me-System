@@ -63,6 +63,17 @@ public abstract class RegistrationHelper extends Activity {
     public boolean usernameExists(String userName){
         return allUsers.containsKey(userName);
     }
+    public boolean verifyUsername(String userName){
+        for(int i=0;i<userName.length();i++){
+            if(Character.isLetterOrDigit(userName.charAt((i)))){
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     public boolean verifyName(String name){
