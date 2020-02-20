@@ -16,7 +16,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ForgotPassword" />
+        <activity android:name=".ForgotPassword"/>
+        <activity android:name=".ServiceProviderHome"/>
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
