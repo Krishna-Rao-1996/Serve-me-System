@@ -84,11 +84,6 @@ public class UserRegistrationActivity extends RegistrationHelper {
                         uname.setError("Enter a Username");
                         flag=false;
                     }
-                    if(!verifyUsername(userName)){
-                        uname.setText("");
-                        uname.setError("Username can't contain special characters");
-                        flag=false;
-                    }
                     if(state.equals("Select a State")){
                         ((TextView)state1.getSelectedView()).setError("Error message");
                         flag=false;
