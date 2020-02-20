@@ -112,8 +112,6 @@ public class LoginActivity extends Activity {
         myRef.child("User_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue());
-                System.out.println(dataSnapshot.getValue());
                 if(dataSnapshot.getValue()!=null){
                     passwordFromDB = dataSnapshot.getValue().toString();
                 }
