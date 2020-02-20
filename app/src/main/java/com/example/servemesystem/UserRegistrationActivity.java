@@ -85,7 +85,12 @@ public class UserRegistrationActivity extends RegistrationHelper {
                         flag=false;
                     }
                     if(state.equals("Select a State")){
-                        ((TextView)state1.getSelectedView()).setError("Error message");
+                        ((TextView)state1.getSelectedView()).setError("Select a State");
+                        flag=false;
+                    }
+                    if(!verifyUsername(userName)){
+                        uname.setText("");
+                        uname.setError("Please enter only alphanumeric values");
                         flag=false;
                     }
                     if(city.length()<1){
