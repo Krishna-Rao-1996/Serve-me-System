@@ -2,11 +2,13 @@ package com.example.servemesystem.Email;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.servemesystem.ForgotPassword;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -113,6 +115,11 @@ public class EmailServices extends AsyncTask<Void,Void,Void>  {
 
         try {
             int recoveryPin = (int)(Math.random()*9000)+1000;
+
+//            Intent intent = new Intent(mContext, ForgotPassword.class);
+//            intent.putExtra("recoveryPin", recoveryPin);
+//            mContext.startActivity(intent);
+
             //Creating MimeMessage object
             MimeMessage mm = new MimeMessage(mSession);
 

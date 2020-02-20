@@ -3,6 +3,7 @@ package com.example.servemesystem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,9 +34,13 @@ public class ResetPasswordActivity extends Activity {
                         if (enteredPasswordField.equals(confirmPasswordField)) {
                             //write code to update password in Firebase
                             Toast.makeText(ResetPasswordActivity.this, "Password reset successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             Toast.makeText(ResetPasswordActivity.this, "Password fields do not match", Toast.LENGTH_SHORT).show();
+                            enterPassword.getText().clear();
+                            confirmPassword.getText().clear();
                         }
                     }
 
