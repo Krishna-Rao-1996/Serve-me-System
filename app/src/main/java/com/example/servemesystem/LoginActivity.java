@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends Activity {
     private Button userReg,loginButton,loginButtonForServiceProvider;
     private EditText username,password;
+    private TextView forgotPassword;
     //private String usernameFromDB = null;
     private String passwordFromDB = null;
     FirebaseAuth uAuth;
@@ -50,6 +51,7 @@ public class LoginActivity extends Activity {
         register();
         loginForUser();
         loginForServiceProvider();
+        forgotPassword();
         password = findViewById(R.id.password);
         showPassword=findViewById(R.id.showPassword);
         showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -230,6 +232,17 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent myInt = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(myInt);
+            }
+        });
+    }
+
+    private void forgotPassword() {
+        forgotPassword = findViewById(R.id.textView2);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myInt = new Intent(LoginActivity.this,ForgotPassword.class);
                 startActivity(myInt);
             }
         });
