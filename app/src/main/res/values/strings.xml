@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">ServeMe System</string>
+    <string name="register">Register</string>
+    <string name="userRegister">User Registration</string>
+    <string name="servemeSystem">ServeMe System</string>
+    <string name="forgotPassword">Forgot Password?</string>
+    <string name="registerAsUser">Register As User</string>
+    <string name="registerAsServiceProvider">Register As Service Provider</string>
     <string-array name="StateCodes">
         <item>Select a State</item>
         <item>AL</item>
@@ -53,24 +59,5 @@
         <item>WI</item>
         <item>WY</item>
     </string-array>
-    <string-array name="ServiceTypes">
-        <item>Appliances</item>
-        <item>Electrical</item>
-        <item>Plumbing</item>
-        <item>Home Cleaning</item>
-        <item>Tutoring</item>
-        <item>Packaging and Moving</item>
-        <item>Computer Repair</item>
-        <item>Home Repair and Painting</item>
-        <item>Pest Control</item>
-    </string-array>
-    <string-array name="Workingdays">
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-        <item>Sunday</item>
-    </string-array>
+
 </resources>
