@@ -23,6 +23,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
     EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
     Spinner state1;
     DatabaseReference myReg;
+    DatabaseReference addingreg;
     DatabaseReference emailRef;
     DatabaseReference numberref;
     String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours,Servtype="",Worktype="";
@@ -563,6 +564,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 }
                 Log.d("worktype", "Check= " + Worktype);
                 myReg = database.getReference("Service_Providers");
+                addingreg = database.getReference("Service_Provider_Credentials");
                 if(Check == true)
                 {
                     Map mymap = new HashMap<>();
@@ -593,6 +595,24 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                         }
                     });
+
+                    mymap.clear();
+                    mymap.put("Password",Pass1);
+                    count1++;
+                    addingreg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            if(databaseError != null){
+
+                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+
+                            }
+
+                        }
+                    });
+
+
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
                 }
