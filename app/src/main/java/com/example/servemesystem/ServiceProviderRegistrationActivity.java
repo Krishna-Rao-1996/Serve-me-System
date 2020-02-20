@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,11 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ServiceProviderRegistrationActivity extends UserRegistrationActivity{
@@ -28,6 +23,8 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
     EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
     Spinner state1;
     DatabaseReference myReg;
+    DatabaseReference emailRef;
+    DatabaseReference numberref;
     String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours,Servtype="",Worktype="";
     boolean Check = false;
     int count=0,count1=0;
@@ -135,7 +132,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                 Fname = (String) fname.getText().toString();
 
-                boolean allLetters = verifyName(Fname);
+                boolean allLetters = Fname.matches("[a-zA-Z\\s\'\"]+");
 
                 Log.d("allLetters", "count= " + allLetters);
 
@@ -165,7 +162,21 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                 Fname1 = (String) sname1.getText().toString();
 
-                if (Fname1.matches("")) {
+                boolean usernamecheck = Fname1.matches("[a-zA-Z.? ]*");
+
+                if(usernamecheck !=true)
+                {
+                    sname1.setError("Username field cannot have special characters");
+                    Check = false;
+                    return;
+                }
+                else
+                {
+                    Check = true;
+                }
+
+                if (Fname1.matches(""))
+                {
                     sname1.setError("Username field cannot be empty");
                     Check = false;
                     return;
@@ -202,6 +213,25 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                 email1 = findViewById(R.id.email1);
 
                 Email1 = (String) email1.getText().toString();
+
+                emailRef = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
+
+                emailRef.orderByChild("Email").equalTo(Email1).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        if (dataSnapshot.exists()) {
+                            email1.setError("Email already exists!");
+                            Check = false;
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 if (Email1.matches("")) {
                     email1.setError("Email field cannot be empty");
@@ -303,9 +333,29 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     Check = true;
                 }
 
+                //Phone number
                 phone1 = findViewById(R.id.phone1);
 
                 Phone1 = (String) phone1.getText().toString();
+
+                numberref = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
+
+                numberref.orderByChild("Phone").equalTo(Phone1).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        if (dataSnapshot.exists()) {
+                            phone1.setError("Phone number already exists!");
+                            Check = false;
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 if (Phone1.matches("")) {
                     phone1.setError("Phone number field cannot be empty");
@@ -384,7 +434,7 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
 
                 Companyname = (String) companyname1.getText().toString();
 
-                boolean companycheck = verifyName(Companyname);
+                boolean companycheck = Companyname.matches("[a-zA-Z\\s\'\"]+");
 
                 if (Companyname.matches("")) {
                     companyname1.setError("Company name field cannot be empty");
@@ -545,6 +595,10 @@ public class ServiceProviderRegistrationActivity extends UserRegistrationActivit
                     });
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Please enter the above mentioned details",Toast.LENGTH_SHORT).show();
                 }
 
 
