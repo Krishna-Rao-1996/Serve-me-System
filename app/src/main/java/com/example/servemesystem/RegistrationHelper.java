@@ -63,6 +63,14 @@ public abstract class RegistrationHelper extends Activity {
     public boolean usernameExists(String userName){
         return allUsers.containsKey(userName);
     }
+    public boolean verifyUsername(String userName){
+        for(int i=0;i<userName.length();i++){
+            if(!Character.isLetterOrDigit(userName.charAt((i)))){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     public boolean verifyName(String name){
@@ -71,10 +79,7 @@ public abstract class RegistrationHelper extends Activity {
             return false;
         }
         for(int i=0;i<name.length();i++){
-            if(Character.isAlphabetic(name.charAt((i))) || name.charAt(i)==' '){
-                continue;
-            }
-            else {
+            if(!Character.isAlphabetic(name.charAt((i))) || name.charAt(i)==' '){
                 return false;
             }
         }

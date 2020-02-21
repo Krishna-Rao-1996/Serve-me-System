@@ -32,7 +32,7 @@ public class RegisterActivity extends Activity {
             spReg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent myint = new Intent(RegisterActivity.this, UserRegistrationActivity.class);
+                    Intent myint = new Intent(RegisterActivity.this, ServiceProviderRegistrationActivity.class);
                     startActivity(myint);
                 }
             });
