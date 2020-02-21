@@ -57,7 +57,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                 int j = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                    String name = ds.getKey();
+                    String name = ds.getValue().toString();
 
                     str[j] = name;
 
