@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
@@ -12,12 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
-        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".Homepage.updateProfile"
+                  android:theme="@style/Theme.AppCompat"></activity>
+        <activity
+            android:name=".Homepage.ServiceProviderHomeActivity"
+            android:label="@string/title_activity_service_provider_home"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".Homepage.UserHomeActivity"
+            android:label="@string/title_activity_user_home"
+            android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ForgotPassword"/>
-        <activity android:name=".ServiceProviderHome"/>
+        <activity android:name=".ForgotPassword" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
@@ -34,6 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ServiceProviderRegistrationActivity" />
     </application>
 
 </manifest>

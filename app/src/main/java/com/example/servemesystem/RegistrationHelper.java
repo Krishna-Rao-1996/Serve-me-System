@@ -132,7 +132,7 @@ public abstract class RegistrationHelper extends Activity {
     public boolean verifyConfirmPass(String confirmPass,String password){
         return (this.password).equals(this.confirmPass);
     }
-    abstract void sendData();
+    protected abstract void sendData();
 
     public String getPassword(EditText editText){
         this.password=editText.getText().toString();
@@ -173,5 +173,8 @@ public abstract class RegistrationHelper extends Activity {
     public String getConfirmPass(EditText editText){
         this.confirmPass=editText.getText().toString();
         return  this.confirmPass;
+    }
+    public HashMap<String, UserModel> getAllUsers() {
+        return allUsers;
     }
 }

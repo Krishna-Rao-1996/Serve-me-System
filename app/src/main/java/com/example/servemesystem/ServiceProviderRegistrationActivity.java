@@ -1,5 +1,6 @@
 package com.example.servemesystem;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -487,7 +488,10 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
-
+                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
+                    editor.putString("userName", Fname1);
+                    editor.putString("type","serviceprovider");
+                    editor.apply();
                     Intent login = new Intent(ServiceProviderRegistrationActivity.this,LoginActivity.class);
                     startActivity(login);
                 }
@@ -545,7 +549,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
     }
 
     @Override
-    void sendData() {
+    protected void sendData() {
 
     }
 }

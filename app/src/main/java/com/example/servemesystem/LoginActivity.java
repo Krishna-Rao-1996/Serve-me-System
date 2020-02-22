@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -19,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.servemesystem.Homepage.ServiceProviderHomeActivity;
+import com.example.servemesystem.Homepage.UserHomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -137,7 +140,11 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
-                    Intent logInIntent = new Intent(LoginActivity.this,MainActivity.class);
+                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
+                    editor.putString("userName", username.getText().toString());
+                    editor.putString("type","user");
+                    editor.apply();
+                    Intent logInIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
                     startActivity(logInIntent);
                 }
             }
@@ -214,7 +221,7 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
-                    Intent logInIntent = new Intent(LoginActivity.this,ServiceProviderHome.class);
+                    Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
                     startActivity(logInIntent);
                 }
             }
