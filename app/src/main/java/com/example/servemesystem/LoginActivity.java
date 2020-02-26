@@ -137,8 +137,13 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
-                    Intent logInIntent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(logInIntent);
+                    if("admin".equalsIgnoreCase(username.getText().toString())){
+                        Intent logInIntent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                        startActivity(logInIntent);
+                    } else {
+                        Intent logInIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(logInIntent);
+                    }
                 }
             }
             @Override
