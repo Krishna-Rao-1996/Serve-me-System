@@ -11,15 +11,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoTitleBar">
-        <activity android:name=".ResetPasswordActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name=".AdminMainActivity"></activity>
+        <activity android:name=".OperaterDataView" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".UpdateProfileActivity" />
+        <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ForgotPassword"/>
-        <activity android:name=".ServiceProviderHome"/>
-        <activity android:name=".ServiceProviderRegistrationActivity"/>
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".ServiceProviderHome" />
+        <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
