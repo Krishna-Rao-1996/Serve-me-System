@@ -76,12 +76,15 @@ public class ForgotPassword extends RegistrationHelper {
 
 //                        Toast.makeText(ForgotPassword.this, recoveryPin, Toast.LENGTH_SHORT).show();
                         String enteredPIN = verifyPIN.getText().toString();
-                        if (enteredPIN.equals("1234")){
+                        if (!enteredPIN.equals("1234") && !enteredPIN.isEmpty()){
                             Intent intent = new Intent(ForgotPassword.this, ResetPasswordActivity.class);
                             startActivity(intent);
 //                            fetchData();
+                        } else if (enteredPIN.isEmpty()){
+                            Toast.makeText(ForgotPassword.this, "Please enter PIN", Toast.LENGTH_SHORT).show();
+                            verifyPIN.getText().clear();
                         }
-                        else {
+                        else if(!enteredPIN.isEmpty()){
                             Toast.makeText(ForgotPassword.this, "Please enter correct PIN", Toast.LENGTH_SHORT).show();
                             verifyPIN.getText().clear();
                         }
@@ -158,7 +161,7 @@ public class ForgotPassword extends RegistrationHelper {
         emailServices.execute();
         Log.i("here   ->", "sendEmail");
 
-        Toast.makeText(ForgotPassword.this, "Email sent", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(ForgotPassword.this, "Email sent", Toast.LENGTH_SHORT).show();
 
         //hide email field and button field after successful email sending
         setVisibilityOfEmail();
@@ -171,7 +174,6 @@ public class ForgotPassword extends RegistrationHelper {
         verifyPIN.setVisibility(View.VISIBLE);
         submitButtonVerify = findViewById(R.id.submitButtonVerify);
         submitButtonVerify.setVisibility(View.VISIBLE);
-        Toast.makeText(this, "Entered VerifyPIN", Toast.LENGTH_SHORT).show();
 
 //        verifyPIN.getText();
         if (verifyPIN.getText().toString() == "1234"){
@@ -179,7 +181,7 @@ public class ForgotPassword extends RegistrationHelper {
             Intent intent = new Intent(ForgotPassword.this, LoginActivity.class);
             startActivity(intent);
         }
-        else {
+        else if(!verifyPIN.getText().toString().isEmpty()){
             Toast.makeText(this, "Entered PIN does not match", Toast.LENGTH_SHORT).show();
         }
     }
