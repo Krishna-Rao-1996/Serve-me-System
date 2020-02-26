@@ -67,7 +67,7 @@ public class EmailServices extends AsyncTask<Void,Void,Void>  {
         //mProgressDialog.dismiss();
 
         //Show success toast
-        Toast.makeText(mContext,"Message Sent",Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext,"Email Sent",Toast.LENGTH_SHORT).show();
     }
 
     @Override
