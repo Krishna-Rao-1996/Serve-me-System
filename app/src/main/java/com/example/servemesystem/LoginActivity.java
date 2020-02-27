@@ -221,6 +221,10 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
+                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
+                    editor.putString("userName", username.getText().toString());
+                    editor.putString("type","serviceProvider");
+                    editor.apply();
                     Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
                     startActivity(logInIntent);
                 }

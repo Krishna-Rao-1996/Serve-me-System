@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="14dp" android:id="@+id/parentLayout">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="150dp"
+        android:layout_height="61dp"
+        android:background="@color/colorPrimary"
+        android:contextClickable="true"
+        android:elegantTextHeight="false"
+        android:text="username"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textDirection="firstStrongRtl"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/request"
+        android:layout_width="245dp"
+        android:layout_height="61dp"
+        android:layout_alignRight="@id/userName"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="-245dp"
+        android:background="@color/colorPrimary"
+        android:text="request"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/servicePic"
+        android:layout_width="50dp"
+        android:layout_marginStart="320dp"
+        android:layout_height="61dp"
+        tools:srcCompat="@tools:sample/avatars[3]" />
+</RelativeLayout>
