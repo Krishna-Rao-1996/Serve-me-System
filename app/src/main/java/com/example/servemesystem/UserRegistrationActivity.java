@@ -157,9 +157,8 @@ public class UserRegistrationActivity extends RegistrationHelper {
         });
 
     }
-
     @Override
-    void sendData() {
+    protected void sendData() {
         // Write a message to the database
 
         Map mymap = new HashMap<>();
@@ -170,6 +169,8 @@ public class UserRegistrationActivity extends RegistrationHelper {
         mymap.put("City", city);
         mymap.put("State", state);
         mymap.put("Address", address);
+        mymap.put("ResetPIN","NULL");
+        mymap.put("dp","");
         mymap.put("Password", password);
         myRef.child("Users").child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
             @Override
