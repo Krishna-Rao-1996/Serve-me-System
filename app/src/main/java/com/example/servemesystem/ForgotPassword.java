@@ -40,7 +40,7 @@ public class ForgotPassword extends RegistrationHelper {
         Log.i("here   ->", "on create");
         RegistrationHelper helper = new RegistrationHelper() {
             @Override
-            void sendData() {
+            protected void sendData() {
                 return;
             }
         };
@@ -150,7 +150,7 @@ public class ForgotPassword extends RegistrationHelper {
     }
 
     @Override
-    void sendData() {
+    protected void sendData() {
         return ;
     }
 
