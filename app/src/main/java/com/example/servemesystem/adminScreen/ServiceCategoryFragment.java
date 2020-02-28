@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
 import android.content.Context;
 
 /**
@@ -146,35 +148,46 @@ public class ServiceCategoryFragment extends Fragment {
                             descriptionInput.requestFocus();
                         }
                         else {
-                            DatabaseReference adminFirebaseRef = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
-                            adminFirebaseRef.child(serviceCategoryInput.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.getValue()!=null){
-                                        descriptionInput.setError(null, null);
-                                        serviceCategoryInput.setError("Service Category already exists!");
-                                        serviceCategoryInput.requestFocus();
-                                    }
-                                    else{
-                                        DatabaseReference serviceCategoryFirebaseRef=FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
-                                        Map serviceCategory = new HashMap<>();
-                                        serviceCategory.put(serviceCategoryInput.getText().toString(), descriptionInput.getText().toString());
-                                        serviceCategoryFirebaseRef.updateChildren(serviceCategory, new DatabaseReference.CompletionListener() {
-                                            @Override
-                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                                if (databaseError != null) {
-                                                    Log.d("CHAT_LOG", databaseError.getMessage().toString());
-                                                }
-                                            }
-                                        });
-                                        Toast.makeText(getActivity(), "Add Service Category Successful", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            String emailRegex = "^[A-Za-z0-9]+$";
 
-                                }
-                            });
+                            Pattern pat = Pattern.compile(emailRegex);
+
+                            if(!pat.matcher(serviceCategoryInput.getText().toString()).matches()){
+                                descriptionInput.setError(null, null);
+                                serviceCategoryInput.setError("Service Category an’t have special characters!");
+                                serviceCategoryInput.requestFocus();
+                            }
+                            else{
+                                DatabaseReference adminFirebaseRef = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
+                                adminFirebaseRef.child(serviceCategoryInput.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.getValue()!=null){
+                                            descriptionInput.setError(null, null);
+                                            serviceCategoryInput.setError("Service Category already exists!");
+                                            serviceCategoryInput.requestFocus();
+                                        }
+                                        else{
+                                            DatabaseReference serviceCategoryFirebaseRef=FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
+                                            Map serviceCategory = new HashMap<>();
+                                            serviceCategory.put(serviceCategoryInput.getText().toString(), descriptionInput.getText().toString());
+                                            serviceCategoryFirebaseRef.updateChildren(serviceCategory, new DatabaseReference.CompletionListener() {
+                                                @Override
+                                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                    if (databaseError != null) {
+                                                        Log.d("CHAT_LOG", databaseError.getMessage().toString());
+                                                    }
+                                                }
+                                            });
+                                            Toast.makeText(getActivity(), "Add Service Category Successful", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
                         }
                     }
                 });
