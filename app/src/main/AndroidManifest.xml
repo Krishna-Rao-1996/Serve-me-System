@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".AdminMainActivity"></activity>
+        <activity android:name=".PendingAuthServiceProviderDetails"></activity>
+        <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
+        <activity android:name=".adminScreen.ServiceProviderListAdapter" />
+        <activity android:name=".AdminMainActivity" />
         <activity android:name=".OperaterDataView" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".UpdateProfileActivity" />

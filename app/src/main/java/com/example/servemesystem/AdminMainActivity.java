@@ -1,13 +1,10 @@
 package com.example.servemesystem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -18,7 +15,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabItem tabItem1, tabItem2, tabItem3;
 
-    public AdminPagAdapter adminPagAdapter;
+    public AdminPageAdapter adminPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +30,19 @@ public class AdminMainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager);
 
-        adminPagAdapter = new AdminPagAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adminPagAdapter);
+        adminPageAdapter = new AdminPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adminPageAdapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if(tab.getPosition() == 0){
-                    adminPagAdapter.notifyDataSetChanged();
+                    adminPageAdapter.notifyDataSetChanged();
                 }else if(tab.getPosition() == 1){
-                    adminPagAdapter.notifyDataSetChanged();
+                    adminPageAdapter.notifyDataSetChanged();
                 }else if(tab.getPosition() == 2){
-                    adminPagAdapter.notifyDataSetChanged();
+                    adminPageAdapter.notifyDataSetChanged();
                 }
             }
 

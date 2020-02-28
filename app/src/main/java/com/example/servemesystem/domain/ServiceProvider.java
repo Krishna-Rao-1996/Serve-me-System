@@ -19,11 +19,15 @@ public class ServiceProvider {
     private String State;
     private String WorkingDays;
     private String WorkingHours;
+    private String zipCode;
 
     public ServiceProvider() {
     }
 
-    public ServiceProvider(String userName, String city, String companyname, String dateOfBirth, String email, String fname, boolean isVerified, String officeaddress, String officenumber, String password, String phone, String servieTypes, String state, String workingDays, String workingHours) {
+    public ServiceProvider(String userName, String city, String companyname, String dateOfBirth,
+                           String email, String fname, boolean isVerified, String officeaddress,
+                           String officenumber, String password, String phone, String servieTypes,
+                           String state, String workingDays, String workingHours, String zipCode) {
         this.userName = userName;
         City = city;
         Companyname = companyname;
@@ -39,6 +43,7 @@ public class ServiceProvider {
         State = state;
         WorkingDays = workingDays;
         WorkingHours = workingHours;
+        this.zipCode = zipCode;
     }
 
     public String getUserName() {
@@ -159,6 +164,14 @@ public class ServiceProvider {
 
     public void setWorkingHours(String workingHours) {
         WorkingHours = workingHours;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     @Override

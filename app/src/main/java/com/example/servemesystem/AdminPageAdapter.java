@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class AdminPagAdapter extends FragmentPagerAdapter {
+import com.example.servemesystem.adminScreen.PendingAuthorizationFragment;
+import com.example.servemesystem.adminScreen.ServiceCategoryFragment;
+import com.example.servemesystem.adminScreen.ServiceProviderListFragment;
+
+public class AdminPageAdapter extends FragmentPagerAdapter {
     int numOfTabs;
 
-    public AdminPagAdapter(FragmentManager fm, int numOfTabs) {
+    public AdminPageAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numOfTabs = numOfTabs;
     }
@@ -18,7 +21,7 @@ public class AdminPagAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ServiveProviderListFragment();
+                return new ServiceProviderListFragment();
             case 1:
                 return new PendingAuthorizationFragment();
             case 2:

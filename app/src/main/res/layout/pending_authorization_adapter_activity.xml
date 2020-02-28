@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:id="@+id/pendingAuthCardId"
+    android:onClick="callThisMethod"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/pendingAuthListAdapter"
+        tools:context=".adminScreen.ServiceProviderListAdapter">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvId">
+
+            <ImageView
+                android:id="@+id/pendingAuthImageId"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginRight="10dp"
+                android:paddingTop="20dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <EditText
+                android:id="@+id/pendingAuthCompanyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/pendingAuthImageId"
+                android:layout_toRightOf="@+id/pendingAuthImageId"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:editable="false"
+                android:text="Company Name"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthAddressID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthCompanyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthImageId"
+                android:text="Address"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthCityID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthCompanyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthAddressID"
+                android:text="City"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthStateID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthCompanyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthCityID"
+                android:text="State"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthCountryID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthCompanyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthStateID"
+                android:text="Country"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthZipID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthCompanyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthCountryID"
+                android:text="ZIP"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthPhoneNumberID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthCityID"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthImageId"
+                android:text="Phone Number"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/pendingAuthServiceCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pendingAuthPhoneNumberID"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/pendingAuthImageId"
+                android:text="Service Categories"
+                android:textColor="#000" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/pendingAuthImageId"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:layout_centerHorizontal="true">
+
+
+                <Button
+                    android:id="@+id/acceptBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:text="Accept" />
+
+                <Button
+                    android:id="@+id/rejectBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reject" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
