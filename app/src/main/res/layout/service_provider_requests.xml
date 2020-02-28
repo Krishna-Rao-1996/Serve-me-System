@@ -10,10 +10,11 @@
         android:layout_width="150dp"
         android:layout_height="61dp"
         android:background="@color/colorPrimary"
-        android:contextClickable="true"
+        android:clickable="false"
+        android:contextClickable="false"
         android:elegantTextHeight="false"
-        android:text="username"
         android:gravity="center"
+        android:text="username"
         android:textColor="@color/colorPrimaryDark"
         android:textDirection="firstStrongRtl"
         android:textSize="18sp" />
