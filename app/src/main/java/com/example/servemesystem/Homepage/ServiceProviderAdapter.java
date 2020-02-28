@@ -51,33 +51,33 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
         Log.d(TAG, "onBindViewHolder: called.");
         holder.userName.setText(mUserNames.get(position));
         holder.requestType.setText(mRequestTypes.get(position));
-
+        Image_Resource image_resource = new Image_Resource();
         if(mRequestTypes.get(position).equals("Plumbing")){
-            Picasso.get().load("https://img.icons8.com/color/48/000000/jacuzzi.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.jacuzziImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Electrical")){
-            Picasso.get().load("https://img.icons8.com/color/48/000000/light-automation.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.electricalImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Appliances")){
-            Picasso.get().load("https://img.icons8.com/color/48/000000/appliances.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.applianceImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Computer Repair")){
-            Picasso.get().load("https://img.icons8.com/dusk/64/000000/broken-computer.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.computerRepairImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Home Cleaning")){
-            Picasso.get().load("https://img.icons8.com/color/48/000000/broom.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.homeCleaningImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Home repair and Painting")){
-            Picasso.get().load("https://img.icons8.com/color/48/000000/structural.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.homeRepairImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Packaging and Moving")){
-            Picasso.get().load("https://img.icons8.com/dusk/64/000000/supplier.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.packingImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Pest Control")){
-            Picasso.get().load("https://img.icons8.com/office/40/000000/ladybird.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.pestControlImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Tutoring")){
-            Picasso.get().load("https://img.icons8.com/officel/40/000000/training.png").into(holder.servicePic);
+            Picasso.get().load(image_resource.tutoringImg).into(holder.servicePic);
         }
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
