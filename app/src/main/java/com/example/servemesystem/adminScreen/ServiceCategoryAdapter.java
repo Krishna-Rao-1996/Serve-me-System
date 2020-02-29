@@ -2,6 +2,7 @@ package com.example.servemesystem.adminScreen;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
         ServiceCategory serviceCategory = mData.get(position);
         holder.serviceCategoryName.setText(serviceCategory.getServiceCategoryName());
         holder.serviceCategoryDescription.setText(serviceCategory.getServiceCategoryDescription());
+        holder.imageView.setImageURI(Uri.parse("https://img.icons8.com/color/48/000000/appliances.png"));
     }
 
     @Override
@@ -56,7 +58,7 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
 
         ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.pendingAuthImageId);
+            imageView = itemView.findViewById(R.id.serviceCategoryImage);
             serviceCategoryName = itemView.findViewById(R.id.serviceCategoryName);
             serviceCategoryDescription = itemView.findViewById(R.id.serviceCategoryDescription);
             itemView.setOnClickListener(this);

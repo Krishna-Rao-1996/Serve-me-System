@@ -24,7 +24,7 @@
             android:id="@+id/rvId">
 
             <ImageView
-                android:id="@+id/pendingAuthImageId"
+                android:id="@+id/serviceCategoryImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginRight="10dp"
