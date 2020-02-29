@@ -1,5 +1,6 @@
 package com.example.servemesystem;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -96,7 +97,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                 int j = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                    String name = ds.getKey();
+                    String name = ds.getValue().toString();
 
                     str[j] = name;
 
@@ -441,13 +442,14 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                 if(Check)
                 {
                     Map mymap = new HashMap<>();
-                    mymap.put("FirstName",Fname);
+                    mymap.put("FullName",Fname);
                     mymap.put("Phone",Phone1);
                     mymap.put("DateOfBirth",Dob1);
                     mymap.put("Email",Email1);
                     mymap.put("City",City1);
                     mymap.put("State",State);
                     mymap.put("Password",Pass1);
+                    mymap.put("dp","");
                     mymap.put("Companyname",Companyname);
                     mymap.put("Officenumber",Officenumber);
                     mymap.put("Officeaddress",Office_Address);
@@ -487,7 +489,10 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
-
+                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
+                    editor.putString("userName", Fname1);
+                    editor.putString("type","serviceprovider");
+                    editor.apply();
                     Intent login = new Intent(ServiceProviderRegistrationActivity.this,LoginActivity.class);
                     startActivity(login);
                 }
@@ -545,7 +550,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
     }
 
     @Override
-    void sendData() {
+    protected void sendData() {
 
     }
 }
