@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.example.servemesystem.LoginActivity;
 import com.example.servemesystem.R;
-import com.example.servemesystem.ServiceProviderHome;
 import com.example.servemesystem.domain.ServiceCategory;
 import com.example.servemesystem.domain.ServiceProvider;
 import com.google.firebase.database.DataSnapshot;
@@ -180,6 +179,7 @@ public class ServiceCategoryFragment extends Fragment {
                                                 }
                                             });
                                             Toast.makeText(getActivity(), "Add Service Category Successful", Toast.LENGTH_LONG).show();
+                                            alertDialog.dismiss();
                                         }
                                     }
                                     @Override

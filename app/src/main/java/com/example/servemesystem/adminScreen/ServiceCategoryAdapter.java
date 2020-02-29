@@ -13,10 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.servemesystem.Homepage.Image_Resource;
 import com.example.servemesystem.PendingAuthServiceProviderDetails;
 import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceCategory;
 import com.example.servemesystem.domain.ServiceProvider;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +45,37 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
         ServiceCategory serviceCategory = mData.get(position);
         holder.serviceCategoryName.setText(serviceCategory.getServiceCategoryName());
         holder.serviceCategoryDescription.setText(serviceCategory.getServiceCategoryDescription());
-        holder.imageView.setImageURI(Uri.parse("https://img.icons8.com/color/48/000000/appliances.png"));
+        Image_Resource image_resource = new Image_Resource();
+        if(serviceCategory.getServiceCategoryName().equals("Plumbing")){
+            Picasso.get().load(image_resource.jacuzziImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Electrical")){
+            Picasso.get().load(image_resource.electricalImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Appliances")){
+            Picasso.get().load(image_resource.applianceImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Computer Repair")){
+            Picasso.get().load(image_resource.computerRepairImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Home cleaning")){
+            Picasso.get().load(image_resource.homeCleaningImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Home repair and Painting")){
+            Picasso.get().load(image_resource.homeRepairImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Packaging and Moving")){
+            Picasso.get().load(image_resource.packingImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Pest Control")){
+            Picasso.get().load(image_resource.pestControlImg).into(holder.imageView);
+        }
+        else if(serviceCategory.getServiceCategoryName().equals("Tutoring")){
+            Picasso.get().load(image_resource.tutoringImg).into(holder.imageView);
+        }
+        else{
+            holder.imageView.setImageResource(R.mipmap.ic_launcher);
+        }
     }
 
     @Override
@@ -72,4 +105,6 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
 //            view.getContext().startActivity(intent);
         }
     }
+
+
 }

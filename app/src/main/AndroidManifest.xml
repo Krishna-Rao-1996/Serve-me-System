@@ -28,7 +28,11 @@
         <activity android:name=".PendingAuthServiceProviderDetails"></activity>
         <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
         <activity android:name=".adminScreen.ServiceProviderListAdapter" />
-        <activity android:name=".AdminMainActivity" />
+        <activity
+            android:name=".AdminMainActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
         <activity android:name=".OperaterDataView" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".UpdateProfileActivity" />
@@ -37,7 +41,6 @@
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".ServiceProviderHome" />
         <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity
             android:name=".SplashScreenActivity"
