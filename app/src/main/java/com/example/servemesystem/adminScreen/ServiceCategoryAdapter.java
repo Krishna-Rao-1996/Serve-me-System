@@ -113,6 +113,7 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 DatabaseReference adminFirebaseRef = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
                                 adminFirebaseRef.child(scname).removeValue();
+                                Toast.makeText(context, scname+" has been deleted !", Toast.LENGTH_LONG).show();
                             }
                         })
                         .setNegativeButton("Cancel",
@@ -123,6 +124,7 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
                                 })
                         .create();
                 alertDialog.show();
+
             }
         });
     }
