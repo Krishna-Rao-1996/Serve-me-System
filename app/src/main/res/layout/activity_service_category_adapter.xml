@@ -35,8 +35,8 @@
                 android:id="@+id/serviceCategoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/pendingAuthImageId"
-                android:layout_toRightOf="@+id/pendingAuthImageId"
+                android:layout_toEndOf="@+id/serviceCategoryImage"
+                android:layout_toRightOf="@+id/serviceCategoryImage"
                 android:clickable="true"
                 android:contextClickable="true"
                 android:editable="false"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/serviceCategoryName"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/pendingAuthImageId"
+                android:layout_toRightOf="@+id/serviceCategoryImage"
                 android:text="Service Category Description"
                 android:textColor="#000" />
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/pendingAuthImageId"
+                android:layout_below="@+id/serviceCategoryImage"
                 android:layout_marginTop="15dp"
                 android:gravity="right"
                 android:layout_centerHorizontal="true">
