@@ -70,7 +70,7 @@
 
 
                 <Button
-                    android:id="@+id/serviceCategoryBtn"
+                    android:id="@+id/serviceCategoryModifyBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -78,7 +78,7 @@
                     android:text="Modify" />
 
                 <Button
-                    android:id="@+id/serviceCategoryDescriptionBtn"
+                    android:id="@+id/serviceCategoryDeleteBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
