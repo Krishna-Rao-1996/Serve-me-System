@@ -1,13 +1,10 @@
 package com.example.servemesystem.adminScreen;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.servemesystem.PendingAuthServiceProviderDetails;
 import com.example.servemesystem.R;
@@ -43,6 +39,9 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
     @Override
     public void onBindViewHolder(@NonNull PendingAuthorizationAdapter.ViewHolder holder, int position) {
         ServiceProvider serviceProvider = mData.get(position);
+        if(serviceProvider.getIsVerified().equalsIgnoreCase("rejected")){
+            holder.acceptBtn.setActivated(false);
+        }
         holder.userName = serviceProvider.getUserName();
         holder.companyNameET.setText(serviceProvider.getCompanyname());
         // holder.addressTV.setText(serviceProvider.getOfficeaddress());

@@ -54,8 +54,9 @@ public class PendingAuthorizationFragment extends Fragment {
                 listOfServiceProviders = new ArrayList<ServiceProvider>();
                 Long count = dataSnapshot.getChildrenCount();
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(ds.child("IsVerified").getValue().toString() != "true"){
+                    if(!ds.child("IsVerified").getValue().toString().equalsIgnoreCase("true")){
                         ServiceProvider sp = new ServiceProvider();
+                        sp.setVerified(ds.child("IsVerified").getValue().toString());
                         sp.setUserName(ds.getKey().toString());
                         sp.setCompanyname(ds.getKey().toString());
                         sp.setOfficenumber(ds.child("Officenumber").getValue().toString());
