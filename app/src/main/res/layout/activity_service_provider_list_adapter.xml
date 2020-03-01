@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="8dp">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/serviceProviderListAdapter"
+    tools:context=".adminScreen.ServiceProviderListAdapter">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvId">
+
+            <ImageView
+                android:id="@+id/imageId"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginRight="10dp"
+                android:paddingTop="20dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <EditText
+                android:id="@+id/companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageId"
+                android:layout_toRightOf="@+id/imageId"
+                android:editable="false"
+                android:text="Company Name"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/addressID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/companyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/imageId"
+                android:text="Address"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/cityID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/companyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/addressID"
+                android:text="City"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/stateID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/companyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/cityID"
+                android:text="State"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/countryID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/companyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/stateID"
+                android:text="Country"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/zipID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/companyName"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/countryID"
+                android:text="ZIP"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/phonrNumberID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cityID"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/imageId"
+                android:text="Phone Number"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/serviceCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phonrNumberID"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/imageId"
+                android:text="Phone Number"
+                android:visibility="invisible"
+                android:textColor="#000" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?android:attr/listDivider" />
+
+        </RelativeLayout>
+
+
+</LinearLayout>
+
+</androidx.cardview.widget.CardView>

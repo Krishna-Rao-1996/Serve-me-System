@@ -93,12 +93,4 @@ public class UserModel {
     private String State;
     private String dp;
 
-
-
-
-
-
-
-
-
 }
