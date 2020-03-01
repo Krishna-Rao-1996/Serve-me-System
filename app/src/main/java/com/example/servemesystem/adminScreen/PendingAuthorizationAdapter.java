@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
 
     private List<ServiceProvider> mData;
     private LayoutInflater mInflater;
+    private AdminUpdates adminUpdates = new AdminUpdates();
 
     public PendingAuthorizationAdapter(Context context, List<ServiceProvider> mData) {
         this.mData = mData;
@@ -41,6 +43,7 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
     @Override
     public void onBindViewHolder(@NonNull PendingAuthorizationAdapter.ViewHolder holder, int position) {
         ServiceProvider serviceProvider = mData.get(position);
+        holder.userName = serviceProvider.getUserName();
         holder.companyNameET.setText(serviceProvider.getCompanyname());
         // holder.addressTV.setText(serviceProvider.getOfficeaddress());
         holder.cityTV.setText(serviceProvider.getCity());
@@ -58,7 +61,9 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         EditText companyNameET;
+        Button acceptBtn, rejectBtn;
         TextView addressTV, cityTV, stateTV, countryTV, zipTV, phoneNumberTV, serviceCategoriesTV;
+        String userName;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -71,7 +76,21 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
             zipTV = itemView.findViewById(R.id.pendingAuthZipID);
             phoneNumberTV = itemView.findViewById(R.id.pendingAuthPhoneNumberID);
             serviceCategoriesTV = itemView.findViewById(R.id.pendingAuthServiceCategories);
+            acceptBtn = itemView.findViewById(R.id.pendingAuthAcceptBtn);
+            rejectBtn = itemView.findViewById(R.id.pendingAuthRejectBtn);
             itemView.setOnClickListener(this);
+            acceptBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adminUpdates.approveServiceProvider(userName);
+                }
+            });
+            rejectBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adminUpdates.rejectServiceProvider(userName);
+                }
+            });
         }
 
         @Override
