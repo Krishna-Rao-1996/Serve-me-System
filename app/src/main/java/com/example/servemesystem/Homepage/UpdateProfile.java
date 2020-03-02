@@ -1,51 +1,75 @@
 package com.example.servemesystem.Homepage;
 
-import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.servemesystem.R;
-import com.example.servemesystem.RegistrationHelper;
 import com.example.servemesystem.UserModel;
+import com.example.servemesystem.domain.ConstantResources;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class updateProfile extends Activity {
-    CircleImageView profilePicture;
-    EditText fullName,email,phone,password;
-    DatabaseReference myRef;
-    FirebaseDatabase database;
+public class UpdateProfile extends Activity {
+    CircleImageView imageview_account_profile;
+    TextView updateUserNameTV;
+    EditText updateFNameTV, updateLNameTV, updatePhoneTV, updateEmailTV, updateAddressTV, updateCityTV, updateStateTV, updateZipTV,
+            updateCompanyNameTV, updateCompanyAddressTV, updateCompanyCityTV, updateCompanyPhoneTV;
+    Button updateProfileBtn;
+    LinearLayout serviceProviderUpdateLayout;
+    static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    SharedPreferences sharedPreferences;
+
     String userName;
+    String userType;
     HashMap<String, UserModel> allUsers= new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
-        profilePicture =findViewById(R.id.imageview_account_profile);
-        profilePicture.setOnClickListener(new View.OnClickListener() {
+
+        sharedPreferences = getSharedPreferences("currUser", MODE_PRIVATE);
+        userName = sharedPreferences.getString("userName", null);
+        userType = sharedPreferences.getString("type",null);
+
+        imageview_account_profile =findViewById(R.id.imageview_account_profile);
+        updateFNameTV = findViewById(R.id.updateFNameTV);
+        updateLNameTV = findViewById(R.id.updateLNameTV);
+        updatePhoneTV= findViewById(R.id.updatePhoneTV);
+        updateEmailTV= findViewById(R.id.updateEmailTV);
+        updateAddressTV= findViewById(R.id.updateAddressTV);
+        updateCityTV= findViewById(R.id.updateCityTV);
+        updateStateTV= findViewById(R.id.updateStateTV);
+        updateZipTV= findViewById(R.id.updateZipTV);
+        updateCompanyNameTV= findViewById(R.id.updateCompanyNameTV);
+        updateCompanyAddressTV= findViewById(R.id.updateCompanyAddressTV);
+        updateCompanyCityTV= findViewById(R.id.updateCompanyCityTV);
+        updateCompanyPhoneTV= findViewById(R.id.updateCompanyPhoneTV);
+
+        if("user".equalsIgnoreCase(userType)){
+            serviceProviderUpdateLayout = findViewById(R.id.serviceProviderUpdateLayout);
+            serviceProviderUpdateLayout.setVisibility(View.GONE);
+        }
+
+        imageview_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -54,22 +78,6 @@ public class updateProfile extends Activity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),1234);
             }
         });
-
-        SharedPreferences prefs = getSharedPreferences("currUser", MODE_PRIVATE);
-        userName = prefs.getString("userName", null);//"No name defined" is the default value.
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        fullName= findViewById(R.id.changeFullName);
-        email= findViewById(R.id.changeEmail);
-        phone= findViewById(R.id.changePhone);
-        password= findViewById(R.id.changePassword);
-        fetchData();
-        UserModel currtemp = allUsers.get(userName);
-        email.setText(currtemp.getEmail());
-        fullName.setText(currtemp.getFullName());
-        password.setText(currtemp.getPassword());
-        phone.setText(currtemp.getPhone());
-
     }
 
     private void fetchData() {
@@ -99,8 +107,8 @@ public class updateProfile extends Activity {
                 if (data != null) {
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                        profilePicture.setImageBitmap(bitmap);
-                        myRef.child(userName).child("dp").setValue(bitmap.toString());
+                        imageview_account_profile.setImageBitmap(bitmap);
+                        myRef.child("userName").child("dp").setValue(bitmap.toString());
 
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -1,11 +1,18 @@
-package com.example.servemesystem;
+package com.example.servemesystem.adminScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.example.servemesystem.Homepage.ServiceProviderHomeActivity;
+import com.example.servemesystem.LoginActivity;
+import com.example.servemesystem.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -58,4 +65,22 @@ public class AdminMainActivity extends AppCompatActivity {
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.service_provider_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+                SharedPreferences prefs = getSharedPreferences("currUser", MODE_PRIVATE);
+                prefs.edit().clear();
+                prefs.edit().apply();
+                Intent myInt = new Intent(AdminMainActivity.this, LoginActivity.class);
+                startActivity(myInt);
+                return true;
+        }
 }
