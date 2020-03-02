@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,12 @@ public class ServiceProviderListAdapter extends RecyclerView.Adapter<ServiceProv
 
         @Override
         public void onClick(View view) {
-//            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            Intent intent = new Intent(view.getContext(), AdminServiceProviderDetails.class);
+            intent.putExtra("c1",((EditText)(itemView.findViewById(R.id.pendingAuthCompanyName))).getText().toString());
+            intent.putExtra("c2",((TextView)(itemView.findViewById(R.id.pendingAuthAddressID))).getText().toString());
+            intent.putExtra("c3",((TextView)(itemView.findViewById(R.id.pendingAuthStateID))).getText().toString());
+            intent.putExtra("c4",((TextView)(itemView.findViewById(R.id.pendingAuthPhoneNumberID))).getText().toString());
+            view.getContext().startActivity(intent);
         }
     }
 }
