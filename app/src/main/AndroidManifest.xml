@@ -13,17 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-<<<<<<<<< Temporary merge branch 1
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".PendingAuthServiceProviderDetails"></activity>
-        <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
-        <activity android:name=".adminScreen.ServiceProviderListAdapter" />
-        <activity android:name=".AdminMainActivity" />
-        <activity android:name=".OperaterDataView" />
-        <activity android:name=".AdminActivity" />
-        <activity android:name=".UpdateProfileActivity" />
-=========
-        android:theme="@android:style/Theme.NoTitleBar">
         <activity android:name=".ViewServiceRequest"></activity>
         <activity
             android:name=".Homepage.updateProfile"
@@ -36,7 +26,7 @@
             android:name=".Homepage.UserHomeActivity"
             android:label="@string/title_activity_user_home"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".PendingAuthServiceProviderDetails"></activity>
+        <activity android:name=".adminScreen.AdminServiceProviderDetails"></activity>
         <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
         <activity android:name=".adminScreen.ServiceProviderListAdapter" />
         <activity android:name=".AdminMainActivity" />
@@ -46,7 +36,6 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
-        <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".ServiceProviderHome" />
