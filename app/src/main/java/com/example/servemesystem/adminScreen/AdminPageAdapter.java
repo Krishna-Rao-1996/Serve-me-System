@@ -1,4 +1,4 @@
-package com.example.servemesystem;
+package com.example.servemesystem.adminScreen;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

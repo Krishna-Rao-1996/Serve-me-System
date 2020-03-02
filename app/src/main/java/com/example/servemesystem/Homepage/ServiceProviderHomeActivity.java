@@ -1,29 +1,22 @@
 package com.example.servemesystem.Homepage;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.servemesystem.LoginActivity;
 import com.example.servemesystem.R;
-import com.example.servemesystem.UserModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,12 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -52,6 +44,8 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     String userName,services;
+    ImageView profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +65,16 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("currUser", MODE_PRIVATE);
         userName = prefs.getString("userName", null);
         getServiceProviderTypes();
+
+        View headerview = navigationView.getHeaderView(0);
+        profile= headerview.findViewById(R.id.profilePicture);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myint = new Intent(ServiceProviderHomeActivity.this, UpdateProfile.class);
+                startActivity(myint);
+            }
+        });
     }
 
 
