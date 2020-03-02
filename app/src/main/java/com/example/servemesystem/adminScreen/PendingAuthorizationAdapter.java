@@ -42,10 +42,6 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
             holder.acceptBtn.setVisibility(View.INVISIBLE);
             holder.rejectBtn.setVisibility(View.INVISIBLE);
             holder.rejectTV.setVisibility(View.VISIBLE);
-        } else {
-            holder.acceptBtn.setVisibility(View.VISIBLE);
-            holder.rejectBtn.setVisibility(View.VISIBLE);
-            holder.rejectTV.setVisibility(View.INVISIBLE);
         }
         holder.userName = serviceProvider.getUserName();
         holder.companyNameET.setText(serviceProvider.getCompanyname());
