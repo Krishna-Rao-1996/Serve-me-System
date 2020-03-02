@@ -1,17 +1,19 @@
-package com.example.servemesystem;
+package com.example.servemesystem.adminScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class PendingAuthServiceProviderDetails extends AppCompatActivity {
+import com.example.servemesystem.R;
+
+public class AdminServiceProviderDetails extends AppCompatActivity {
 
     TextView textView1,textView2, textView3, textView4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pending_auth_service_provider_details_activity);
+        setContentView(R.layout.admin_service_provider_details_activity);
 
         textView1 = findViewById(R.id.textView3);
         textView2 = findViewById(R.id.textView6);

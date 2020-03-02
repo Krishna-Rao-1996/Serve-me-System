@@ -26,7 +26,7 @@
             android:name=".Homepage.UserHomeActivity"
             android:label="@string/title_activity_user_home"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".PendingAuthServiceProviderDetails"></activity>
+        <activity android:name=".adminScreen.AdminServiceProviderDetails"></activity>
         <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
         <activity android:name=".adminScreen.ServiceProviderListAdapter" />
         <activity android:name=".AdminMainActivity" />
