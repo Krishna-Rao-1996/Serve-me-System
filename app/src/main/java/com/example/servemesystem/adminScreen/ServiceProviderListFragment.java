@@ -52,8 +52,9 @@ public class ServiceProviderListFragment extends Fragment {
                 listOfServiceProviders = new ArrayList<ServiceProvider>();
                 Long count = dataSnapshot.getChildrenCount();
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(ds.child("IsVerified").getValue().toString() == "true"){
+                    if(ds.child("IsVerified").getValue().toString().equalsIgnoreCase("true")){
                         ServiceProvider sp = new ServiceProvider();
+                        sp.setVerified(ds.child("IsVerified").getValue().toString());
                         sp.setCompanyname(ds.child("Companyname").getValue().toString());
                         sp.setOfficenumber(ds.child("Officenumber").getValue().toString());
                         sp.setOfficeaddress(ds.child("Officeaddress").getValue().toString());

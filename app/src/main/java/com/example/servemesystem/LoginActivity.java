@@ -140,19 +140,17 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
-                    if(username.getText().toString().equals("admin")){
+                    if("admin".equalsIgnoreCase(username.getText().toString())){
                         Intent logInIntent = new Intent(LoginActivity.this, AdminMainActivity.class);
                         startActivity(logInIntent);
-                    }
-                    else{
+                    } else {
                         SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
                         editor.putString("userName", username.getText().toString());
-                        editor.putString("type","user");
+                        editor.putString("type", "user");
                         editor.apply();
                         Intent logInIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
                         startActivity(logInIntent);
                     }
-
                 }
             }
             @Override

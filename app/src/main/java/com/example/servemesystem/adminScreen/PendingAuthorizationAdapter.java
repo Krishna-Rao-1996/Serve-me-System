@@ -1,20 +1,18 @@
 package com.example.servemesystem.adminScreen;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.servemesystem.PendingAuthServiceProviderDetails;
 import com.example.servemesystem.R;
@@ -26,6 +24,7 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
 
     private List<ServiceProvider> mData;
     private LayoutInflater mInflater;
+    private AdminUpdates adminUpdates = new AdminUpdates();
 
     public PendingAuthorizationAdapter(Context context, List<ServiceProvider> mData) {
         this.mData = mData;
@@ -41,6 +40,16 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
     @Override
     public void onBindViewHolder(@NonNull PendingAuthorizationAdapter.ViewHolder holder, int position) {
         ServiceProvider serviceProvider = mData.get(position);
+        if(serviceProvider.getIsVerified().equalsIgnoreCase("rejected")){
+            holder.acceptBtn.setVisibility(View.INVISIBLE);
+            holder.rejectBtn.setVisibility(View.INVISIBLE);
+            holder.rejectTV.setVisibility(View.VISIBLE);
+        } else {
+            holder.acceptBtn.setVisibility(View.VISIBLE);
+            holder.rejectBtn.setVisibility(View.VISIBLE);
+            holder.rejectTV.setVisibility(View.INVISIBLE);
+        }
+        holder.userName = serviceProvider.getUserName();
         holder.companyNameET.setText(serviceProvider.getCompanyname());
         // holder.addressTV.setText(serviceProvider.getOfficeaddress());
         holder.cityTV.setText(serviceProvider.getCity());
@@ -56,9 +65,12 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         ImageView imageView;
         EditText companyNameET;
-        TextView addressTV, cityTV, stateTV, countryTV, zipTV, phoneNumberTV, serviceCategoriesTV;
+        Button acceptBtn, rejectBtn;
+        TextView addressTV, cityTV, stateTV, countryTV, zipTV, phoneNumberTV, serviceCategoriesTV,rejectTV;
+        String userName;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -71,7 +83,22 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
             zipTV = itemView.findViewById(R.id.pendingAuthZipID);
             phoneNumberTV = itemView.findViewById(R.id.pendingAuthPhoneNumberID);
             serviceCategoriesTV = itemView.findViewById(R.id.pendingAuthServiceCategories);
+            acceptBtn = itemView.findViewById(R.id.pendingAuthAcceptBtn);
+            rejectBtn = itemView.findViewById(R.id.pendingAuthRejectBtn);
             itemView.setOnClickListener(this);
+            rejectTV = itemView.findViewById(R.id.rejectedTV);
+            acceptBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adminUpdates.approveServiceProvider(userName);
+                }
+            });
+            rejectBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adminUpdates.rejectServiceProvider(userName);
+                }
+            });
         }
 
         @Override

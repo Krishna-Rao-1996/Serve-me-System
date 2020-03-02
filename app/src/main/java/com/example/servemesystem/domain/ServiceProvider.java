@@ -10,7 +10,7 @@ public class ServiceProvider {
     private String DateOfBirth;
     private String Email;
     private String Fname;
-    private boolean IsVerified;
+    private String IsVerified;
     private String Officeaddress;
     private String Officenumber;
     private String Password;
@@ -25,7 +25,7 @@ public class ServiceProvider {
     }
 
     public ServiceProvider(String userName, String city, String companyname, String dateOfBirth,
-                           String email, String fname, boolean isVerified, String officeaddress,
+                           String email, String fname, String isVerified, String officeaddress,
                            String officenumber, String password, String phone, String servieTypes,
                            String state, String workingDays, String workingHours, String zipCode) {
         this.userName = userName;
@@ -94,11 +94,11 @@ public class ServiceProvider {
         Fname = fname;
     }
 
-    public boolean isVerified() {
+    public String getIsVerified() {
         return IsVerified;
     }
 
-    public void setVerified(boolean verified) {
+    public void setVerified(String verified) {
         IsVerified = verified;
     }
 
