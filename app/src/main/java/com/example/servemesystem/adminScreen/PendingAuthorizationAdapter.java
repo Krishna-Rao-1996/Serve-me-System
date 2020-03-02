@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,13 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
     public void onBindViewHolder(@NonNull PendingAuthorizationAdapter.ViewHolder holder, int position) {
         ServiceProvider serviceProvider = mData.get(position);
         if(serviceProvider.getIsVerified().equalsIgnoreCase("rejected")){
-            holder.acceptBtn.setActivated(false);
+            holder.acceptBtn.setVisibility(View.INVISIBLE);
+            holder.rejectBtn.setVisibility(View.INVISIBLE);
+            holder.rejectTV.setVisibility(View.VISIBLE);
+        } else {
+            holder.acceptBtn.setVisibility(View.VISIBLE);
+            holder.rejectBtn.setVisibility(View.VISIBLE);
+            holder.rejectTV.setVisibility(View.INVISIBLE);
         }
         holder.userName = serviceProvider.getUserName();
         holder.companyNameET.setText(serviceProvider.getCompanyname());
@@ -58,10 +65,11 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         ImageView imageView;
         EditText companyNameET;
         Button acceptBtn, rejectBtn;
-        TextView addressTV, cityTV, stateTV, countryTV, zipTV, phoneNumberTV, serviceCategoriesTV;
+        TextView addressTV, cityTV, stateTV, countryTV, zipTV, phoneNumberTV, serviceCategoriesTV,rejectTV;
         String userName;
 
         ViewHolder(View itemView) {
@@ -78,6 +86,7 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
             acceptBtn = itemView.findViewById(R.id.pendingAuthAcceptBtn);
             rejectBtn = itemView.findViewById(R.id.pendingAuthRejectBtn);
             itemView.setOnClickListener(this);
+            rejectTV = itemView.findViewById(R.id.rejectedTV);
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
