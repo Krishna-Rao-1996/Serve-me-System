@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.servemesystem.PendingAuthServiceProviderDetails;
 import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceProvider;
 
@@ -103,7 +101,7 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), PendingAuthServiceProviderDetails.class);
+            Intent intent = new Intent(view.getContext(), AdminServiceProviderDetails.class);
             intent.putExtra("c1",((EditText)(itemView.findViewById(R.id.pendingAuthCompanyName))).getText().toString());
             intent.putExtra("c2",((TextView)(itemView.findViewById(R.id.pendingAuthAddressID))).getText().toString());
             intent.putExtra("c3",((TextView)(itemView.findViewById(R.id.pendingAuthStateID))).getText().toString());
