@@ -68,19 +68,4 @@ public class OperaterDataView extends RecyclerView.Adapter<OperaterDataView.View
 //            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
-
-//    // convenience method for getting data at click position
-//    String getItem(int id) {
-//        return mData.get(id);
-//    }
-//
-//    // allows clicks events to be caught
-//    void setClickListener(ItemClickListener itemClickListener) {
-//        this.mClickListener = itemClickListener;
-//    }
-//
-//    // parent activity will implement this method to respond to click events
-//    public interface ItemClickListener {
-//        void onItemClick(View view, int position);
-//    }
 }
