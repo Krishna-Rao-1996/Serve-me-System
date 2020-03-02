@@ -1,15 +1,14 @@
-package com.example.servemesystem;
+package com.example.servemesystem.adminScreen;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceProvider;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class OperaterDataView extends RecyclerView.Adapter<OperaterDataView.View
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.activity_operater_data_view, parent, false);
+        View view = mInflater.inflate(R.layout.activity_admin_main, parent, false);
         return new ViewHolder(view);
     }
 
