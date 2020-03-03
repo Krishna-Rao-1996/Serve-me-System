@@ -28,7 +28,7 @@
         android:layout_marginBottom="17dp"
         android:drawableLeft="@drawable/ic_account_circle_black_48dp"
         android:hint="    Username"
-        android:text=""
+        android:text="Krishna"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
         android:drawableLeft="@drawable/ic_lock_black_48dp"
         android:hint="  Password"
         android:inputType="textPassword"
-        android:text=""
+        android:text="1234"
         app:layout_constraintBottom_toTopOf="@+id/regbutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
