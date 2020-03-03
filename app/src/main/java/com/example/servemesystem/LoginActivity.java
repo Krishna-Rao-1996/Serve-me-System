@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends Activity {
+    private RadioGroup rgLogin;
     private Button userReg,loginButton,loginButtonForServiceProvider;
     private EditText username,password;
     private TextView forgotPassword;
@@ -44,6 +46,7 @@ public class LoginActivity extends Activity {
     FirebaseDatabase database;
     DatabaseReference myRef;
     private CheckBox showPassword;
+    String info = "User_Credentials";
 
 
     @Override
@@ -53,7 +56,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         register();
         loginForUser();
-        loginForServiceProvider();
+        //loginForServiceProvider();
         forgotPassword();
         password = findViewById(R.id.password);
         showPassword=findViewById(R.id.showPassword);
@@ -76,7 +79,7 @@ public class LoginActivity extends Activity {
     }
 
     private void loginForUser() {
-        loginButton = findViewById(R.id.Logbutton);
+        loginButton = findViewById(R.id.logbutton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         database = FirebaseDatabase.getInstance();
@@ -114,7 +117,7 @@ public class LoginActivity extends Activity {
     }
 
     private void queryData() {
-        myRef.child("User_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(info).child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue()!=null){
@@ -143,12 +146,20 @@ public class LoginActivity extends Activity {
                     if("admin".equalsIgnoreCase(username.getText().toString())){
                         Intent logInIntent = new Intent(LoginActivity.this, AdminMainActivity.class);
                         startActivity(logInIntent);
-                    } else {
+                    } else if(info.equals("User_Credentials")){
                         SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
                         editor.putString("userName", username.getText().toString());
                         editor.putString("type", "user");
                         editor.apply();
                         Intent logInIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                        startActivity(logInIntent);
+                    }
+                    else {
+                        SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
+                        editor.putString("userName", username.getText().toString());
+                        editor.putString("type","serviceProvider");
+                        editor.apply();
+                        Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
                         startActivity(logInIntent);
                     }
                 }
@@ -161,86 +172,86 @@ public class LoginActivity extends Activity {
 
     }
 
-    private void loginForServiceProvider() {
-        loginButtonForServiceProvider = findViewById(R.id.LogbuttonForServiceProvider);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        loginButtonForServiceProvider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginEventForServiceProvider();
-            }
-        });
-    }
-
-
-    private void loginEventForServiceProvider() {
-        if(TextUtils.isEmpty(username.getText())){
-            //return username is empty
-            //Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
-            password.setError(null,null);
+//    private void loginForServiceProvider() {
+//        loginButtonForServiceProvider = findViewById(R.id.LogbuttonForServiceProvider);
+//        username = findViewById(R.id.username);
+//        password = findViewById(R.id.password);
+//        database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference();
+//        loginButtonForServiceProvider.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loginEventForServiceProvider();
+//            }
+//        });
+//    }
+//
+//
+//    private void loginEventForServiceProvider() {
+//        if(TextUtils.isEmpty(username.getText())){
+//            //return username is empty
+//            //Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
+//            password.setError(null,null);
+////            username.setError(null, null);
+//            username.setError("Username is empty!");
+//            username.requestFocus();
+//
+//        }
+//        else if(password.getText().toString().length()==0){
+//            //return password is empty
+//            //Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
 //            username.setError(null, null);
-            username.setError("Username is empty!");
-            username.requestFocus();
-
-        }
-        else if(password.getText().toString().length()==0){
-            //return password is empty
-            //Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
-            username.setError(null, null);
-            password.setError("Password is empty!");
-            password.requestFocus();
-        }
-        else {
-            queryDataForServiceProvider();
-        }
-
-    }
-
-    private void queryDataForServiceProvider() {
-        //We should modify here.
-        myRef.child("Service_Provider_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null){
-                    passwordFromDB = dataSnapshot.getValue().toString();
-                }
-                if(passwordFromDB == null){
-                    //return username is not register,page not jump to homepage
-                    //Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
-                    password.setError(null,null);
+//            password.setError("Password is empty!");
+//            password.requestFocus();
+//        }
+//        else {
+//            queryDataForServiceProvider();
+//        }
+//
+//    }
+//
+//    private void queryDataForServiceProvider() {
+//        //We should modify here.
+//        myRef.child("Service_Provider_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.getValue()!=null){
+//                    passwordFromDB = dataSnapshot.getValue().toString();
+//                }
+//                if(passwordFromDB == null){
+//                    //return username is not register,page not jump to homepage
+//                    //Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
+//                    password.setError(null,null);
+////                    username.setError(null, null);
+//                    username.setError("Username is not registered!");
+//                    username.requestFocus();
+//                }
+//                else if(!password.getText().toString().equals(passwordFromDB)){
+//                    //return password is not correct,page not jump to homepage
+//                   // Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
 //                    username.setError(null, null);
-                    username.setError("Username is not registered!");
-                    username.requestFocus();
-                }
-                else if(!password.getText().toString().equals(passwordFromDB)){
-                    //return password is not correct,page not jump to homepage
-                   // Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
-                    username.setError(null, null);
-                    passwordFromDB = null;
-                    password.setError("Password is not correct!");
-                    password.requestFocus();
-                }
-                else{
-                    //username and password match,return login success and jump to homepage
-                    passwordFromDB = null;
-                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
-                    editor.putString("userName", username.getText().toString());
-                    editor.putString("type","serviceProvider");
-                    editor.apply();
-                    Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
-                    startActivity(logInIntent);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
+//                    passwordFromDB = null;
+//                    password.setError("Password is not correct!");
+//                    password.requestFocus();
+//                }
+//                else{
+//                    //username and password match,return login success and jump to homepage
+//                    passwordFromDB = null;
+//                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
+//                    editor.putString("userName", username.getText().toString());
+//                    editor.putString("type","serviceProvider");
+//                    editor.apply();
+//                    Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
+//                    startActivity(logInIntent);
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//    }
 
     private void register() {
         userReg=findViewById(R.id.regbutton);

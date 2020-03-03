@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.servemesystem.LoginActivity;
@@ -53,9 +54,9 @@ public class ServiceCategoryFragment extends Fragment {
         super.onAttach(context);
         activity = getActivity();
     }
-    ServiceCategoryAdapter adapter;
-    RecyclerView recyclerView;
-    ArrayList<ServiceCategory> listOfServiceCategory;
+    private ServiceCategoryAdapter adapter;
+    private RecyclerView recyclerView;
+    private ArrayList<ServiceCategory> listOfServiceCategory;
     Button addServiceCategoryBtn;
 
     public ServiceCategoryFragment() {
@@ -153,7 +154,7 @@ public class ServiceCategoryFragment extends Fragment {
 
                             if(!pat.matcher(serviceCategoryInput.getText().toString()).matches()){
                                 descriptionInput.setError(null, null);
-                                serviceCategoryInput.setError("Service Category an’t have special characters!");
+                                serviceCategoryInput.setError("Service Category can’t have special characters!");
                                 serviceCategoryInput.requestFocus();
                             }
                             else{

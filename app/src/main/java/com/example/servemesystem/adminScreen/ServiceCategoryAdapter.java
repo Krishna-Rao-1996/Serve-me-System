@@ -1,5 +1,6 @@
 package com.example.servemesystem.adminScreen;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,13 +37,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategoryAdapter.ViewHolder> {
     private ArrayList<ServiceCategory> mData;
     private LayoutInflater mInflater;
     private Context context;
     public AdminMainActivity activity;
-
 
     public ServiceCategoryAdapter(Context context, ArrayList<ServiceCategory> mData) {
         this.mData = mData;
@@ -94,13 +95,105 @@ public class ServiceCategoryAdapter extends RecyclerView.Adapter<ServiceCategory
         else{
             holder.imageView.setImageResource(R.mipmap.ic_launcher);
         }
+        // modify category
         holder.serviceCategoryModifyBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.service_category_modify_dialog, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        context);
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText serviceCategoryInput = (EditText) promptsView
+                        .findViewById(R.id.editTextDialogServiceCategoryInput);
+                final EditText descriptionInput = (EditText) promptsView
+                        .findViewById(R.id.editTextDialogDescriptionInput);
+
+                //set hint for modify categories
+                serviceCategoryInput.setText(serviceCategory.getServiceCategoryName());
+                descriptionInput.setText(serviceCategory.getServiceCategoryDescription());
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Modify",null)
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+
+                // create alert dialog
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(serviceCategoryInput.getText().toString().length()==0){
+                            descriptionInput.setError(null, null);
+                            serviceCategoryInput.setError("Service Category is empty!");
+                            serviceCategoryInput.requestFocus();
+                        }
+                        else if(descriptionInput.getText().toString().length()==0){
+                            serviceCategoryInput.setError(null, null);
+                            descriptionInput.setError("Description is empty!");
+                            descriptionInput.requestFocus();
+                        }
+                        else {
+                            String emailRegex = "^[A-Za-z0-9]+$";
+
+                            Pattern pat = Pattern.compile(emailRegex);
+
+                            if(!pat.matcher(serviceCategoryInput.getText().toString()).matches()){
+                                descriptionInput.setError(null, null);
+                                serviceCategoryInput.setError("Service Category can’t have special characters!");
+                                serviceCategoryInput.requestFocus();
+                            }
+                            else{
+                                DatabaseReference adminFirebaseRef = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
+                                adminFirebaseRef.child(serviceCategoryInput.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.getValue()!=null){
+                                            descriptionInput.setError(null, null);
+                                            serviceCategoryInput.setError("Service Category already exists!");
+                                            serviceCategoryInput.requestFocus();
+                                        }
+                                        else{
+                                            final DatabaseReference serviceCategoryFirebaseRef=FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
+                                            Map serviceCategory = new HashMap<>();
+                                            serviceCategory.put(serviceCategoryInput.getText().toString(), descriptionInput.getText().toString());
+                                            serviceCategoryFirebaseRef.updateChildren(serviceCategory, new DatabaseReference.CompletionListener() {
+                                                @Override
+                                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                    if (databaseError != null) {
+                                                        Log.d("CHAT_LOG", databaseError.getMessage().toString());
+                                                    }
+                                                    serviceCategoryFirebaseRef.child(scname).removeValue();
+                                                }
+                                            });
+                                            Toast.makeText(context, "Modify Service Category Successful", Toast.LENGTH_LONG).show();
+                                            alertDialog.dismiss();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
             }
         });
+        //delete category
         holder.serviceCategoryDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

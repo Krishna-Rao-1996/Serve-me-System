@@ -71,18 +71,18 @@
 
                 <Button
                     android:id="@+id/serviceCategoryModifyBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
-                    android:text="Modify" />
+                    android:background="@drawable/ic_edit_black_24dp"/>
 
                 <Button
                     android:id="@+id/serviceCategoryDeleteBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:text="Delete" />
+                    android:background="@drawable/ic_delete_black_24dp"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

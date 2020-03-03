@@ -7,11 +7,19 @@
     tools:context=".adminScreen.ServiceCategoryFragment">
     <Button
         android:id="@+id/addServiceCategoryBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="right"
+        android:background="@drawable/ic_add_circle_outline_black_24dp"
         />
+<!--    <ImageButton-->
+<!--        android:id="@+id/addServiceCategoryBtn"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_gravity="right"-->
+<!--        android:src="@drawable/ic_add_circle_outline_black_24dp"-->
+<!--        android:layout_marginRight="40dp"-->
+<!--        tools:ignore="RtlHardcoded" />-->
     <!-- TODO: Update blank fragment layout -->
 
     <androidx.recyclerview.widget.RecyclerView
