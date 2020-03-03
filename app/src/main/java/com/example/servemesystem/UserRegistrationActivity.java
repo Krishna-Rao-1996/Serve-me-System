@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.servemesystem.domain.ConstantResources;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -172,7 +173,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         mymap.put("ResetPIN","NULL");
         mymap.put("dp","");
         mymap.put("Password", password);
-        myRef.child("Users").child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+        myRef.child(ConstantResources.USERS).child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
@@ -187,7 +188,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
 
         Map userCred = new HashMap<>();
         userCred.put(userName, password);
-        myRef.child("User_Credentials").updateChildren(userCred, new DatabaseReference.CompletionListener() {
+        myRef.child(ConstantResources.USER_CREDENTIALS).updateChildren(userCred, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 

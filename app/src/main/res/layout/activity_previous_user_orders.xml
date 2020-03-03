@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".Homepage.PastUserOrders">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
-
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="10dp"
+        android:text="@string/past_orders"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp" />
 
 </LinearLayout>
