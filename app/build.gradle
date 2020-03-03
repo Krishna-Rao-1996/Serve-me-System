@@ -43,5 +43,5 @@ dependencies {
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
-    implementation 'androidx.navigation:navigation-runtime:2.0.0'
+    implementation 'androidx.navigation:navigation-runtime:2.2.1'
 }
