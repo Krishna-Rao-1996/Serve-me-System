@@ -457,7 +457,6 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     mymap.put("ServiceTypes",Servtype);
                     mymap.put("Workingdays",Worktype);
                     mymap.put("IsVerified","false");
-                    count++;
                     myReg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

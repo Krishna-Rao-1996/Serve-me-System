@@ -44,9 +44,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginRight="10dp"
             android:ems="10"
             android:inputType="textPersonName"
+            android:text="                Full Name"
             android:textStyle="bold" />
 
         <EditText
@@ -54,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginRight="10dp"
             android:ems="10"
             android:inputType="textPersonName"
@@ -61,6 +64,7 @@
 
         <EditText
             android:id="@+id/updatePhoneTV"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -71,6 +75,7 @@
 
         <EditText
             android:id="@+id/updateEmailTV"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -82,6 +87,7 @@
         <EditText
             android:id="@+id/updateAddressTV"
             android:layout_width="match_parent"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -94,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginRight="10dp"
             android:ems="10"
             android:inputType="textPostalAddress"
@@ -102,6 +109,7 @@
         <EditText
             android:id="@+id/updateStateTV"
             android:layout_width="match_parent"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -112,6 +120,7 @@
         <EditText
             android:id="@+id/updateZipTV"
             android:layout_width="match_parent"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -138,6 +147,7 @@
                 android:id="@+id/updateCompanyAddressTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:ems="10"
@@ -148,6 +158,8 @@
                 android:id="@+id/updateCompanyCityTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:ems="10"
@@ -158,6 +170,7 @@
                 android:id="@+id/updateCompanyPhoneTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:ems="10"

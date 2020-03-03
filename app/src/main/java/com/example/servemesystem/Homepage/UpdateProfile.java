@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.servemesystem.R;
 import com.example.servemesystem.UserModel;
 import com.example.servemesystem.domain.ConstantResources;
@@ -33,9 +35,14 @@ public class UpdateProfile extends Activity {
     TextView updateUserNameTV;
     EditText updateFNameTV, updateLNameTV, updatePhoneTV, updateEmailTV, updateAddressTV, updateCityTV, updateStateTV, updateZipTV,
             updateCompanyNameTV, updateCompanyAddressTV, updateCompanyCityTV, updateCompanyPhoneTV;
+    String updateFNameTVString, updateLNameTVString, updatePhoneTVString, updateEmailTVString, updateAddressTVString, updateCityTVString,
+            updateStateTVString, updateZipTVString,updateCompanyNameTVString, updateCompanyAddressTVString,
+            updateCompanyCityTVString, updateCompanyPhoneTVString;
     Button updateProfileBtn;
     LinearLayout serviceProviderUpdateLayout;
     static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    final DatabaseReference myServref = FirebaseDatabase.getInstance().getReference("Service_Providers");
+    final DatabaseReference myUserref = FirebaseDatabase.getInstance().getReference("Users");
     SharedPreferences sharedPreferences;
 
     String userName;
@@ -50,6 +57,8 @@ public class UpdateProfile extends Activity {
         userName = sharedPreferences.getString("userName", null);
         userType = sharedPreferences.getString("type",null);
 
+
+        updateUserNameTV = findViewById(R.id.updateUserNameTV);
         imageview_account_profile =findViewById(R.id.imageview_account_profile);
         updateFNameTV = findViewById(R.id.updateFNameTV);
         updateLNameTV = findViewById(R.id.updateLNameTV);
@@ -64,10 +73,81 @@ public class UpdateProfile extends Activity {
         updateCompanyCityTV= findViewById(R.id.updateCompanyCityTV);
         updateCompanyPhoneTV= findViewById(R.id.updateCompanyPhoneTV);
 
+
+        if(userType == "user")
+        {
+            myUserref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    for (DataSnapshot ds : dataSnapshot.getChildren())
+                    {
+                        userName = ds.getKey().toString();
+                        updateUserNameTV.setText(userName);
+                        updateFNameTVString = ds.child("FirstName").getValue(String.class);
+                        updateFNameTV.setText(updateFNameTVString);
+                        updatePhoneTVString = ds.child("Phone").getValue(String.class);
+                        updatePhoneTV.setText(updatePhoneTVString);
+                        updateEmailTVString = ds.child("Email").getValue(String.class);
+                        updateEmailTV.setText(updateEmailTVString);
+                        updateCityTVString = ds.child("Address").getValue(String.class);
+                        updateCityTV.setText(updateCityTVString);
+                        updateStateTVString = ds.child("State").getValue(String.class);
+                        updateStateTV.setText(updateStateTVString);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError)
+                {
+                    Log.e("The read failed: ", databaseError.getMessage());
+                }
+            });
+        }
+        else
+        {
+            myServref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    for (DataSnapshot dt : dataSnapshot.getChildren())
+                    {
+                        userName = dt.getKey().toString();
+                        updateUserNameTV.setText(userName);
+                        updateFNameTVString = dt.child("FirstName").getValue(String.class);
+                        updateFNameTV.setText(updateFNameTVString);
+                        updatePhoneTVString = dt.child("Phone").getValue(String.class);
+                        updatePhoneTV.setText(updatePhoneTVString);
+                        updateEmailTVString = dt.child("Email").getValue(String.class);
+                        updateEmailTV.setText(updateEmailTVString);
+                        updateCityTVString = dt.child("Address").getValue(String.class);
+                        updateCityTV.setText(updateCityTVString);
+                        updateStateTVString = dt.child("State").getValue(String.class);
+                        updateStateTV.setText(updateStateTVString);
+                        updateCompanyAddressTVString = dt.child("Officeaddress").getValue(String.class);
+                        updateCompanyAddressTV.setText(updateCompanyAddressTVString);
+                        updateCompanyNameTVString = dt.child("Companyname").getValue(String.class);
+                        updateCompanyNameTV.setText(updateCompanyNameTVString);
+                        updateCompanyPhoneTVString = dt.child("Officenumber").getValue(String.class);
+                        updateCompanyPhoneTV.setText(updateCompanyPhoneTVString);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError)
+                {
+                    Log.e("The read failed: ", databaseError.getMessage());
+                }
+            });
+        }
+
+
+
         if("user".equalsIgnoreCase(userType)){
             serviceProviderUpdateLayout = findViewById(R.id.serviceProviderUpdateLayout);
             serviceProviderUpdateLayout.setVisibility(View.GONE);
         }
+
 
         imageview_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
