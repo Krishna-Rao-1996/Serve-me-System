@@ -1,4 +1,4 @@
-package com.example.servemesystem;
+package com.example.servemesystem.adminScreen;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdminActivity extends Activity  {
     OperaterDataView adapter;

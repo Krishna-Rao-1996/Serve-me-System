@@ -79,4 +79,5 @@ public class PendingAuthorizationFragment extends Fragment {
 
         return view;
     }
+
 }

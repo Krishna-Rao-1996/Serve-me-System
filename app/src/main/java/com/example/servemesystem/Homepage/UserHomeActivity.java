@@ -59,7 +59,7 @@ public class UserHomeActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myint = new Intent(UserHomeActivity.this,updateProfile.class);
+                Intent myint = new Intent(UserHomeActivity.this, UpdateProfile.class);
                 startActivity(myint);
             }
         });
