@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".ViewServiceRequest"></activity>
+        <activity android:name=".Homepage.PastUserOrders"></activity>
+        <activity android:name=".ViewServiceRequest" />
         <activity
             android:name=".Homepage.updateProfile"
             android:theme="@style/Theme.AppCompat" />
@@ -26,7 +27,7 @@
             android:name=".Homepage.UserHomeActivity"
             android:label="@string/title_activity_user_home"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".adminScreen.AdminServiceProviderDetails"></activity>
+        <activity android:name=".adminScreen.AdminServiceProviderDetails" />
         <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
         <activity android:name=".adminScreen.ServiceProviderListAdapter" />
         <activity android:name=".AdminMainActivity" />
@@ -38,7 +39,6 @@
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".ServiceProviderHome" />
         <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity
             android:name=".SplashScreenActivity"
@@ -49,7 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
