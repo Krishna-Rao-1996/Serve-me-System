@@ -22,21 +22,20 @@ import java.util.Map;
 
 public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
-    EditText fname,sname1,email1,dob1,address1,city1,phone1,pass1,conpass1,companyname1,Office_Number1,Office_Address1,workinghours;
-    Spinner state1;
+    EditText fNameET,uNameET,emailAdressET,dateOfbirthET,homeAddressET,cityET,phoneNumberET,passwordET,confirmPasswordET,
+            companyNameET, officeNumberET,officeAddressET,officeCityET,zipCodeET;
+    Spinner stateSpinner;
     DatabaseReference myReg;
-    DatabaseReference addingreg;
+    DatabaseReference addingReg;
     DatabaseReference emailRef;
-    DatabaseReference numberref;
-    String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours,Servtype="",Worktype="";
+    DatabaseReference numberRef;
+    String fNameString,uNameString,emailAddressString,dateOfbirthETString,homeAddressString,stateSpinnerString,cityString,phoneNumberString
+            ,passwordString,confirmPasswordString,companyNameString,officeNumberString,officeAddressString,zipCodeString,officeCityString
+            ,Servtype = "",ServiceArr = "";
     boolean Check = true;
-    int count=0,count1=0;
-    CheckBox workdaycheckBox;
     CheckBox servicetypecheckBox;
     DatabaseReference rootref = FirebaseDatabase.getInstance().getReference().child("Service_Provider_Types");
-    DatabaseReference rootrefer = FirebaseDatabase.getInstance().getReference().child("Working_Day_Types");
     ArrayList<String> Servicearray = new ArrayList<String>();
-    ArrayList<String> Workdayarray = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -58,7 +57,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                 int j = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
-                    String name = ds.getValue().toString();
+                    String name = ds.getKey().toString();
 
                     str[j] = name;
 
@@ -81,47 +80,6 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
         rootref.removeEventListener(valueEventListener);
 
 
-        //Working day Types
-
-        final RadioGroup workingradioGroup = (RadioGroup)findViewById(R.id.workingradioGroup);
-
-        Log.d("Working_Day_Types", "usersRefer= " + rootrefer);
-
-        final ValueEventListener workdaylistener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                long count1 = dataSnapshot.getChildrenCount();
-                Log.d("Service_Providers", "count= " + count1);
-                String[] str = new String[((int) count1)];
-                int j = 0;
-                for(DataSnapshot ds : dataSnapshot.getChildren())
-                {
-                    String name = ds.getValue().toString();
-
-                    str[j] = name;
-
-                    j++;
-                }
-                int i=0;
-                while (i<count1)
-                {
-                    workdaycheckBox = new CheckBox(getBaseContext());
-                    workingradioGroup.addView(workdaycheckBox);
-                    ((CheckBox) workingradioGroup.getChildAt(i)).setText(str[i]);
-                    workdaycheckBox.setOnClickListener(ServiceType2(workdaycheckBox));
-                    i++;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-
-        rootrefer.addListenerForSingleValueEvent(workdaylistener);
-        rootrefer.removeEventListener(workdaylistener);
-
-
         //Registration Button Onclick Event
 
         Button Registration =  (Button) findViewById(R.id.userReg);
@@ -131,51 +89,49 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
             public void onClick(View v)
             {
                 //Full Name
-                fname = findViewById(R.id.fname);
+                fNameET = findViewById(R.id.fname);
 
-                Fname = (String) fname.getText().toString();
+                fNameString =  fNameET.getText().toString();
 
-                boolean allLetters = Fname.matches("[a-zA-Z\\s\'\"]+");
+                boolean allLetters = fNameString.matches("[a-zA-Z\\s\'\"]+");
 
                 Log.d("allLetters", "count= " + allLetters);
 
 
                 if (allLetters != true) {
-                    fname.setError("Please Enter a Valid Fullname");
+                    fNameET.setError("Please Enter a Valid Fullname");
                     Check = false;
                 }
 
-                if (Fname.matches("")) {
-                    fname.setError("Fullname field cannot be empty");
+                if (fNameString.matches("")) {
+                    fNameET.setError("Fullname field cannot be empty");
                     Check = false;
                 }
 
                 //User Name
-                sname1 = findViewById(R.id.sname1);
+                uNameET = findViewById(R.id.sname1);
 
-                Fname1 = (String) sname1.getText().toString();
+                uNameString = uNameET.getText().toString();
 
-                boolean usernamecheck = verifyUsername(Fname1);
-
-                if(usernamecheck !=true)
+                if(!verifyUsername(uNameString))
                 {
-                    sname1.setError("Username field cannot have special characters");
+                    uNameET.setError("Username field cannot have special characters");
                     Check = false;
                 }
 
-                if (Fname1.matches(""))
+                if (uNameString.matches(""))
                 {
-                    sname1.setError("Username field cannot be empty");
+                    uNameET.setError("Username field cannot be empty");
                     Check = false;
                 }
 
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                ref.child("Service_Providers").child(Fname1).addListenerForSingleValueEvent(new ValueEventListener() {
+                ref.child("Service_Providers").child(uNameString).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            sname1.setError("Username already exists!");
+                            uNameET.setError("Username already exists!");
                             Check = false;
                             return;
                         }
@@ -193,18 +149,18 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
                 //Email
 
-                email1 = findViewById(R.id.email1);
+                emailAdressET = findViewById(R.id.email1);
 
-                Email1 = (String) email1.getText().toString();
+                emailAddressString = emailAdressET.getText().toString();
 
                 emailRef = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
 
-                emailRef.orderByChild("Email").equalTo(Email1).addListenerForSingleValueEvent(new ValueEventListener() {
+                emailRef.orderByChild("Email").equalTo(emailAddressString).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                     {
                         if (dataSnapshot.exists()) {
-                            email1.setError("Email already exists!");
+                            emailAdressET.setError("Email already exists!");
                             Check = false;
                             return;
                         }
@@ -216,83 +172,79 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     }
                 });
 
-                if (Email1.matches("")) {
-                    email1.setError("Email field cannot be empty");
+                if (emailAddressString.matches("")) {
+                    emailAdressET.setError("Email field cannot be empty");
                     Check = false;
                 }
 
-                boolean emailcheck = verifyEmail(Email1);
-
-                if (emailcheck == false) {
-                    email1.setError("Email entered is invalid");
+                if (!verifyEmail(emailAddressString)) {
+                    emailAdressET.setError("Email entered is invalid");
                     Check = false;
                 }
 
                 //Date of Birth
-                dob1 = findViewById(R.id.dob1);
+                dateOfbirthET = findViewById(R.id.dob1);
 
-                Dob1 = (String) dob1.getText().toString();
+                dateOfbirthETString = dateOfbirthET.getText().toString();
 
-                if (Dob1.matches("")) {
-                    dob1.setError("Date of Birth field cannot be empty");
+                if (dateOfbirthETString.matches("")) {
+                    dateOfbirthET.setError("Date of Birth field cannot be empty");
                     Check = false;
                 }
 
-                boolean isDate = verifydob(Dob1);
-
-                if (isDate != true) {
-                    dob1.setError("Date of Birth format is not according to MM/DD/YYYY");
+                if (!verifydob(dateOfbirthETString)) {
+                    dateOfbirthET.setError("Date of Birth format is not according to MM/DD/YYYY");
                     Check = false;
                 }
 
                 //Address
-                address1 = findViewById(R.id.address1);
+                homeAddressET = findViewById(R.id.address1);
 
-                Address1 = (String) address1.getText().toString();
+                homeAddressString = homeAddressET.getText().toString();
 
-                Log.d("Address1", "count= " + Address1);
+                Log.d("Address1", "count= " + homeAddressString);
 
-                if (Address1.matches("")) {
-                    address1.setError("Address field cannot be empty");
+                if (homeAddressString.matches("")) {
+                    homeAddressET.setError("Address field cannot be empty");
                     Check = false;
                 }
 
                 //State
-                state1 = (Spinner) findViewById(R.id.state1);
+                stateSpinner = (Spinner) findViewById(R.id.state1);
 
-                State = (String) state1.getSelectedItem();
+                stateSpinnerString = (String) stateSpinner.getSelectedItem();
 
-                Log.d("State", "count= " + State);
+                Log.d("State", "count= " + stateSpinnerString);
 
-                if (State.matches("Select a State")) {
+                if (stateSpinnerString.matches("Select a State")) {
                     Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a State", Toast.LENGTH_SHORT).show();
                     Check = false;
                 }
 
                 //City
 
-                city1 = findViewById(R.id.city1);
+                cityET = findViewById(R.id.city1);
 
-                City1 = (String) city1.getText().toString();
+                cityString =  cityET.getText().toString();
 
-                if (City1.matches("")) {
-                    city1.setError("City field cannot be empty");
+                if (cityString.matches("")) {
+                    cityET.setError("City field cannot be empty");
                     Check = false;
                 }
 
                 //Phone number
-                phone1 = findViewById(R.id.phone1);
+                phoneNumberET = findViewById(R.id.phone1);
 
-                Phone1 = (String) phone1.getText().toString();
+                phoneNumberString = phoneNumberET.getText().toString();
 
-                numberref = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
+                numberRef = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
 
-                numberref.orderByChild("Phone").equalTo(Phone1).addListenerForSingleValueEvent(new ValueEventListener() {
+                numberRef.orderByChild("Phone").equalTo(phoneNumberString).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                     {
                         if (dataSnapshot.exists()) {
-                            phone1.setError("Phone number already exists!");
+                            phoneNumberET.setError("Phone number already exists!");
                             Check = false;
                             return;
                         }
@@ -303,111 +255,111 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
                     }
                 });
-
-                if (Phone1.matches("")) {
-                    phone1.setError("Phone number field cannot be empty");
+                if (phoneNumberString.matches("")) {
+                    phoneNumberET.setError("Phone number field cannot be empty");
                     Check = false;
                 }
-
-                boolean phonecheck = verifyPhone(Phone1);
-
-                if (phonecheck == false) {
-                    phone1.setError("Invalid Phone number");
+                if (!verifyPhone(phoneNumberString)) {
+                    phoneNumberET.setError("Invalid Phone number");
                     Check = false;
                 }
 
                 //Pass1
-                pass1 = findViewById(R.id.pass1);
+                passwordET = findViewById(R.id.pass1);
 
-                Pass1 = (String) pass1.getText().toString();
+                passwordString =  passwordET.getText().toString();
 
-                if (Pass1.matches("")) {
-                    pass1.setError("Password field cannot be empty");
+                if (passwordString.matches("")) {
+                    passwordET.setError("Password field cannot be empty");
                     Check = false;
                 }
 
                 //Confirmpass
 
-                conpass1 = findViewById(R.id.conpass1);
+                confirmPasswordET = findViewById(R.id.conpass1);
 
-                Conpass1 = (String) conpass1.getText().toString();
+                confirmPasswordString = confirmPasswordET.getText().toString();
 
-                if (Conpass1.matches("")) {
-                    conpass1.setError("Password field cannot be empty");
+                if (confirmPasswordString.matches("")) {
+                    confirmPasswordET.setError("Password field cannot be empty");
                     Check = false;
 
                 }
 
-                //Check wheter they are different
 
-                boolean confirmpass = Pass1.matches(Conpass1);
-
-                if (confirmpass == false) {
-                    pass1.setError("Please Enter Similar Passwords");
-                    conpass1.setError("Please Enter Similar Passwords");
+                if (!passwordString.matches(confirmPasswordString)) {
+                    passwordET.setError("Please Enter Similar Passwords");
+                    confirmPasswordET.setError("Please Enter Similar Passwords");
                     Check = false;
                 }
 
                 //Company name
 
 
-                companyname1 = findViewById(R.id.companyname1);
+                companyNameET = findViewById(R.id.companyname1);
 
-                Companyname = (String) companyname1.getText().toString();
+                companyNameString = companyNameET.getText().toString();
 
-                boolean companycheck = Companyname.matches("[a-zA-Z\\s\'\"]+");
-
-                if (Companyname.matches("")) {
-                    companyname1.setError("Company name field cannot be empty");
+                if (companyNameString.matches("")) {
+                    companyNameET.setError("Company name field cannot be empty");
                     Check = false;
                 }
 
-                if(companycheck == false)
+                if(!companyNameString.matches("[a-zA-Z\\s\'\"]+"))
                 {
-                    companyname1.setError("Company name entered is not valid");
+                    companyNameET.setError("Company name entered is not valid");
                     Check = false;
                 }
 
                 //Office Number
 
-                Office_Number1 = findViewById(R.id.Office_Number1);
+                officeNumberET = findViewById(R.id.Office_Number1);
 
-                Officenumber = (String) Office_Number1.getText().toString();
+                officeNumberString = officeNumberET.getText().toString();
 
-                boolean Officenumbercheck = verifyPhone(Officenumber);
-
-                if (Officenumber.matches("")) {
-                    Office_Number1.setError("Office number field cannot be empty");
+                if (officeNumberString.matches("")) {
+                    officeNumberET.setError("Office number field cannot be empty");
                     Check = false;
                 }
 
-                if(Officenumbercheck == false)
+                if(!verifyPhone(officeNumberString))
                 {
-                    Office_Number1.setError("Office number entered is not valid");
+                    officeNumberET.setError("Office number entered is not valid");
                     Check = false;
                 }
 
                 //Office Address
 
-                Office_Address1 = findViewById(R.id.Office_Address1);
+                officeAddressET = findViewById(R.id.Office_Address1);
 
-                Office_Address = (String) Office_Address1.getText().toString();
+                officeAddressString = officeAddressET.getText().toString();
 
-                if (Office_Address.matches("")) {
-                    Office_Address1.setError("Office Address field cannot be empty");
+                if (officeAddressString.matches("")) {
+                    officeAddressET.setError("Office Address field cannot be empty");
                     Check = false;
                 }
 
-                //Working hours
 
-                workinghours = findViewById(R.id.workinghours);
+                zipCodeET = findViewById(R.id.zipCode);
 
-                Workinghours = (String) workinghours.getText().toString();
+                zipCodeString = zipCodeET.getText().toString();
 
-                if (Workinghours.matches("")) {
-                    workinghours.setError("Working hours field cannot be empty");
+                if(zipCodeString.matches(""))
+                {
+                    zipCodeET.setError("Zipcode field cannot be empty");
                     Check = false;
                 }
+
+                officeCityET = findViewById(R.id.Office_City1);
+
+                officeCityString = officeCityET.getText().toString();
+
+                if(officeCityString.matches(""))
+                {
+                    officeCityET.setError("Office city field cannot be empty");
+                    Check = false;
+                }
+
 
                 //Service type and Workday Validation
 
@@ -417,47 +369,39 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     Check = false;
                 }
 
-                if(Workdayarray == null)
-                {
-                    Toast.makeText(ServiceProviderRegistrationActivity.this, "Please select a Working Day", Toast.LENGTH_SHORT).show();
-                    Check = false;
-                }
-
-
                 Log.d("Check", "Check= " + Check);
 
                 //Sending Data to Firebase
                 for (int i = 0; i < Servicearray.size(); i++)
                 {
-                    Servtype += Servicearray.get(i) + ",";
+                    if(!Servtype.contains(Servicearray.get(i))) {
+
+                        Servtype += Servicearray.get(i) + ",";
+                    }
                 }
+
                 Log.d("Servtype", "Check= " + Servtype);
-                for (int i = 0; i < Workdayarray.size(); i++)
-                {
-                    Worktype += Workdayarray.get(i) + ",";
-                }
-                Log.d("worktype", "Check= " + Worktype);
                 myReg = database.getReference("Service_Providers");
-                addingreg = database.getReference("Service_Provider_Credentials");
+                addingReg = database.getReference("Service_Provider_Credentials");
                 if(Check)
                 {
                     Map mymap = new HashMap<>();
-                    mymap.put("FullName",Fname);
-                    mymap.put("Phone",Phone1);
-                    mymap.put("DateOfBirth",Dob1);
-                    mymap.put("Email",Email1);
-                    mymap.put("City",City1);
-                    mymap.put("State",State);
-                    mymap.put("Password",Pass1);
+                    mymap.put("FullName",fNameString);
+                    mymap.put("Phone",phoneNumberString);
+                    mymap.put("DateOfBirth",dateOfbirthETString);
+                    mymap.put("Email",emailAddressString);
+                    mymap.put("City",cityString);
+                    mymap.put("State",stateSpinnerString);
+                    mymap.put("Password",passwordString);
+                    mymap.put("Zipcode",zipCodeString);
                     mymap.put("dp","");
-                    mymap.put("Companyname",Companyname);
-                    mymap.put("Officenumber",Officenumber);
-                    mymap.put("Officeaddress",Office_Address);
-                    mymap.put("Workinghours",Workinghours);
+                    mymap.put("Companyname",companyNameString);
+                    mymap.put("Officenumber",officeNumberString);
+                    mymap.put("Officeaddress",officeAddressString);
+                    mymap.put("Officecity",officeCityString);
                     mymap.put("ServiceTypes",Servtype);
-                    mymap.put("Workingdays",Worktype);
                     mymap.put("IsVerified","false");
-                    myReg.child(Fname1).updateChildren(mymap, new DatabaseReference.CompletionListener() {
+                    myReg.child(uNameString).updateChildren(mymap, new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
@@ -471,8 +415,8 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     });
 
                     Map userCred = new HashMap<>();
-                    userCred.put(Fname1, Pass1);
-                    addingreg.child("Service_Provider_Credentials").updateChildren(userCred, new DatabaseReference.CompletionListener() {
+                    userCred.put(uNameString, passwordString);
+                    addingReg.updateChildren(userCred, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
@@ -489,7 +433,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
-                    editor.putString("userName", Fname1);
+                    editor.putString("userName", uNameString);
                     editor.putString("type","serviceprovider");
                     editor.apply();
                     Intent login = new Intent(ServiceProviderRegistrationActivity.this,LoginActivity.class);
@@ -525,27 +469,6 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                Log.d("Servicearray", "count= " + Servicearray);
            }
        };
-    }
-    View.OnClickListener ServiceType2(final Button button)
-    {
-        return  new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Log.d("Button clicked is", "count= " + button.getText());
-
-                if(Workdayarray.contains(button.getText()))
-                {
-                    Workdayarray.remove(button.getText().toString());
-                }
-                else
-                {
-                    Workdayarray.add(button.getText().toString());
-                }
-
-                Log.d("Servicearray", "count= " + Workdayarray);
-            }
-        };
     }
 
     @Override
