@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/past_orders"
+            android:id="@+id/fragment_prev_orders"
             android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/past_orders" />
     </group>
@@ -13,7 +13,7 @@
     <item android:title="">
         <menu>
             <item
-                android:id="@+id/logoutButton"
+                android:id="@+id/fragment_logout"
                 android:title="@string/logout" />
         </menu>
     </item>

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.servemesystem.R;
 import com.example.servemesystem.UserModel;
 import com.example.servemesystem.domain.ConstantResources;
