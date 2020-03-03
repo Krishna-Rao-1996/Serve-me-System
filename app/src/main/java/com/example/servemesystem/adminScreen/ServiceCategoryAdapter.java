@@ -19,10 +19,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.servemesystem.AdminMainActivity;
+//import com.example.servemesystem.AdminMainActivity;
 import com.example.servemesystem.Homepage.Image_Resource;
 import com.example.servemesystem.MainActivity;
-import com.example.servemesystem.PendingAuthServiceProviderDetails;
+//import com.example.servemesystem.PendingAuthServiceProviderDetails;
 import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceCategory;
 import com.example.servemesystem.domain.ServiceProvider;

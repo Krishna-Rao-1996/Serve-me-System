@@ -44,11 +44,12 @@ public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        uAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        uAuth = FirebaseAuth.getInstance();
+        rgLogin = findViewById(R.id.rg_1);
         register();
-        loginForUser();
+        login();
         //loginForServiceProvider();
         forgotPassword();
         password = findViewById(R.id.password);
@@ -68,10 +69,27 @@ public class LoginActivity extends Activity {
 
             }
         });
+        rgLogin.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.customer_check_in:
+                        info = "User_Credentials";
+                        break;
+                    case R.id.vender_check_in:
+                        info = "Service_Provider_Credentials";
+                        break;
+                    case R.id.admin_check_in:
+                        info = "Administrator_Credentials";
+                        break;
+                }
+            }
+        });
+
 
     }
 
-    private void loginForUser() {
+    private void login() {
         loginButton = findViewById(R.id.logbutton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -120,7 +138,7 @@ public class LoginActivity extends Activity {
                     //return username is not register,page not jump to homepage
                     //Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
                     password.setError(null,null);
-//                    username.setError(null, null);
+//                  username.setError(null, null);
                     username.setError("Username is not registered!");
                     username.requestFocus();
                 }
@@ -136,7 +154,7 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
-                    if("admin".equalsIgnoreCase(username.getText().toString())){
+                    if(info.equals("Administrator_Credentials")){
                         Intent logInIntent = new Intent(LoginActivity.this, AdminMainActivity.class);
                         startActivity(logInIntent);
                     } else if(info.equals("User_Credentials")){
