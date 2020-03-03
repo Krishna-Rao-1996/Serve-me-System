@@ -18,9 +18,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.servemesystem.LoginActivity;
 import com.example.servemesystem.R;
+import com.example.servemesystem.RegistrationHelper;
 import com.example.servemesystem.UserModel;
+import com.example.servemesystem.UserRegistrationActivity;
 import com.example.servemesystem.domain.ConstantResources;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,8 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
-public class UpdateProfile extends Activity {
+public class UpdateProfile extends RegistrationHelper {
     CircleImageView imageview_account_profile;
     TextView updateUserNameTV;
     EditText updateFNameTV, updateLNameTV, updatePhoneTV, updateEmailTV, updateAddressTV, updateCityTV, updateStateTV, updateZipTV,
@@ -44,6 +49,7 @@ public class UpdateProfile extends Activity {
     final DatabaseReference myServref = FirebaseDatabase.getInstance().getReference("Service_Providers");
     final DatabaseReference myUserref = FirebaseDatabase.getInstance().getReference("Users");
     SharedPreferences sharedPreferences;
+    Boolean flag = true;
 
     String userName;
     String userType;
@@ -57,7 +63,7 @@ public class UpdateProfile extends Activity {
         userName = sharedPreferences.getString("userName", null);
         userType = sharedPreferences.getString("type",null);
 
-
+        updateProfileBtn = findViewById(R.id.updateProfileBtn);
         updateUserNameTV = findViewById(R.id.updateUserNameTV);
         imageview_account_profile =findViewById(R.id.imageview_account_profile);
         updateFNameTV = findViewById(R.id.updateFNameTV);
@@ -150,12 +156,31 @@ public class UpdateProfile extends Activity {
         }
 
 
-
         if("user".equalsIgnoreCase(userType)){
             serviceProviderUpdateLayout = findViewById(R.id.serviceProviderUpdateLayout);
             serviceProviderUpdateLayout.setVisibility(View.GONE);
         }
 
+        updateProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                updateFNameTVString = updateFNameTV.getText().toString();
+                updatePhoneTVString = updatePhoneTV.getText().toString();
+                updateEmailTVString = updateEmailTV.getText().toString();
+                updateAddressTVString = updateAddressTV.getText().toString();
+                updateCityTVString = updateCityTV.getText().toString();
+                updateZipTVString = updateZipTV.getText().toString();
+                if(!"user".equalsIgnoreCase(userType))
+                {
+                    updateCompanyAddressTVString = updateCompanyAddressTV.getText().toString();
+                    updateCompanyNameTVString = updateCompanyNameTV.getText().toString();
+                    updateCompanyPhoneTVString = updateCompanyPhoneTV.getText().toString();
+                    updateCompanyCityTVString = updateCompanyCityTV.getText().toString();
+                }
+                sendData();
+            }
+        });
 
         imageview_account_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +193,7 @@ public class UpdateProfile extends Activity {
         });
     }
 
-    private void fetchData() {
+    private void fetchDataa() {
 
         myRef.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
@@ -186,6 +211,74 @@ public class UpdateProfile extends Activity {
                 Log.e("The read failed: ", firebaseError.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void sendData()
+    {
+        if("user".equalsIgnoreCase(userType))
+        {
+
+           final DatabaseReference  userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+            userRef.child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    userRef.child(userName).child("FullName").setValue(updateFNameTVString);
+                    userRef.child(userName).child("Phone").setValue(updatePhoneTVString);
+                    userRef.child(userName).child("Email").setValue(updateEmailTVString);
+                    userRef.child(userName).child("Address").setValue(updateAddressTVString);
+                    userRef.child(userName).child("City").setValue(updateCityTVString);
+                    userRef.child(userName).child("State").setValue(updateStateTVString);
+                    userRef.child(userName).child("Zipcode").setValue(updateZipTVString);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError)
+                {
+                    Log.e("The read failed: ", databaseError.getMessage());
+                }
+            });
+
+            Toast.makeText(getApplicationContext(), "Values Updated Successfully", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(UpdateProfile.this, LoginActivity.class);
+            startActivity(login);
+        }
+        else
+        {
+            final DatabaseReference  servRef = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
+
+            servRef.child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    servRef.child(userName).child("FullName").setValue(updateFNameTVString);
+                    servRef.child(userName).child("Phone").setValue(updatePhoneTVString);
+                    servRef.child(userName).child("Email").setValue(updateEmailTVString);
+                    servRef.child(userName).child("Address").setValue(updateAddressTVString);
+                    servRef.child(userName).child("City").setValue(updateCityTVString);
+                    servRef.child(userName).child("State").setValue(updateStateTVString);
+                    servRef.child(userName).child("Zipcode").setValue(updateZipTVString);
+                    servRef.child(userName).child("Officeaddress").setValue(updateCompanyAddressTVString);
+                    servRef.child(userName).child("Companyname").setValue(updateCompanyNameTVString);
+                    servRef.child(userName).child("Officenumber").setValue(updateCompanyPhoneTVString);
+                    servRef.child(userName).child("Officecity").setValue(updateCompanyCityTVString);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError)
+                {
+                    Log.e("The read failed: ", databaseError.getMessage());
+                }
+            });
+
+            Toast.makeText(getApplicationContext(), "Values Updated Successfully", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(UpdateProfile.this, LoginActivity.class);
+            startActivity(login);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
