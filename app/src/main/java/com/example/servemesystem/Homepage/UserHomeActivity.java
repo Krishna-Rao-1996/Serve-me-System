@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.servemesystem.Homepage.ui.home.HomeViewModel;
 import com.example.servemesystem.R;
+import com.example.servemesystem.UpdateProfileActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -73,7 +74,8 @@ public class UserHomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home )
+                R.id.fragment_prev_orders, R.id.nav_gallery, R.id.nav_slideshow,
+                R.id.nav_tools, R.id.fragment_logout, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -86,7 +88,7 @@ public class UserHomeActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myint = new Intent(UserHomeActivity.this,updateProfile.class);
+                Intent myint = new Intent(UserHomeActivity.this, UpdateProfileActivity.class);
                 startActivity(myint);
             }
         });
