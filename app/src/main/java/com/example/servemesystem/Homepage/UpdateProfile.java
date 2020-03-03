@@ -73,31 +73,32 @@ public class UpdateProfile extends Activity {
         updateCompanyPhoneTV= findViewById(R.id.updateCompanyPhoneTV);
 
 
+        Log.e("USERNAME: ", userName);
+
         if("user".equalsIgnoreCase(userType))
         {
-            myUserref.addValueEventListener(new ValueEventListener() {
+
+            DatabaseReference ref1 = myUserref.child(userName);
+
+            ref1.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                 {
-                    for (DataSnapshot ds : dataSnapshot.getChildren())
-                    {
-                        userName = ds.getKey().toString();
-                        updateUserNameTV.setText(userName);
-                        updateFNameTVString = ds.child("FullName").getValue(String.class);
-                        updateFNameTV.setText(updateFNameTVString);
-                        updatePhoneTVString = ds.child("Phone").getValue(String.class);
-                        updatePhoneTV.setText(updatePhoneTVString);
-                        updateEmailTVString = ds.child("Email").getValue(String.class);
-                        updateEmailTV.setText(updateEmailTVString);
-                        updateAddressTVString = ds.child("Address").getValue(String.class);
-                        updateAddressTV.setText(updateAddressTVString);
-                        updateCityTVString = ds.child("City").getValue(String.class);
-                        updateCityTV.setText(updateCityTVString);
-                        updateStateTVString = ds.child("State").getValue(String.class);
-                        updateStateTV.setText(updateStateTVString);
-                        updateZipTVString = ds.child("Zipcode").getValue(String.class);
-                        updateZipTV.setText(updateZipTVString);
-                    }
+                    updateUserNameTV.setText(userName);
+                    updateFNameTVString = dataSnapshot.child("FullName").getValue(String.class);
+                    updateFNameTV.setText(updateFNameTVString);
+                    updatePhoneTVString = dataSnapshot.child("Phone").getValue(String.class);
+                    updatePhoneTV.setText(updatePhoneTVString);
+                    updateEmailTVString = dataSnapshot.child("Email").getValue(String.class);
+                    updateEmailTV.setText(updateEmailTVString);
+                    updateAddressTVString = dataSnapshot.child("Address").getValue(String.class);
+                    updateAddressTV.setText(updateAddressTVString);
+                    updateCityTVString = dataSnapshot.child("City").getValue(String.class);
+                    updateCityTV.setText(updateCityTVString);
+                    updateStateTVString = dataSnapshot.child("State").getValue(String.class);
+                    updateStateTV.setText(updateStateTVString);
+                    updateZipTVString = dataSnapshot.child("Zipcode").getValue(String.class);
+                    updateZipTV.setText(updateZipTVString);
                 }
 
                 @Override
@@ -109,37 +110,35 @@ public class UpdateProfile extends Activity {
         }
         else
         {
-            myServref.addValueEventListener(new ValueEventListener() {
+            DatabaseReference ref2 = myServref.child(userName);
+
+            ref2.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                public void onDataChange(@NonNull DataSnapshot data)
                 {
-                    for (DataSnapshot dt : dataSnapshot.getChildren())
-                    {
-                        userName = dt.getKey().toString();
-                        updateUserNameTV.setText(userName);
-                        updateFNameTVString = dt.child("FullName").getValue(String.class);
-                        updateFNameTV.setText(updateFNameTVString);
-                        updatePhoneTVString = dt.child("Phone").getValue(String.class);
-                        updatePhoneTV.setText(updatePhoneTVString);
-                        updateEmailTVString = dt.child("Email").getValue(String.class);
-                        updateEmailTV.setText(updateEmailTVString);
-                        updateAddressTVString = dt.child("Address").getValue(String.class);
-                        updateAddressTV.setText(updateAddressTVString);
-                        updateCityTVString = dt.child("City").getValue(String.class);
-                        updateCityTV.setText(updateCityTVString);
-                        updateStateTVString = dt.child("State").getValue(String.class);
-                        updateStateTV.setText(updateStateTVString);
-                        updateZipTVString = dt.child("Zipcode").getValue(String.class);
-                        updateZipTV.setText(updateZipTVString);
-                        updateCompanyAddressTVString = dt.child("Officeaddress").getValue(String.class);
-                        updateCompanyAddressTV.setText(updateCompanyAddressTVString);
-                        updateCompanyNameTVString = dt.child("Companyname").getValue(String.class);
-                        updateCompanyNameTV.setText(updateCompanyNameTVString);
-                        updateCompanyPhoneTVString = dt.child("Officenumber").getValue(String.class);
-                        updateCompanyPhoneTV.setText(updateCompanyPhoneTVString);
-                        updateCompanyCityTVString = dt.child("Officecity").getValue(String.class);
-                        updateCompanyCityTV.setText(updateCompanyCityTVString);
-                    }
+                    updateUserNameTV.setText(userName);
+                    updateFNameTVString = data.child("FullName").getValue(String.class);
+                    updateFNameTV.setText(updateFNameTVString);
+                    updatePhoneTVString = data.child("Phone").getValue(String.class);
+                    updatePhoneTV.setText(updatePhoneTVString);
+                    updateEmailTVString = data.child("Email").getValue(String.class);
+                    updateEmailTV.setText(updateEmailTVString);
+                    updateAddressTVString = data.child("Address").getValue(String.class);
+                    updateAddressTV.setText(updateAddressTVString);
+                    updateCityTVString = data.child("City").getValue(String.class);
+                    updateCityTV.setText(updateCityTVString);
+                    updateStateTVString = data.child("State").getValue(String.class);
+                    updateStateTV.setText(updateStateTVString);
+                    updateZipTVString = data.child("Zipcode").getValue(String.class);
+                    updateZipTV.setText(updateZipTVString);
+                    updateCompanyAddressTVString = data.child("Officeaddress").getValue(String.class);
+                    updateCompanyAddressTV.setText(updateCompanyAddressTVString);
+                    updateCompanyNameTVString = data.child("Companyname").getValue(String.class);
+                    updateCompanyNameTV.setText(updateCompanyNameTVString);
+                    updateCompanyPhoneTVString = data.child("Officenumber").getValue(String.class);
+                    updateCompanyPhoneTV.setText(updateCompanyPhoneTVString);
+                    updateCompanyCityTVString = data.child("Officecity").getValue(String.class);
+                    updateCompanyCityTV.setText(updateCompanyCityTVString);
                 }
 
                 @Override
