@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class RegistrationHelper extends Activity {
-    String password,fullName,userName,email,phone,city,state,dateOfBirth,confirmPass,address;
+    String password,fullName,userName,email,phone,city,state,dateOfBirth,confirmPass,address,zipCode;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     HashMap<String, UserModel> allUsers= new HashMap<>();
@@ -72,6 +72,16 @@ public abstract class RegistrationHelper extends Activity {
         return true;
     }
 
+    public boolean verifyZipcode(String zipCode)
+    {
+        zipCode = zipCode.trim();
+
+        if(zipCode.length() == 5)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public boolean verifyName(String name){
         name=name.trim();
@@ -137,6 +147,11 @@ public abstract class RegistrationHelper extends Activity {
     public String getPassword(EditText editText){
         this.password=editText.getText().toString();
         return  this.password;
+    }
+    public  String getZipCode(EditText editText)
+    {
+        this.zipCode=editText.getText().toString();
+        return  this.zipCode;
     }
     public String getFullName(EditText editText){
         this.fullName=editText.getText().toString();

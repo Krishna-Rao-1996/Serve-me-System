@@ -93,12 +93,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
                 fNameString =  fNameET.getText().toString();
 
-                boolean allLetters = fNameString.matches("[a-zA-Z\\s\'\"]+");
-
-                Log.d("allLetters", "count= " + allLetters);
-
-
-                if (allLetters != true) {
+                if (!fNameString.matches("[a-zA-Z\\s\'\"]+")) {
                     fNameET.setError("Please Enter a Valid Fullname");
                     Check = false;
                 }
@@ -273,6 +268,11 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     passwordET.setError("Password field cannot be empty");
                     Check = false;
                 }
+                if(passwordString.length()<6)
+                {
+                    passwordET.setError("Password field cannot be less than 6 characters");
+                    Check = false;
+                }
 
                 //Confirmpass
 
@@ -284,6 +284,11 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     confirmPasswordET.setError("Password field cannot be empty");
                     Check = false;
 
+                }
+                if(confirmPasswordString.length()<6)
+                {
+                    confirmPasswordET.setError("Confirm password field cannot be less than 6 characters");
+                    Check = false;
                 }
 
 
@@ -349,6 +354,11 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     zipCodeET.setError("Zipcode field cannot be empty");
                     Check = false;
                 }
+                if(!verifyZipcode(zipCodeString))
+                {
+                    zipCodeET.setError("Zipcode field should be 5 characters");
+                    Check = false;
+                }
 
                 officeCityET = findViewById(R.id.Office_City1);
 
@@ -389,6 +399,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     mymap.put("FullName",fNameString);
                     mymap.put("Phone",phoneNumberString);
                     mymap.put("DateOfBirth",dateOfbirthETString);
+                    mymap.put("Address",homeAddressString);
                     mymap.put("Email",emailAddressString);
                     mymap.put("City",cityString);
                     mymap.put("State",stateSpinnerString);

@@ -31,8 +31,8 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 public class UserRegistrationActivity extends RegistrationHelper {
-    String password, fullName, userName, email, phone, city, state, country, dateOfBirth, confirmPass,address;
-    EditText pass, fname, uname, email1, ph, city1, address1, dob, cpass;
+    String password, fullName, userName, email, phone, city, state, country, dateOfBirth, confirmPass,address,zipCodeString;
+    EditText pass, fname, uname, email1, ph, city1, address1, dob, cpass,zipCodeET;
     Spinner state1;
     Button registration;
     FirebaseDatabase database;
@@ -46,7 +46,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         setContentView(R.layout.activity_user_registration);
         pass = findViewById(R.id.pass1);
         cpass = findViewById(R.id.conpass1);
-        fname = findViewById(R.id.fname1);
+        fname = findViewById(R.id.fname);
         uname = findViewById(R.id.sname1);
         email1 = findViewById(R.id.email1);
         ph = findViewById(R.id.phone1);
@@ -54,6 +54,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         city1 = findViewById(R.id.city1);
         address1=findViewById(R.id.address1);
         dob = findViewById(R.id.dob1);
+        zipCodeET = findViewById(R.id.zipCode);
         registration = findViewById(R.id.userReg);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
@@ -70,6 +71,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
                 city = getCity(city1);
                 state = getState(state1);
                 dateOfBirth = getDateOfBirth(dob);
+                zipCodeString = getZipCode(zipCodeET);
                 confirmPass = getConfirmPass(cpass);
                 address=getAddress(address1);
                 boolean flag = true;
@@ -148,6 +150,12 @@ public class UserRegistrationActivity extends RegistrationHelper {
                         dob.setError("Enter a valid date");
                         flag = false;
                     }
+                    if(!verifyZipcode(zipCodeString))
+                    {
+                        zipCodeET.setText("");
+                        zipCodeET.setError("Enter valid zip code");
+                        flag = false;
+                    }
 
                     if (flag) {
                         sendData();
@@ -168,6 +176,7 @@ public class UserRegistrationActivity extends RegistrationHelper {
         mymap.put("Email", email);
         mymap.put("City", city);
         mymap.put("State", state);
+        mymap.put("Zipcode",zipCodeString);
         mymap.put("Address", address);
         mymap.put("ResetPIN","NULL");
         mymap.put("dp","");

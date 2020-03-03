@@ -61,7 +61,6 @@ public class UpdateProfile extends Activity {
         updateUserNameTV = findViewById(R.id.updateUserNameTV);
         imageview_account_profile =findViewById(R.id.imageview_account_profile);
         updateFNameTV = findViewById(R.id.updateFNameTV);
-        updateLNameTV = findViewById(R.id.updateLNameTV);
         updatePhoneTV= findViewById(R.id.updatePhoneTV);
         updateEmailTV= findViewById(R.id.updateEmailTV);
         updateAddressTV= findViewById(R.id.updateAddressTV);
@@ -74,7 +73,7 @@ public class UpdateProfile extends Activity {
         updateCompanyPhoneTV= findViewById(R.id.updateCompanyPhoneTV);
 
 
-        if(userType == "user")
+        if("user".equalsIgnoreCase(userType))
         {
             myUserref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -84,16 +83,20 @@ public class UpdateProfile extends Activity {
                     {
                         userName = ds.getKey().toString();
                         updateUserNameTV.setText(userName);
-                        updateFNameTVString = ds.child("FirstName").getValue(String.class);
+                        updateFNameTVString = ds.child("FullName").getValue(String.class);
                         updateFNameTV.setText(updateFNameTVString);
                         updatePhoneTVString = ds.child("Phone").getValue(String.class);
                         updatePhoneTV.setText(updatePhoneTVString);
                         updateEmailTVString = ds.child("Email").getValue(String.class);
                         updateEmailTV.setText(updateEmailTVString);
-                        updateCityTVString = ds.child("Address").getValue(String.class);
+                        updateAddressTVString = ds.child("Address").getValue(String.class);
+                        updateAddressTV.setText(updateAddressTVString);
+                        updateCityTVString = ds.child("City").getValue(String.class);
                         updateCityTV.setText(updateCityTVString);
                         updateStateTVString = ds.child("State").getValue(String.class);
                         updateStateTV.setText(updateStateTVString);
+                        updateZipTVString = ds.child("Zipcode").getValue(String.class);
+                        updateZipTV.setText(updateZipTVString);
                     }
                 }
 
@@ -114,22 +117,28 @@ public class UpdateProfile extends Activity {
                     {
                         userName = dt.getKey().toString();
                         updateUserNameTV.setText(userName);
-                        updateFNameTVString = dt.child("FirstName").getValue(String.class);
+                        updateFNameTVString = dt.child("FullName").getValue(String.class);
                         updateFNameTV.setText(updateFNameTVString);
                         updatePhoneTVString = dt.child("Phone").getValue(String.class);
                         updatePhoneTV.setText(updatePhoneTVString);
                         updateEmailTVString = dt.child("Email").getValue(String.class);
                         updateEmailTV.setText(updateEmailTVString);
-                        updateCityTVString = dt.child("Address").getValue(String.class);
+                        updateAddressTVString = dt.child("Address").getValue(String.class);
+                        updateAddressTV.setText(updateAddressTVString);
+                        updateCityTVString = dt.child("City").getValue(String.class);
                         updateCityTV.setText(updateCityTVString);
                         updateStateTVString = dt.child("State").getValue(String.class);
                         updateStateTV.setText(updateStateTVString);
+                        updateZipTVString = dt.child("Zipcode").getValue(String.class);
+                        updateZipTV.setText(updateZipTVString);
                         updateCompanyAddressTVString = dt.child("Officeaddress").getValue(String.class);
                         updateCompanyAddressTV.setText(updateCompanyAddressTVString);
                         updateCompanyNameTVString = dt.child("Companyname").getValue(String.class);
                         updateCompanyNameTV.setText(updateCompanyNameTVString);
                         updateCompanyPhoneTVString = dt.child("Officenumber").getValue(String.class);
                         updateCompanyPhoneTV.setText(updateCompanyPhoneTVString);
+                        updateCompanyCityTVString = dt.child("Officecity").getValue(String.class);
+                        updateCompanyCityTV.setText(updateCompanyCityTVString);
                     }
                 }
 
