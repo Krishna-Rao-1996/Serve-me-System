@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoTitleBar">
+        android:theme="@style/Theme.AppCompat.Light">
         <activity android:name=".PlaceServiceRequest"></activity>
         <activity android:name=".ViewServiceRequest" />
         <activity
@@ -33,6 +33,7 @@
         <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
+        <activity android:name=".adminScreen.AdminMainActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
