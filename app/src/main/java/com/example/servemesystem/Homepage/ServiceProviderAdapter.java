@@ -33,7 +33,7 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
     public ServiceProviderAdapter(Context mContext,ArrayList<String> mUserNames, ArrayList<String> mRequestTypes, ArrayList<String> mUserMessage) {
         this.mUserNames = mUserNames;
         this.mRequestTypes = mRequestTypes;
-        this.mUserMessage=mUserMessage;
+        this.mUserMessage = mUserMessage;
         this.mContext = mContext;
     }
 
@@ -48,7 +48,7 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
+        Log.i(TAG, "onBindViewHolder: Service Provider Adapter: called.");
         holder.userName.setText(mUserNames.get(position));
         holder.requestType.setText(mRequestTypes.get(position));
         Image_Resource image_resource = new Image_Resource();
