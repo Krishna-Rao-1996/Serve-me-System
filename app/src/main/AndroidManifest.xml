@@ -31,6 +31,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".ServiceProviderRegistrationActivity" />
+        <activity android:name=".Homepage.PastUserOrders"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".adminScreen.AdminMainActivity" />
