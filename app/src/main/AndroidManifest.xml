@@ -17,7 +17,7 @@
         <activity android:name=".PlaceServiceRequest"></activity>
         <activity android:name=".ViewServiceRequest" />
         <activity
-            android:name=".Homepage.updateProfile"
+            android:name=".Homepage.UpdateProfile"
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".Homepage.ServiceProviderHomeActivity"

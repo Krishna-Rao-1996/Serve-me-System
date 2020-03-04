@@ -2,15 +2,19 @@ package com.example.servemesystem.Homepage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.servemesystem.Homepage.ui.home.HomeViewModel;
+import com.example.servemesystem.LoginActivity;
 import com.example.servemesystem.R;
 import com.example.servemesystem.UpdateProfileActivity;
+import com.example.servemesystem.domain.ConstantResources;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -60,35 +64,49 @@ public class UserHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
         getServiceProviderTypes();
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Pooja, what is this behaviour?", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.fragment_prev_orders, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.fragment_logout, R.id.nav_send)
+                R.id.nav_past_orders,
+                R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        SharedPreferences prefs = getSharedPreferences("currUser", MODE_PRIVATE);
+        String uName = prefs.getString("userName", null);
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.fragment_prev_orders:
+                        Intent myint = new Intent(UserHomeActivity.this,PastUserOrders.class);
+                        startActivity(myint);
+                        break;
+                    case R.id.fragment_logout:
+                        SharedPreferences prefs = getSharedPreferences("currUser", MODE_PRIVATE);
+                        prefs.edit().clear();
+                        prefs.edit().apply();
+                        Intent myInt = new Intent(UserHomeActivity.this, LoginActivity.class);
+                        startActivity(myInt);
+                        break;
+                }
+                drawer.closeDrawers();
+                return false;
+            }
+        });
+
+
         View headerview = navigationView.getHeaderView(0);
-        TextView profilename = (TextView) headerview.findViewById(R.id.emailHeader);
-        profilename.setText("Behaviour Pooja");
         profile= headerview.findViewById(R.id.profilePicture);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myint = new Intent(UserHomeActivity.this, UpdateProfileActivity.class);
+                Intent myint = new Intent(UserHomeActivity.this, UpdateProfile.class);
                 startActivity(myint);
             }
         });
