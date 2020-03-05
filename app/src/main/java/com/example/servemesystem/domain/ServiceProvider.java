@@ -9,13 +9,13 @@ public class ServiceProvider {
     private String Companyname;
     private String DateOfBirth;
     private String Email;
-    private String Fname;
+    private String FirstName;
     private String IsVerified;
     private String Officeaddress;
     private String Officenumber;
     private String Password;
     private String Phone;
-    private String ServieTypes;
+    private String ServiceTypes;
     private String State;
     private String WorkingDays;
     private String WorkingHours;
@@ -26,21 +26,21 @@ public class ServiceProvider {
     }
 
     public ServiceProvider(String userName, String city, String companyname, String dateOfBirth,
-                           String email, String fname, String isVerified, String officeaddress,
-                           String officenumber, String password, String phone, String servieTypes,
+                           String email, String firstName, String isVerified, String officeaddress,
+                           String officenumber, String password, String phone, String serviceTypes,
                            String state, String workingDays, String workingHours, String zipCode) {
         this.userName = userName;
         City = city;
         Companyname = companyname;
         DateOfBirth = dateOfBirth;
         Email = email;
-        Fname = fname;
+        FirstName = firstName;
         IsVerified = isVerified;
         Officeaddress = officeaddress;
         Officenumber = officenumber;
         Password = password;
         Phone = phone;
-        ServieTypes = servieTypes;
+        ServiceTypes = serviceTypes;
         State = state;
         WorkingDays = workingDays;
         WorkingHours = workingHours;
@@ -87,12 +87,12 @@ public class ServiceProvider {
         Email = email;
     }
 
-    public String getFname() {
-        return Fname;
+    public String getFirstName() {
+        return FirstName;
     }
 
-    public void setFname(String fname) {
-        Fname = fname;
+    public void setFirstName(String fname) {
+        FirstName = fname;
     }
 
     public String getIsVerified() {
@@ -135,12 +135,12 @@ public class ServiceProvider {
         Phone = phone;
     }
 
-    public String getServieTypes() {
-        return ServieTypes;
+    public String getServiceTypes() {
+        return ServiceTypes;
     }
 
-    public void setServieTypes(String servieTypes) {
-        ServieTypes = servieTypes;
+    public void setServiceTypes(String serviceTypes) {
+        ServiceTypes = serviceTypes;
     }
 
     public String getState() {
@@ -187,13 +187,13 @@ public class ServiceProvider {
                 ", Companyname='" + Companyname + '\'' +
                 ", DateOfBirth='" + DateOfBirth + '\'' +
                 ", Email='" + Email + '\'' +
-                ", Fname='" + Fname + '\'' +
+                ", Fname='" + FirstName + '\'' +
                 ", IsVerified=" + IsVerified +
                 ", Officeaddress='" + Officeaddress + '\'' +
                 ", Officenumber='" + Officenumber + '\'' +
                 ", Password='" + Password + '\'' +
                 ", Phone='" + Phone + '\'' +
-                ", ServieTypes='" + ServieTypes + '\'' +
+                ", ServieTypes='" + ServiceTypes + '\'' +
                 ", State='" + State + '\'' +
                 ", WorkingDays='" + WorkingDays + '\'' +
                 ", WorkingHours='" + WorkingHours + '\'' +

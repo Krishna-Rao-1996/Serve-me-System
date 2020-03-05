@@ -49,7 +49,7 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
         holder.companyNameET.setText(serviceProvider.getCompanyname());
         // holder.addressTV.setText(serviceProvider.getOfficeaddress());
         holder.cityTV.setText(serviceProvider.getCity());
-        if(!serviceProvider.getDp().isEmpty()){
+        if(null != serviceProvider.getDp()){
             Picasso.get().load(serviceProvider.getDp()).into(holder.imageView);
         }
         // holder.stateTV.setText(serviceProvider.getState());

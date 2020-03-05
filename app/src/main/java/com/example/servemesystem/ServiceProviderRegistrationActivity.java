@@ -454,7 +454,6 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     mymap.put("City",City1);
                     mymap.put("State",State);
                     mymap.put("Password",Pass1);
-                    mymap.put("dp","");
                     mymap.put("Companyname",Companyname);
                     mymap.put("Officenumber",Officenumber);
                     mymap.put("Officeaddress",Office_Address);
