@@ -108,13 +108,12 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                assert userModel != null;
                 dp=userModel.getDp();
                 emailAddress=userModel.getEmail();
                 fullName=userModel.getFullName();
                 emailTV.setText(emailAddress);
                 fullNameTV.setText(fullName);
-                if(!dp.trim().equals("")){
+                if(null != dp){
                     Picasso.get().load(dp).into(profile);
                 }
             }
