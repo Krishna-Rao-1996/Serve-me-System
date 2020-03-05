@@ -37,9 +37,10 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
+        <activity android:name=".ServiceProviderRegistrationActivity" />
+        <activity android:name=".Homepage.PastUserOrders"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
