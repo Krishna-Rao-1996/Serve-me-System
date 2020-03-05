@@ -7,6 +7,10 @@ public class UserModel {
     private String Email;
     private String FullName;
     private String Password;
+    private String Phone;
+    private String ResetPIN;
+    private String State;
+    private String dp;
 
     public String getAddress() {
         return Address;
@@ -87,10 +91,5 @@ public class UserModel {
     public void setDp(String dp) {
         this.dp = dp;
     }
-
-    private String Phone;
-    private String ResetPIN;
-    private String State;
-    private String dp;
 
 }

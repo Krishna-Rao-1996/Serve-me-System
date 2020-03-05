@@ -58,7 +58,7 @@ public class ServiceProviderListFragment extends Fragment {
                         sp.setCompanyname(ds.child("Companyname").getValue().toString());
                         sp.setOfficenumber(ds.child("Officenumber").getValue().toString());
                         sp.setOfficeaddress(ds.child("Officeaddress").getValue().toString());
-                        sp.setServieTypes(ds.child("ServiceTypes").getValue().toString());
+                        sp.setServiceTypes(ds.child("ServiceTypes").getValue().toString());
                         sp.setCity(ds.child("City").getValue().toString());
                         sp.setState(ds.child("State").getValue().toString());
                         listOfServiceProviders.add(sp);
