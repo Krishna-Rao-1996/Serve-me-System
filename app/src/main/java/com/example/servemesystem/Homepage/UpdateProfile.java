@@ -212,19 +212,18 @@ public class UpdateProfile extends Activity {
         updateFirebaseRef.updateChildren(updateMap, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
-                if (databaseError != null) {
-                    Log.d("CHAT_LOG", databaseError.getMessage().toString());
+            if (databaseError != null) {
+                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+            } else {
+                Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_SHORT).show();
+                if(ConstantResources.USER_TYPE_CUSTOMER.equalsIgnoreCase(userType)){
+                    Intent intent = new Intent(UpdateProfile.this, UserHomeActivity.class);
+                    startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_SHORT).show();
-                    if(ConstantResources.USER_TYPE_CUSTOMER.equalsIgnoreCase(userType)){
-                        Intent intent = new Intent(UpdateProfile.this, UserHomeActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(UpdateProfile.this, ServiceProviderHomeActivity.class);
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(UpdateProfile.this, ServiceProviderHomeActivity.class);
+                    startActivity(intent);
                 }
+            }
             }
         });
     }
