@@ -171,7 +171,6 @@ public class UserRegistrationActivity extends RegistrationHelper {
         mymap.put("State", state);
         mymap.put("Address", address);
         mymap.put("ResetPIN","NULL");
-        mymap.put("dp","");
         mymap.put("Password", password);
         myRef.child(ConstantResources.USERS).child(userName).updateChildren(mymap, new DatabaseReference.CompletionListener() {
             @Override
