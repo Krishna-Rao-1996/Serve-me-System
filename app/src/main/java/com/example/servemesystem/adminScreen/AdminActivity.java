@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.servemesystem.R;
+import com.example.servemesystem.domain.ConstantResources;
 import com.example.servemesystem.domain.ServiceProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +34,7 @@ public class AdminActivity extends Activity  {
         recyclerView = findViewById(R.id.rvServiceProvider);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        DatabaseReference adminFirebaseRef = FirebaseDatabase.getInstance().getReference().child("Service_Providers");
+        DatabaseReference adminFirebaseRef = FirebaseDatabase.getInstance().getReference().child(ConstantResources.SERVICE_PROVIDER);
         adminFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

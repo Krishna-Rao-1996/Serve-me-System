@@ -20,6 +20,7 @@ public class ServiceProvider {
     private String WorkingDays;
     private String WorkingHours;
     private String zipCode;
+    private String dp;
 
     public ServiceProvider() {
     }
@@ -173,6 +174,10 @@ public class ServiceProvider {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
+
+    public String getDp() { return dp;}
+
+    public void setDp(String dp) {this.dp = dp; }
 
     @Override
     public String toString() {

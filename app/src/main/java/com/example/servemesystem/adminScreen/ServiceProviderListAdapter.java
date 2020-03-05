@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceProvider;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,6 +44,9 @@ public class ServiceProviderListAdapter extends RecyclerView.Adapter<ServiceProv
         holder.countryTV.setText("USA");
         holder.phoneNumberTV.setText(serviceProvider.getOfficenumber());
         holder.zipTV.setText(serviceProvider.getZipCode());
+        if(!serviceProvider.getDp().isEmpty()){
+            Picasso.get().load(serviceProvider.getDp()).into(holder.imageView);
+        }
     }
 
     @Override

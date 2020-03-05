@@ -6,9 +6,7 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".adminScreen.AdminMainActivity">
-
-
+    tools:context=".AdminMainActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
