@@ -44,7 +44,7 @@ public class ServiceProviderListAdapter extends RecyclerView.Adapter<ServiceProv
         holder.countryTV.setText("USA");
         holder.phoneNumberTV.setText(serviceProvider.getOfficenumber());
         holder.zipTV.setText(serviceProvider.getZipCode());
-        if(!serviceProvider.getDp().isEmpty()){
+        if(null != serviceProvider.getDp()){
             Picasso.get().load(serviceProvider.getDp()).into(holder.imageView);
         }
     }
