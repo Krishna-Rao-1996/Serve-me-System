@@ -18,8 +18,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.servemesystem.Homepage.ServiceProviderHomeActivity;
+import com.example.servemesystem.Homepage.UpdateProfile;
 import com.example.servemesystem.Homepage.UserHomeActivity;
 import com.example.servemesystem.adminScreen.AdminMainActivity;
+import com.example.servemesystem.domain.ConstantResources;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +52,6 @@ public class LoginActivity extends Activity {
         rgLogin = findViewById(R.id.rg_1);
         register();
         login();
-        //loginForServiceProvider();
         forgotPassword();
         password = findViewById(R.id.password);
         showPassword=findViewById(R.id.showPassword);
@@ -74,13 +75,13 @@ public class LoginActivity extends Activity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.customer_check_in:
-                        info = "User_Credentials";
+                        info = ConstantResources.USER_CREDENTIALS;
                         break;
                     case R.id.vender_check_in:
-                        info = "Service_Provider_Credentials";
+                        info = ConstantResources.SERVICE_PROVIDER_CREDENTIALS;
                         break;
                     case R.id.admin_check_in:
-                        info = "Administrator_Credentials";
+                        info = ConstantResources.ADMINISTRATOR_CREDENTIALS;
                         break;
                 }
             }
@@ -154,21 +155,21 @@ public class LoginActivity extends Activity {
                 else{
                     //username and password match,return login success and jump to homepage
                     passwordFromDB = null;
-                    if(info.equals("Administrator_Credentials")){
+                    if(info.equals(ConstantResources.ADMINISTRATOR_CREDENTIALS)){
                         Intent logInIntent = new Intent(LoginActivity.this, AdminMainActivity.class);
                         startActivity(logInIntent);
-                    } else if(info.equals("User_Credentials")){
-                        SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
-                        editor.putString("userName", username.getText().toString());
-                        editor.putString("type", "user");
+                    } else if(info.equals(ConstantResources.USER_CREDENTIALS)){
+                        SharedPreferences.Editor editor = getSharedPreferences(ConstantResources.SHARED_PREF_CURRENT_SESSION, MODE_PRIVATE).edit();
+                        editor.putString(ConstantResources.SHARED_PREF_USERNAME, username.getText().toString());
+                        editor.putString(ConstantResources.SHARED_PREF_USER_TYPE, ConstantResources.USER_TYPE_CUSTOMER);
                         editor.apply();
                         Intent logInIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
                         startActivity(logInIntent);
                     }
                     else {
-                        SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
-                        editor.putString("userName", username.getText().toString());
-                        editor.putString("type","serviceProvider");
+                        SharedPreferences.Editor editor = getSharedPreferences(ConstantResources.SHARED_PREF_CURRENT_SESSION, MODE_PRIVATE).edit();
+                        editor.putString(ConstantResources.SHARED_PREF_USERNAME, username.getText().toString());
+                        editor.putString(ConstantResources.SHARED_PREF_USER_TYPE, ConstantResources.USER_TYPE_SERVICE_PROVIDER);
                         editor.apply();
                         Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
                         startActivity(logInIntent);
@@ -182,87 +183,6 @@ public class LoginActivity extends Activity {
         });
 
     }
-
-//    private void loginForServiceProvider() {
-//        loginButtonForServiceProvider = findViewById(R.id.LogbuttonForServiceProvider);
-//        username = findViewById(R.id.username);
-//        password = findViewById(R.id.password);
-//        database = FirebaseDatabase.getInstance();
-//        myRef = database.getReference();
-//        loginButtonForServiceProvider.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loginEventForServiceProvider();
-//            }
-//        });
-//    }
-//
-//
-//    private void loginEventForServiceProvider() {
-//        if(TextUtils.isEmpty(username.getText())){
-//            //return username is empty
-//            //Toast.makeText(getApplicationContext(), "Username is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
-//            password.setError(null,null);
-////            username.setError(null, null);
-//            username.setError("Username is empty!");
-//            username.requestFocus();
-//
-//        }
-//        else if(password.getText().toString().length()==0){
-//            //return password is empty
-//            //Toast.makeText(getApplicationContext(), "Password is empty,Please Re-Enter", Toast.LENGTH_SHORT).show();
-//            username.setError(null, null);
-//            password.setError("Password is empty!");
-//            password.requestFocus();
-//        }
-//        else {
-//            queryDataForServiceProvider();
-//        }
-//
-//    }
-//
-//    private void queryDataForServiceProvider() {
-//        //We should modify here.
-//        myRef.child("Service_Provider_Credentials").child(username.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.getValue()!=null){
-//                    passwordFromDB = dataSnapshot.getValue().toString();
-//                }
-//                if(passwordFromDB == null){
-//                    //return username is not register,page not jump to homepage
-//                    //Toast.makeText(getApplicationContext(), "Username is not registered,Please Re-Enter", Toast.LENGTH_SHORT).show();
-//                    password.setError(null,null);
-////                    username.setError(null, null);
-//                    username.setError("Username is not registered!");
-//                    username.requestFocus();
-//                }
-//                else if(!password.getText().toString().equals(passwordFromDB)){
-//                    //return password is not correct,page not jump to homepage
-//                   // Toast.makeText(getApplicationContext(), "Password is not correct,Please Re-Enter", Toast.LENGTH_SHORT).show();
-//                    username.setError(null, null);
-//                    passwordFromDB = null;
-//                    password.setError("Password is not correct!");
-//                    password.requestFocus();
-//                }
-//                else{
-//                    //username and password match,return login success and jump to homepage
-//                    passwordFromDB = null;
-//                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
-//                    editor.putString("userName", username.getText().toString());
-//                    editor.putString("type","serviceProvider");
-//                    editor.apply();
-//                    Intent logInIntent = new Intent(LoginActivity.this, ServiceProviderHomeActivity.class);
-//                    startActivity(logInIntent);
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
 
     private void register() {
         userReg=findViewById(R.id.regbutton);

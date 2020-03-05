@@ -3,13 +3,18 @@ package com.example.servemesystem.Homepage;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Picture;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,17 +26,25 @@ import androidx.annotation.NonNull;
 import com.example.servemesystem.R;
 import com.example.servemesystem.UserModel;
 import com.example.servemesystem.domain.ConstantResources;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.activation.MimeType;
 
 public class UpdateProfile extends Activity {
     CircleImageView imageview_account_profile;
@@ -40,21 +53,27 @@ public class UpdateProfile extends Activity {
             updateCompanyNameTV, updateCompanyAddressTV, updateCompanyCityTV, updateCompanyPhoneTV;
     Button updateProfileBtn;
     LinearLayout serviceProviderUpdateLayout;
-    static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference adminFirebaseRef;
     SharedPreferences sharedPreferences;
 
-    private StorageReference mStorageRef;
+    private static int IMAGE_REQUEST_CODE = 1;
+
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference adminFirebaseRef;
+
+    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("images");
+
+    private Uri imageURI;
+    private String fileName;
+    private String dpURL;
 
     String userName;
     String userType;
     HashMap<String, UserModel> allUsers= new HashMap<>();
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
-
-        mStorageRef = FirebaseStorage.getInstance().getReference().child("images/"+userName+".jpg");
 
         sharedPreferences = getSharedPreferences("currUser", MODE_PRIVATE);
         userName = sharedPreferences.getString("userName", null);
@@ -74,6 +93,7 @@ public class UpdateProfile extends Activity {
         updateCompanyCityTV= findViewById(R.id.updateCompanyCityTV);
         updateCompanyPhoneTV= findViewById(R.id.updateCompanyPhoneTV);
         updateProfileBtn = findViewById(R.id.updateProfileBtn);
+
         if("user".equalsIgnoreCase(userType)){
             serviceProviderUpdateLayout = findViewById(R.id.serviceProviderUpdateLayout);
             serviceProviderUpdateLayout.setVisibility(View.GONE);
@@ -85,16 +105,23 @@ public class UpdateProfile extends Activity {
         adminFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                updateUserNameTV.setText(dataSnapshot.getValue().toString());
-                updateFNameTV.setText(dataSnapshot.child("FullName").getValue().toString());
+                Picasso.get().load(dataSnapshot.child("dp").getValue().toString()).into(imageview_account_profile);
+                updateUserNameTV.setText(dataSnapshot.getKey().toString());
+                if(ConstantResources.USERS.equalsIgnoreCase(userType)){
+                    updateFNameTV.setText(dataSnapshot.child("FullName").getValue().toString());
+                    updateAddressTV.setText(dataSnapshot.child("Address").getValue().toString());
+                } else {
+                    updateFNameTV.setText(dataSnapshot.child("FirstName").getValue().toString());
+                    updateAddressTV.setText(dataSnapshot.child("Officeaddress").getValue().toString());
+                }
+
                 updatePhoneTV.setText(dataSnapshot.child("Phone").getValue().toString());
                 updateEmailTV.setText(dataSnapshot.child("Email").getValue().toString());
-                updateAddressTV.setText(dataSnapshot.child("Address").getValue().toString());
                 updateCityTV.setText(dataSnapshot.child("City").getValue().toString());
                 updateStateTV.setText(dataSnapshot.child("State").getValue().toString());
-                if(!"user".equalsIgnoreCase(userType)) {
-                    updateCompanyNameTV.setText(dataSnapshot.child("City").getValue().toString());
-                    updateCompanyAddressTV.setText(dataSnapshot.child("City").getValue().toString());
+                if(!ConstantResources.USERS.equalsIgnoreCase(userType)) {
+                    updateCompanyNameTV.setText(dataSnapshot.child("Companyname").getValue().toString());
+                    updateCompanyAddressTV.setText(dataSnapshot.child("Officeaddress").getValue().toString());
                     updateCompanyCityTV.setText(dataSnapshot.child("City").getValue().toString());
                     updateCompanyPhoneTV.setText(dataSnapshot.child("City").getValue().toString());
                 }
@@ -111,54 +138,20 @@ public class UpdateProfile extends Activity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),1234);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),IMAGE_REQUEST_CODE);
             }
+
         });
 
         updateProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map updateMap = new HashMap<>();
-                updateMap.put("FullName", updateFNameTV.getText().toString());
-                updateMap.put("Phone", updatePhoneTV.getText().toString());
-                updateMap.put("Email", updateEmailTV.getText().toString());
-                updateMap.put("City", updateCityTV.getText().toString());
-                updateMap.put("State", updateStateTV.getText().toString());
-                updateMap.put("Address", updateAddressTV.getText().toString());
-                updateMap.put("dp","");
-                if(!"user".equalsIgnoreCase(userType)){
-                    updateMap.put("Companyname", updateCompanyNameTV);
-                    updateMap.put("Officeaddress", updateCompanyAddressTV);
-                    updateMap.put("Officenumber", updateCompanyPhoneTV);
-                }
-                adminFirebaseRef.updateChildren(updateMap, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
-                        if (databaseError != null) {
-
-                            Log.d("CHAT_LOG", databaseError.getMessage().toString());
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_SHORT).show();
-
-                            if("user".equalsIgnoreCase(userType)){
-                                Intent intent = new Intent(UpdateProfile.this, UserHomeActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(UpdateProfile.this, ServiceProviderHomeActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-
-                    }
-                });
+                uploadImage();
             }
         });
     }
 
     private void fetchData() {
-
         myRef.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -177,24 +170,88 @@ public class UpdateProfile extends Activity {
         });
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1234) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                        imageview_account_profile.setImageBitmap(bitmap);
-                        myRef.child("userName").child("dp").setValue(bitmap.toString());
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            imageURI = data.getData();
+            imageview_account_profile.setImageURI(imageURI );
+        }
+        else if (resultCode == Activity.RESULT_CANCELED)  {
+            Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getFileExtention(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadImage(){
+        final StorageReference fileRef;
+        if(imageURI != null){
+            fileName = userName+"."+getFileExtention(imageURI);
+            fileRef = mStorageRef.child(userName+"."+getFileExtention(imageURI));
+            fileRef.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    //had to do this since I wasn't getting the Downloadable HTTP link for the images being uploaded in firebase storage
+                    adminFirebaseRef.child("dp").setValue("https://firebasestorage.googleapis.com/v0/b/serveme-system-d313f.appspot.com/o/images%2F"+userName+".jpg?alt=media");
+                    dpURL = taskSnapshot.getTask().getResult().toString();
+                    updateData();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "Upload Fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(this, "No File selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateData(){
+        Map updateMap = new HashMap<>();
+        if("user".equalsIgnoreCase(userType)){
+            updateMap.put("FullName", updateFNameTV.getText().toString());
+            updateMap.put("Address", updateFNameTV.getText().toString());
+        } else {
+            updateMap.put("FirstName", updateFNameTV.getText().toString());
+            updateMap.put("Officeaddress", updateFNameTV.getText().toString());
+        }
+
+        updateMap.put("Phone", updatePhoneTV.getText().toString());
+        updateMap.put("Email", updateEmailTV.getText().toString());
+        updateMap.put("City", updateCityTV.getText().toString());
+        updateMap.put("State", updateStateTV.getText().toString());
+        updateMap.put("Address", updateAddressTV.getText().toString());
+        if(!"user".equalsIgnoreCase(userType)){
+            updateMap.put("Companyname", updateCompanyNameTV);
+            updateMap.put("Officeaddress", updateCompanyAddressTV);
+            updateMap.put("Officenumber", updateCompanyPhoneTV);
+        }
+
+        adminFirebaseRef.updateChildren(updateMap, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                if (databaseError != null) {
+                    Log.d("CHAT_LOG", databaseError.getMessage().toString());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Profile Successfully updated", Toast.LENGTH_SHORT).show();
+                    if(ConstantResources.USER_TYPE_CUSTOMER.equalsIgnoreCase(userType)){
+                        Intent intent = new Intent(UpdateProfile.this, UserHomeActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(UpdateProfile.this, ServiceProviderHomeActivity.class);
+                        startActivity(intent);
                     }
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED)  {
-                Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_SHORT).show();
             }
-        }
+        });
     }
 
 }

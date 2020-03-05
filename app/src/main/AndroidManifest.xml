@@ -17,7 +17,7 @@
         <activity android:name=".PlaceServiceRequest"></activity>
         <activity android:name=".ViewServiceRequest" />
         <activity
-            android:name=".Homepage.updateProfile"
+            android:name=".Homepage.UpdateProfile"
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".Homepage.ServiceProviderHomeActivity"
@@ -27,13 +27,19 @@
             android:name=".Homepage.UserHomeActivity"
             android:label="@string/title_activity_user_home"
             android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".adminScreen.AdminServiceProviderDetails"></activity>
+        <activity android:name=".adminScreen.PendingAuthorizationAdapter" />
+        <activity android:name=".adminScreen.ServiceProviderListAdapter" />
+        <activity android:name=".adminScreen.AdminMainActivity" />
+        <activity android:name=".adminScreen.OperaterDataView" />
+        <activity android:name=".adminScreen.AdminActivity" />
+        <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserRegistrationActivity" />
-        <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".adminScreen.AdminMainActivity" />
+        <activity android:name=".ServiceProviderRegistrationActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
