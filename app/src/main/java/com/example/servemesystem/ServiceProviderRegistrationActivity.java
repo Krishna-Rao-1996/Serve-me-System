@@ -11,6 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+
+import com.example.servemesystem.domain.ConstantResources;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +30,8 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
     DatabaseReference addingreg;
     DatabaseReference emailRef;
     DatabaseReference numberref;
-    String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,Workinghours,Servtype="",Worktype="";
+    String Fname,Fname1,Email1,Dob1,Address1,State,City1,Phone1,Pass1,Conpass1,Companyname,Officenumber,Office_Address,
+            Workinghours,Servtype="",Worktype="";
     boolean Check = true;
     int count=0,count1=0;
     CheckBox workdaycheckBox;
@@ -37,6 +40,8 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
     DatabaseReference rootrefer = FirebaseDatabase.getInstance().getReference().child("Working_Day_Types");
     ArrayList<String> Servicearray = new ArrayList<String>();
     ArrayList<String> Workdayarray = new ArrayList<String>();
+
+    static final String TAG = "ServiceProviderRegistrationActivity :";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -47,13 +52,13 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
         //Service Provider Types
         final RadioGroup serviceradioGroup = (RadioGroup)findViewById(R.id.radioGroup);
-        Log.d("Service_Providers", "usersRef= " + rootref);
+        Log.d(TAG, "usersRef= " + rootref);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long count = dataSnapshot.getChildrenCount();
-                Log.d("Service_Providers", "count= " + count);
+                Log.d(TAG, "count= " + count);
                 String[] str = new String[((int) count)];
                 int j = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
@@ -85,14 +90,14 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
         final RadioGroup workingradioGroup = (RadioGroup)findViewById(R.id.workingradioGroup);
 
-        Log.d("Working_Day_Types", "usersRefer= " + rootrefer);
+        Log.d(TAG, "usersRefer= " + rootrefer);
 
         final ValueEventListener workdaylistener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
                 long count1 = dataSnapshot.getChildrenCount();
-                Log.d("Service_Providers", "count= " + count1);
+                Log.d(TAG, "count= " + count1);
                 String[] str = new String[((int) count1)];
                 int j = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren())
@@ -171,7 +176,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                ref.child("Service_Providers").child(Fname1).addListenerForSingleValueEvent(new ValueEventListener() {
+                ref.child(ConstantResources.SERVICE_PROVIDER).child(Fname1).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -437,8 +442,8 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
                     Worktype += Workdayarray.get(i) + ",";
                 }
                 Log.d("worktype", "Check= " + Worktype);
-                myReg = database.getReference("Service_Providers");
-                addingreg = database.getReference("Service_Provider_Credentials");
+                myReg = database.getReference(ConstantResources.SERVICE_PROVIDER);
+                addingreg = database.getReference(ConstantResources.SERVICE_PROVIDER_CREDENTIALS);
                 if(Check)
                 {
                     Map mymap = new HashMap<>();
@@ -473,7 +478,7 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
                     Map userCred = new HashMap<>();
                     userCred.put(Fname1, Pass1);
-                    addingreg.child("Service_Provider_Credentials").updateChildren(userCred, new DatabaseReference.CompletionListener() {
+                    addingreg.child(ConstantResources.SERVICE_PROVIDER_CREDENTIALS).updateChildren(userCred, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
@@ -489,9 +494,9 @@ public class ServiceProviderRegistrationActivity extends RegistrationHelper{
 
 
                     Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = getSharedPreferences("currUser", MODE_PRIVATE).edit();
-                    editor.putString("userName", Fname1);
-                    editor.putString("type","serviceprovider");
+                    SharedPreferences.Editor editor = getSharedPreferences(ConstantResources.SHARED_PREF_CURRENT_SESSION, MODE_PRIVATE).edit();
+                    editor.putString(ConstantResources.SHARED_PREF_USERNAME, Fname1);
+                    editor.putString(ConstantResources.SHARED_PREF_USER_TYPE, ConstantResources.USER_TYPE_SERVICE_PROVIDER);
                     editor.apply();
                     Intent login = new Intent(ServiceProviderRegistrationActivity.this,LoginActivity.class);
                     startActivity(login);

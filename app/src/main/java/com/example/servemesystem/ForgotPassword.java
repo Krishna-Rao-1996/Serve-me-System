@@ -30,6 +30,7 @@ public class ForgotPassword extends RegistrationHelper {
     EditText verifyPIN;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference dbRef = database.getReference();
+    static final String TAG ="ForgotPassword :";
 
 
     @Override
@@ -37,7 +38,7 @@ public class ForgotPassword extends RegistrationHelper {
 //        verifyPIN.setVisibility(View.INVISIBLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        Log.i("here   ->", "on create");
+        Log.i(TAG, "on create");
         RegistrationHelper helper = new RegistrationHelper() {
             @Override
             protected void sendData() {
@@ -142,7 +143,7 @@ public class ForgotPassword extends RegistrationHelper {
                 "A-Z]{2,7}$";
 
         Pattern pat = Pattern.compile(emailRegex);
-        Log.i("here   ->", "verifyEmail");
+        Log.i(TAG, "verifyEmail");
 
         if (email == null)
             return false;
@@ -157,9 +158,9 @@ public class ForgotPassword extends RegistrationHelper {
 
     protected void sendEmail() {
         EmailServices emailServices = new EmailServices(ForgotPassword.this, emailEditText.getText().toString());
-        Log.i("here   ->",emailEditText.getText().toString());
+        Log.i(TAG, emailEditText.getText().toString());
         emailServices.execute();
-        Log.i("here   ->", "sendEmail");
+        Log.i(TAG, "sendEmail");
 
         //Toast.makeText(ForgotPassword.this, "Email sent", Toast.LENGTH_SHORT).show();
 
@@ -190,7 +191,7 @@ public class ForgotPassword extends RegistrationHelper {
     protected void setVisibilityOfEmail(){
         submitButton = findViewById(R.id.submitResetPassword);
         submitButton.setVisibility(View.INVISIBLE);
-        Log.i("here   ->", "setVisibilityOfEmail");
+        Log.i(TAG, "setVisibilityOfEmail");
 
         emailEditText = findViewById(R.id.emailEditText);
         emailEditText.setVisibility(View.INVISIBLE);

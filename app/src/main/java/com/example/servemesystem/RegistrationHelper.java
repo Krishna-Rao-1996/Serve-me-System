@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.servemesystem.UserModel;
+import com.example.servemesystem.domain.ConstantResources;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +28,7 @@ public abstract class RegistrationHelper extends Activity {
     ArrayList<UserModel> userValues;
     ArrayList<String> emailPhone = new ArrayList<>();
     public void fetchData(){
-        myRef.child("Users").addValueEventListener(new ValueEventListener() {
+        myRef.child(ConstantResources.USERS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Log.e("Count ", "" + snapshot.getChildrenCount());
