@@ -105,7 +105,7 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
                 }
                 emailTV.setText(emailAddress);
                 fullNameTV.setText(fullName);
-                if(!dp.trim().equals("")){
+                if(dp!=null){
                     Picasso.get().load(dp).into(profile);
                 }
             }
