@@ -43,7 +43,7 @@ public class AdminActivity extends Activity  {
                     ServiceProvider sp = new ServiceProvider();
                     sp.setCompanyname(ds.child("Companyname").getValue().toString());
                     sp.setOfficenumber(ds.child("Officenumber").getValue().toString());
-                    sp.setServieTypes(ds.child("ServiceTypes").getValue().toString());
+                    sp.setServiceTypes(ds.child("ServiceTypes").getValue().toString());
                     listOfServiceProviders.add(sp);
                 }
                 adapter = new OperaterDataView(getApplicationContext(), listOfServiceProviders);
