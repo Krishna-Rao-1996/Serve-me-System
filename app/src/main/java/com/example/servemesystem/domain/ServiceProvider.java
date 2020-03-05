@@ -22,15 +22,6 @@ public class ServiceProvider {
     private String zipCode;
     private String dp;
 
-    public String getDp() {
-        return dp;
-    }
-
-    public void setDp(String dp) {
-        this.dp = dp;
-    }
-
-    private String dp;
     public ServiceProvider() {
     }
 
