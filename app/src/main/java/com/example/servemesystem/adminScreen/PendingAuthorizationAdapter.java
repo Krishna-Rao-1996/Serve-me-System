@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceProvider;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -48,6 +49,9 @@ public class PendingAuthorizationAdapter extends RecyclerView.Adapter<PendingAut
         holder.companyNameET.setText(serviceProvider.getCompanyname());
         // holder.addressTV.setText(serviceProvider.getOfficeaddress());
         holder.cityTV.setText(serviceProvider.getCity());
+        if(null != serviceProvider.getDp()){
+            Picasso.get().load(serviceProvider.getDp()).into(holder.imageView);
+        }
         // holder.stateTV.setText(serviceProvider.getState());
         // holder.countryTV.setText("USA");
         //holder.serviceTypesTextView.setText();

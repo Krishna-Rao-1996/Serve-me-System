@@ -8,10 +8,8 @@ import android.os.Bundle;
 import com.example.servemesystem.Homepage.ui.home.HomeViewModel;
 import com.example.servemesystem.LoginActivity;
 import com.example.servemesystem.R;
-import com.example.servemesystem.UpdateProfileActivity;
+import com.example.servemesystem.UserModel;
 import com.example.servemesystem.domain.ConstantResources;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -39,26 +38,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserHomeActivity extends AppCompatActivity {
 
     private HomeViewModel homeViewModel;
     private String TAG = "UserHomeActivity.java";
     private ArrayList<String> serviceType = new ArrayList<>();
-    private ArrayList<String> userName= new ArrayList<>();
+    private ArrayList<String> uName = new ArrayList<>();
     private ArrayList<String> serviceDescription =  new ArrayList<>();
     private Context mContext;
-
+    String userName,services,verified,dp,emailAddress,fullName;
+    ImageView profile;
+    TextView emailTV,fullNameTV;
     private AppBarConfiguration mAppBarConfiguration;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-//    String userName,services;
-    ImageView profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +65,7 @@ public class UserHomeActivity extends AppCompatActivity {
         getServiceProviderTypes();
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.bringToFront();
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -76,9 +76,9 @@ public class UserHomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
         SharedPreferences prefs = getSharedPreferences("currUser", MODE_PRIVATE);
-        String uName = prefs.getString("userName", null);
-        navigationView.bringToFront();
+        userName = prefs.getString("userName", null);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -99,10 +99,31 @@ public class UserHomeActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
         View headerview = navigationView.getHeaderView(0);
         profile= headerview.findViewById(R.id.profilePicture);
+        emailTV= headerview.findViewById(R.id.emailTV);
+        fullNameTV = headerview.findViewById(R.id.fullNameTV);
+
+        myRef.child(ConstantResources.USERS).child(userName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                dp=userModel.getDp();
+                emailAddress=userModel.getEmail();
+                fullName=userModel.getFullName();
+                emailTV.setText(emailAddress);
+                fullNameTV.setText(fullName);
+                if(null != dp){
+                    Picasso.get().load(dp).into(profile);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +162,7 @@ public class UserHomeActivity extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "UserHomeActivity: init recyclerview.");
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        UserHomeActivityAdapter adapter = new UserHomeActivityAdapter(this, userName, serviceType,serviceDescription);
+        UserHomeActivityAdapter adapter = new UserHomeActivityAdapter(this, uName, serviceType,serviceDescription);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

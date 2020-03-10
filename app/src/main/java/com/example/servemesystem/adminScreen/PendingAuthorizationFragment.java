@@ -63,6 +63,9 @@ public class PendingAuthorizationFragment extends Fragment {
                         //sp.setServieTypes(ds.child("ServiceTypes").getValue().toString());
                         sp.setCity(ds.child("City").getValue().toString());
                         sp.setState(ds.child("State").getValue().toString());
+                        if(ds.child("dp").exists()){
+                            sp.setDp(ds.child("dp").getValue().toString());
+                        }
                         listOfServiceProviders.add(sp);
                     }
                     ServiceProvider sp = new ServiceProvider();
@@ -76,8 +79,6 @@ public class PendingAuthorizationFragment extends Fragment {
 
             }
         });
-
         return view;
     }
-
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.servemesystem.R;
 import com.example.servemesystem.domain.ServiceProvider;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,6 +44,9 @@ public class ServiceProviderListAdapter extends RecyclerView.Adapter<ServiceProv
         holder.countryTV.setText("USA");
         holder.phoneNumberTV.setText(serviceProvider.getOfficenumber());
         holder.zipTV.setText(serviceProvider.getZipCode());
+        if(null != serviceProvider.getDp()){
+            Picasso.get().load(serviceProvider.getDp()).into(holder.imageView);
+        }
     }
 
     @Override
@@ -73,10 +77,10 @@ public class ServiceProviderListAdapter extends RecyclerView.Adapter<ServiceProv
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), AdminServiceProviderDetails.class);
-            intent.putExtra("c1",((EditText)(itemView.findViewById(R.id.companyName))).getText().toString());
-            intent.putExtra("c2",((TextView)(itemView.findViewById(R.id.addressID))).getText().toString());
+            intent.putExtra("companyName",((EditText)(itemView.findViewById(R.id.companyName))).getText().toString());
+            intent.putExtra("addressID",((TextView)(itemView.findViewById(R.id.addressID))).getText().toString());
             intent.putExtra("c3",((TextView)(itemView.findViewById(R.id.stateID))).getText().toString());
-            intent.putExtra("c4",((TextView)(itemView.findViewById(R.id.phonrNumberID))).getText().toString());
+            intent.putExtra("phonrNumberID",((TextView)(itemView.findViewById(R.id.phonrNumberID))).getText().toString());
             view.getContext().startActivity(intent);
         }
     }
