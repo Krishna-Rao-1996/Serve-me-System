@@ -29,11 +29,13 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
     private ArrayList<String> mUserNames = new ArrayList<>();
     private ArrayList<String> mRequestTypes = new ArrayList<>();
     private ArrayList<String> mUserMessage = new ArrayList<>();
+    private ArrayList<String> mServiceProblemImage = new ArrayList<>();
     private Context mContext;
-    public ServiceProviderAdapter(Context mContext,ArrayList<String> mUserNames, ArrayList<String> mRequestTypes, ArrayList<String> mUserMessage) {
+    public ServiceProviderAdapter(Context mContext, ArrayList<String> mUserNames, ArrayList<String> mRequestTypes, ArrayList<String> mUserMessage, ArrayList<String> mServiceProblemImage) {
         this.mUserNames = mUserNames;
         this.mRequestTypes = mRequestTypes;
         this.mUserMessage = mUserMessage;
+        this.mServiceProblemImage= mServiceProblemImage;
         this.mContext = mContext;
     }
 
@@ -86,6 +88,7 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
                 intent.putExtra("userName", mUserNames.get(position));
                 intent.putExtra("serviceReq", mRequestTypes.get(position));
                 intent.putExtra("userMessage",mUserMessage.get(position));
+                intent.putExtra("serviceProblemImage",mServiceProblemImage.get(position));
                 mContext.startActivity(intent);
             }
         });
@@ -100,7 +103,7 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView userName,requestType;
-        ImageView servicePic;
+        ImageView servicePic,serviceProblemImage;
         RelativeLayout parentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -108,6 +111,7 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
             requestType=itemView.findViewById(R.id.request);
             servicePic=itemView.findViewById(R.id.servicePic);
             parentLayout=itemView.findViewById(R.id.parentLayout);
+
         }
     }
 }
