@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.servemesystem.UserModel;
 import com.example.servemesystem.domain.ConstantResources;
 import com.example.servemesystem.domain.ServiceProvider;
+import com.example.servemesystem.domain.ServiceRequests;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +42,7 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ArrayList<String> mUserNames = new ArrayList<>();
     private ArrayList<String> mUserMessage = new ArrayList<>();
+    private ArrayList<String> mServiceProblemImage = new ArrayList<>();
     private ArrayList<String> mRequestTypes = new ArrayList<>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -132,13 +134,15 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
                     myRef.child(ConstantResources.SERVICE_REQUESTS).child(service).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            Log.e("Count ", "" + snapshot.getChildrenCount());
-                            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                                String uname = postSnapshot.getKey();
-                                String message = postSnapshot.getValue(String.class);
+                            for (DataSnapshot usersSnapshot : snapshot.getChildren()) {
+                                String uname = usersSnapshot.getKey();
                                 mUserNames.add(uname);
-                                mUserMessage.add(message);
                                 mRequestTypes.add(service);
+                                Log.e("Count ", "" + snapshot.getChildrenCount());
+                                ServiceRequests serviceRequests = usersSnapshot.getValue(ServiceRequests.class);
+                                //String message = postSnapshot.getValue(String.class);
+                                mUserMessage.add(serviceRequests.getDescription());
+                                mServiceProblemImage.add(serviceRequests.getServiceProblemImage());
                             }
                             initRecyclerView();
                         }
@@ -154,7 +158,7 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview.");
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        ServiceProviderAdapter adapter = new ServiceProviderAdapter(this, mUserNames, mRequestTypes,mUserMessage);
+        ServiceProviderAdapter adapter = new ServiceProviderAdapter(this, mUserNames, mRequestTypes,mUserMessage,mServiceProblemImage);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

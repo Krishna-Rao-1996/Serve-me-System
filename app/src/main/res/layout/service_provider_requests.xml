@@ -27,6 +27,7 @@
         android:layout_height="81dp"
         android:layout_marginStart="150dp"
         android:gravity="center"
+        android:contextClickable="false"
         android:text="request"
         android:inputType="textMultiLine"
         android:textColor="@color/colorPrimaryDark"
