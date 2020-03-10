@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.servemesystem.PlaceServiceRequest;
 import com.example.servemesystem.R;
 import com.example.servemesystem.ViewServiceRequest;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class UserHomeActivityAdapter extends RecyclerView.Adapter<UserHomeActivi
     private ArrayList<String> userName;
     private ArrayList<String> serviceDescription;
     private Context mContext;
+    private ImageView serviceImage;
     public UserHomeActivityAdapter(Context mContext, ArrayList<String> mUserNames, ArrayList<String> serviceType, ArrayList<String> serviceDescription) {
         Log.i(TAG, "Constructor: User Home Adapter called.");
 
@@ -53,7 +55,37 @@ public class UserHomeActivityAdapter extends RecyclerView.Adapter<UserHomeActivi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder: User Home Adapter called.");
+
         holder.typeName.setText(serviceType.get(position));
+        Image_Resource image_resource = new Image_Resource();
+        if(serviceType.get(position).equals("Plumbing")){
+            Picasso.get().load(image_resource.jacuzziImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Electrical")){
+            Picasso.get().load(image_resource.electricalImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Appliances")){
+            Picasso.get().load(image_resource.applianceImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Computer Repair")){
+            Picasso.get().load(image_resource.computerRepairImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Home cleaning")){
+            Picasso.get().load(image_resource.homeCleaningImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Home repair and Painting")){
+            Picasso.get().load(image_resource.homeRepairImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Packaging and Moving")){
+            Picasso.get().load(image_resource.packingImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Pest Control")){
+            Picasso.get().load(image_resource.pestControlImg).into(holder.serviceImage);
+        }
+        else if(serviceType.get(position).equals("Tutoring")){
+            Picasso.get().load(image_resource.tutoringImg).into(holder.serviceImage);
+        }
+
         holder.typeDescription.setText(serviceDescription.get(position));
         holder.userHomeScreenParent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,11 +102,12 @@ public class UserHomeActivityAdapter extends RecyclerView.Adapter<UserHomeActivi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView userName;
         TextView typeName, typeDescription ;
-//        ImageView servicePic;
+        ImageView serviceImage;
         LinearLayout userHomeScreenParent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            serviceImage = itemView.findViewById(R.id.serviceImage);
             userName = itemView.findViewById(R.id.userName);
             typeName = itemView.findViewById(R.id.serviceProviderTypeName);
             typeDescription = itemView.findViewById(R.id.serviceProviderTypeDescription);

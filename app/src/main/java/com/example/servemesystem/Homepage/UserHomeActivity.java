@@ -52,7 +52,7 @@ public class UserHomeActivity extends AppCompatActivity {
     private ArrayList<String> serviceDescription =  new ArrayList<>();
     private Context mContext;
     String userName,services,verified,dp,emailAddress,fullName;
-    ImageView profile;
+    ImageView profile, serviceImage;
     TextView emailTV,fullNameTV;
     private AppBarConfiguration mAppBarConfiguration;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
