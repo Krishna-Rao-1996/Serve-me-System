@@ -138,7 +138,6 @@ public class ServiceProviderHomeActivity extends AppCompatActivity {
                                 String uname = usersSnapshot.getKey();
                                 mUserNames.add(uname);
                                 mRequestTypes.add(service);
-                                Log.e("Count ", "" + snapshot.getChildrenCount());
                                 ServiceRequests serviceRequests = usersSnapshot.getValue(ServiceRequests.class);
                                 //String message = postSnapshot.getValue(String.class);
                                 mUserMessage.add(serviceRequests.getDescription());
