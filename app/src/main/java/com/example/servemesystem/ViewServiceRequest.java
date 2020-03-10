@@ -35,7 +35,12 @@ public class ViewServiceRequest extends Activity {
         reject=findViewById(R.id.rejectButton);
         userNameTV.setText(userName);
         requestTV.setText(requestName);
-        Picasso.get().load(problemImage).into(serviceProblemImage);
+        if(problemImage!=null) {
+            Picasso.get().load(problemImage).into(serviceProblemImage);
+        }
+        else{
+            serviceProblemImage.setVisibility(View.GONE);
+        }
         requestMessageTV.setText(userMessage);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
