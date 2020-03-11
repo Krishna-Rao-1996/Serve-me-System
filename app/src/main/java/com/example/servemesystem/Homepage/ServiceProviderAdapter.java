@@ -66,7 +66,7 @@ public class ServiceProviderAdapter extends RecyclerView.Adapter<ServiceProvider
         else if(mRequestTypes.get(position).equals("Computer Repair")){
             Picasso.get().load(image_resource.computerRepairImg).into(holder.servicePic);
         }
-        else if(mRequestTypes.get(position).equals("Home Cleaning")){
+        else if(mRequestTypes.get(position).equals("Home cleaning")){
             Picasso.get().load(image_resource.homeCleaningImg).into(holder.servicePic);
         }
         else if(mRequestTypes.get(position).equals("Home repair and Painting")){

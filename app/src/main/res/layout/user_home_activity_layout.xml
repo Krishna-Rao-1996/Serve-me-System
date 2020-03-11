@@ -4,12 +4,15 @@
     android:id="@+id/userHomeScreenParent"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="#F5090808"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/rounded_edittext"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="horizontal">
 
     <TextView
@@ -18,8 +21,8 @@
         android:layout_height="80dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_weight="0.5"
+        android:fontFamily="@font/clan_ot_narrownews"
         android:background="@color/cardview_dark_background"
         android:gravity="center"
         android:textSize="20sp"
@@ -44,6 +47,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
+        android:fontFamily="@font/clan_ot_narrownews"
         android:layout_weight="0.5"
         android:background="@color/cardview_light_background"
         android:gravity="center"

@@ -168,10 +168,9 @@ public class PlaceServiceRequest extends Activity {
                     storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            String urlMaker = "https://firebasestorage.googleapis.com/v0/b/serveme-system-d313f.appspot.com/o/images/+"+uname+"%2F"+serviceName+".jpg?alt=media";
+                            String urlMaker = "https://firebasestorage.googleapis.com/v0/b/serveme-system-d313f.appspot.com/o/images%2F"+uname+"%2F"+serviceName+".jpg?alt=media";
                             databaseReference.child(serviceName).child(uname).child("ServiceProblemImage").setValue(urlMaker);
                             problemImageURL = urlMaker;
-//                            problemImageURL = taskSnapshot.getTask().getResult().toString();
                             Toast.makeText(PlaceServiceRequest.this, "URL"+problemImageURL, Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
