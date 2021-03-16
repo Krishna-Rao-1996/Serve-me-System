@@ -2,6 +2,4 @@
 
 ServerMe System Project
 
-Please dont push to the main branch, it will overwrite everything.
-First pull from the main into your local directory and create a new branch 
-to push into it.
+Developed a native Android application using Firebase as the database.Designed the User Interface and implemented Core functionality of the application.Responsible for developing 30% of all screens and functionality of the application.
